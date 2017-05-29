@@ -1,2 +1,16 @@
 include LICENSE
 include geopythoncore/PShell/*
+
+exclude geopythoncore/*.pyc
+exclude geopythoncore/GEOToolBoxSetup.isproj
+exclude geopythoncore/GISPython.pyproj
+exclude geopythoncore/GISPython.pyproj.vspscc
+exclude geopythoncore/AGServerHelpaer.py
+exclude geopythoncore/CachingHelper.py
+exclude geopythoncore/FTPHleper.py
+exclude geopythoncore/GDBHelper.py
+exclude geopythoncore/GDPSyncroniserHelper.py
+exclude geopythoncore/JsonParamsHelper.py
+exclude geopythoncore/RarHelper.py
+exclude geopythoncore/SFTPHelper.py
+exclude geopythoncore/SysTools_unittest.py

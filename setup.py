@@ -45,7 +45,7 @@ setup(
 	#   main()
 
 	entry_points = {'console_scripts': [
-		'geopythoncore = __init__'
+		'geopythoncore = __init__:main'
 		]
 	},
 )
