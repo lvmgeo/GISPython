@@ -1,0 +1,14 @@
+*.pyc
+*.egg-info
+GEOToolBoxSetup.isproj
+GISPython.pyproj
+GISPython.pyproj.vspscc
+AGServerHelpaer.py
+CachingHelper.py
+FTPHleper.py
+GDBHelper.py
+GDPSyncroniserHelper.py
+JsonParamsHelper.py
+RarHelper.py
+SFTPHelper.py
+SysTools_unittest.py

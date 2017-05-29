@@ -1,0 +1,1 @@
+For readme see `GitHub <https://bitbucket.org/arturspd/geopythontest>`_.
