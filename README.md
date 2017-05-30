@@ -19,7 +19,7 @@ The core also includes tools that simplify usage of ArcPy and Python functions, 
 
 LVM GEO Python Core is an open source automation and scripting core developed by the LVM GEO team. Based on this core any developer can build their simple and structured Python programming scripts with a rich functionality.
 
-LVM GEO also offers courses about LVM GEO Python and to develop an automation platform for companies and organizations. LVM GEO scripting platform is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day
+LVM GEO also offers courses about LVM GEO Python and to develop an automation platform for companies and organizations. LVM GEO scripting platform is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day.
 
 ---------
 LVM GEO Python Core package **_geopythoncore_** contains following modules:
@@ -48,7 +48,7 @@ LVM GEO Python Core package **_geopythoncore_** contains following modules:
 
 ---------
 ## Dependencies
-* ArcGIS 10.x /recommended with newest patches and service packs/ (_geopythoncore_is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
+* ArcGIS 10.x /recommended with newest patches and service packs/ (**_geopythoncore_** is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
 * Python 2.7 (usually included in ArcGIS installation) (arcpy module included)
 * Additional python modules:
     * [PyCrypto](http://www.voidspace.org.uk/python/modules.shtml#pycrypto)
@@ -66,9 +66,9 @@ LVM GEO Python Core package **_geopythoncore_** contains following modules:
 ---------
 ## Configuration & basic usage
 
-Before using _geopythoncore_ modules in custom geoprocessing scripts, you need to set up your scripting environment.
+Before using **_geopythoncore_** modules in custom geoprocessing scripts, you need to set up your scripting environment.
 
-Here is example or _geopythoncore_ script:
+Here is example of **_geopythoncore_** script:
 ```python
 # -*- coding: utf-8 -*-
 """
@@ -102,20 +102,20 @@ if __name__ == "__main__":
 	Module = MainModule()
 	Module.DoJob()
 ```
-Parameter file or object (e.g. SysGISParams.py) is important, because _geopythoncore_ relies of several parameters to be present to function successfully:
+Parameter file or object (e.g. SysGISParams.py) is important, because **_geopythoncore_** relies of several parameters to be present to function successfully:
 
 * OutDir - directory for storing script output log files `OutDir = r'C:\GIS\Log\Outlog\' `
 * OutDirArh - directory for storing script output log file archive (all non active files) `OutDirArh = r'C:\GIS\Log\Outlog\Archive\' `
-* ErrorLogDir - directory for storing script error log files `ErrorLogDir = r'C:\GIS\Log\ErrorLog\' `(*Important! This directory can be monitored for non empty files. If this directory has a file that is non empty - this indicates that a scrypt has failed*)
+* ErrorLogDir - directory for storing script error log files `ErrorLogDir = r'C:\GIS\Log\ErrorLog\' `(*Important! This directory can be monitored for non empty files. If this directory has a file that is non empty - this indicates that a script has failed*)
 * ErrorLogDirArh - directory for storing script error log files `ErrorLogDirArh = r'C:\GIS\Log\ErrorLog\Archive' `
 * TmpFolder - Temp folder `TmpFolder = r'C:\GIS\tmp'`
-* encodingPrimary - encoding of Windows schell `encodingPrimary = 'cp775' `
+* encodingPrimary - encoding of Windows shell `encodingPrimary = 'cp775' `
 * encodingSecondary - encoding of Windows unicode language used `encodingSecondary = 'cp1257' `
 
 >It is recommended to define additional script parameters in SysGISParams.py file, to keep the main code clean. Our approach is to define all the parameters that define current system environment be kept in this one file. In case of moving environment (e.g. test system and production system) this one file has the specific connections and can be easily modified without changing the scripts.
 
 ### Recommendations
-Set up the variables at the beggining of the main function, to shorten the main code 
+Set up the variables at the beggining of the main function, to shorten the main code:
 
 ```python
 Tool = self.Tool
