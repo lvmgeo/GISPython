@@ -100,7 +100,7 @@ if __name__ == "__main__":
 	Module = MainModule()
 	Module.DoJob()
 ```
->It is recommended to define additional script parameters in SysGISParams.py file (included in package), to keep the main code clean.
+>It is recommended to define additional script parameters in SysGISParams.py file, to keep the main code clean.
 
 ### Recommendations
 Set up the variables at the beggining of the main function, to shorten the main code
