@@ -17,9 +17,11 @@ The core also includes tools that simplify usage of ArcPy and Python functions, 
 * unified script initiation from ArcGIS environment, Python Shell and from other tools
 * etc.
 
+LVM GEO Python Core is an open source automation and scripting core developed by the LVM GEO team. Based on this core any developer can build their simple and structured Python programming scripts with a rich functionality.
 
+LVM GEO also offers courses about LVM GEO Python and to develop an automation platform for companies and organizations. LVM GEO scripting platform is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day
 
-
+---------
 LVM GEO Python Core package **_geopythoncore_** contains following modules:
 
 * [Main modules](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-main-modules):
