@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
 	name = 'geopythoncore',
-	version = '0.1.1', # version number according to PEP440 https://www.python.org/dev/peps/pep-0440/
+	version = '0.1.2', # version number according to PEP440 https://www.python.org/dev/peps/pep-0440/
 	description = 'Additional tools for administering and automating different arcpy geoprocessing operations. Package is intended for use with ArcGIS 10.3.1.', # short package description
 	long_description = 'For readme see GitHub https://bitbucket.org/arturspd/geopythontest', # if needed (entire documentation)
 	# url = 'https://bitbucket.org/arturspd/geopythontest', # GitHub url
