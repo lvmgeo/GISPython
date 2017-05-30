@@ -1,10 +1,26 @@
 # geopythoncore
-![python_large.png](https://bitbucket.org/repo/eky5EEp/images/957292278-python_large.png)
 
 ---------
-Droši vien jāliek arī kaut kas no Katrīnas iztulkotā teksta.
+There are many automated maintenance operations necessary for every large geospatial information system (GIS). These operations usually are connected with database and server maintenance, data validations and calculations, map preparing and caching, data exchange with other systems and other necessities. Within ERSI platform maintenance scripting is done by Python programming language and [ArcPy](http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm) library. LVM GEO developer team has worked with ArcPy library for many years and has developed LVM GEO Python Core complementing and enriching the functional possibilities of the ESRI library that are not provided in the ArcPy standard:
 
-geopythoncore package contains following modules:
+* monitoring possibilities for the automated scripts (for example Zabbix)
+* script audit storage possibilities
+* generation of automated e-mails (script progress status reports as well as automated data validation warning e-mails, etc.)
+* data transfer using FTP and SFTP, data compressing and uncompressing
+* SQL, PowerShell, Windows Shell file initiation and progress monitoring within an unified environment with ArcPy geoprocessing tools
+
+The core also includes tools that simplify usage of ArcPy and Python functions, significantly easing the development process:
+
+* scripting of ArcGIS server administration
+* scripting of file operations
+* scripting of service caching
+* unified script initiation from ArcGIS environment, Python Shell and from other tools
+* etc.
+
+
+
+
+LVM GEO Python Core package **_geopythoncore_** contains following modules:
 
 * [Main modules](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-main-modules):
     * [GISPythonModule](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-gispythonmodule)
@@ -43,7 +59,7 @@ geopythoncore package contains following modules:
 
 ## Installation
 
-_geopythoncore_ is available on the Python Package Index (te nāks iekšā links), so you can get it via pip: `pip install geopythoncore`
+**_geopythoncore_** is available on the Python Package Index (te nāks iekšā links), so you can get it via pip: `pip install geopythoncore`
 
 ---------
 ## Configuration & basic usage
