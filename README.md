@@ -203,13 +203,17 @@ _Examples:_
 ##### Run a script from Shell with parameters
 ```Python
 Tool = self.Tool
-Tool.runShell('SomeProcess.py', Detached = True, noErr = True) # executes your custom process script (mainly maintenance scripts) within runShell function, which implements _runProcess function (message output in terminal window). Function executes script seperately from main process (Detached=True) and indicates, that the errors doesn't have to be logged (noErr=True).
+# Executes your custom process script (mainly maintenance scripts) within runShell function,
+# which implements _runProcess function (message output in terminal window).
+# Function executes script seperately from main process (Detached=True) and indicates, 
+# that the errors doesn't have to be logged (noErr=True).
+Tool.runShell('SomeProcess.py', Detached = True, noErr = True)
 time.sleep(10) # after 10 seconds launch another runShell process
 ```
 
 ##### Executes a custom SQL script file (only Oracle sqlplus supported)
 ```Python
-from geopythoncore import TimerHelper
+from geopythoncore import TimerHelper
 Tool = self.Tool
 # Executes process from SQL file
 with TimerHelper.TimedSubprocess(self.Tool, u'datu atlasi no nogabaliem'): # Adds a message to the tool output
