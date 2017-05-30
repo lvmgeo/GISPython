@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-     File and filesystem operations module
+    File and filesystem operations module
 """
 import os
 import shutil
@@ -18,8 +18,8 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         """
             Class initialization procedure
             Args:
-                self: Reserved object 'self' 
-                Tool: The GISTools10 object for data processing
+                self: The reserved object 'self' 
+                Tool: The 'GISTools10' object for data processing
         """
         super(SimpleFileOpsSafe,self).__init__(_Tool)
 
@@ -27,7 +27,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         """
             Directory cleaning automation procedure
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 DirName: The directory to be cleaned
         """
         self.Tool.AddMessage(u"\n----------- Cleaning directory [" +  DirName + "] -------" + self.Tool.MyNow())
@@ -38,7 +38,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         """
             Delete non-empty directory
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 DirName: The directory to be deleted
         """
         self.Tool.AddMessage(u"\n----------- Cleaning and deleting directory [" +  DirName + "] -------" + self.Tool.MyNow())
@@ -50,7 +50,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         """
             File archiving automation procedure
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 InDirName: Input directory
                 OutDirName: Output directory
                 D: How old files to archive (number of days)
@@ -66,7 +66,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         """
             Specific file archiving automation procedure
             Args:
-                self: Reserved object 'self' 
+                self: The reserved object 'self' 
                 InFileName: Input file
                 OutDirName: Output directory
         """
@@ -82,7 +82,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         """
             Remove read-only files and directories
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 fn: Function for removing either a directory or a file
                 path_: Path to the directory/file
         """
@@ -98,7 +98,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         """
             Force remove files and symlinks
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 path_: Path to the file/symlink
         """
         try:
@@ -112,7 +112,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         """
             Check if directory is regular directory
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 path_: Path to the directory
         """
         try:
@@ -126,7 +126,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         """
             Clear directory contents
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 path_: Path to the directory
                 pattern: Check if the file matches the given pattern (Default = '*'(Matches everything))
         """

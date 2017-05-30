@@ -9,9 +9,9 @@ class ZipHelper:
 
     def __init__(self):
          """
-            Class initialization procedure
-            Args:
-                self: The reserved object 'self'
+             Class initialization procedure
+             Args:
+                 self: The reserved object 'self'
          """
     
     def CompressFile(filePath, zipFileName):
@@ -19,7 +19,7 @@ class ZipHelper:
             Compress file
             Args:
                 self: The reserved object 'self'
-                filePath: Archivable file path + name)
+                filePath: Archivable file path + name
                 zipFileName: New Zip file path + name
         """
         zfile = zipfile.ZipFile(zipFileName, "w", zipfile.ZIP_DEFLATED)

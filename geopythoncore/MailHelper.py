@@ -11,7 +11,7 @@ class MailHelper:
         """
             Class initialization procedure
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 From: E-mail adress from which to send
                 recipients: Recipient array
                 Subject: E-mail subject
@@ -30,7 +30,7 @@ class MailHelper:
         """
             Procedure to add attachments
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 FilePath: Path to the attachment
         """
         from email.mime.base import MIMEBase
@@ -45,7 +45,7 @@ class MailHelper:
         """
             Procedure for sending an e-mail
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 Mailserver: Mailserver name
                 port: Mailserver port number
                 user: Username
@@ -76,7 +76,7 @@ class GISPythonMailHelper(MailHelper):
         """
             Class initialization procedure
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 Pr: Parameter file with corresponding parameters
                 recipients: Recipient array
                 Subject: E-mail subject

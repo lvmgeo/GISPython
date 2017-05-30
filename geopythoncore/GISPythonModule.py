@@ -25,7 +25,7 @@ class GISPythonModule(object):
         """
             Initialize the tool and the tool parameters
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 ToolName: Tool name
                 SysGISParams: GISPython parameter module
                 ExecutePatch: # ko te likt???
@@ -57,7 +57,7 @@ class GISPythonModule(object):
         """
             Procedure executes the tool, if it's to be executed within an another Python tool
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 Tool: The tool name to execute
         """
         self.SetTool(Tool)
@@ -187,7 +187,7 @@ class GISPythonModuleArgsHelper(object):
         """
             Procedure processes a parameter acquisition from the argument
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 argumentNumber: Argument from which to read the data
         """
         if len(sys.argv) > argumentNumber:
@@ -200,7 +200,7 @@ class GISPythonModuleArgsHelper(object):
         """
             Procedure processes a parameter setup from the tool initialization procedure
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 value: Setup value
         """
         self.initValue = value
@@ -211,7 +211,7 @@ class GISPythonModuleArgsHelper(object):
         """
             Procedure processes a parameter setup from the base module of the tool
             Args:
-                self: Reserved object 'self'
+                self: The reserved object 'self'
                 value: Setup value
         """
         self.mainModuleValue = value
@@ -222,7 +222,7 @@ class GISPythonModuleArgsHelper(object):
         """
             Procedure makes a choice from the given attributes
             Args:
-                self: Reserved object self
+                self: The reserved object self
                 value: Setup value
         """
         candidate = Default

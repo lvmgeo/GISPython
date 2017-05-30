@@ -80,7 +80,7 @@ class GISTools10:
     
     def callGPSilent(self, functionName, *args):
         """
-             Function to call the arcPy GP functions without output
+            Function to call the arcPy GP functions without output
             Args:
                 self: The reserved object 'self'
                 functionName: Name of the arcPy GP function
@@ -145,7 +145,6 @@ class GISTools10:
     def OutputErrors(self):
         """
             Procedure to output messages and errors stored in the GP object.
-            
             !!! Depricated - Left for backwards compatibility - use OutputMessages with ErrorSeverity 0 !!!
 
             Args:
@@ -171,7 +170,6 @@ class GISTools10:
     def _runProcess(self, exe, noErr=False, Detached = False):  
         """
             Shell command execution support function (see the runShell function)
-
             Args:
                 self: The reserved object 'self'
                 exe: Executable command
@@ -204,7 +202,6 @@ class GISTools10:
     def runShell(self, exe, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Detached = False, Silent=False): 
         """
             Shell command execution procedure. It can detect errors in execution and can output results to screen.
-
             Args:
                 self: The reserved object 'self'
                 exe: Executable command
@@ -226,7 +223,6 @@ class GISTools10:
     def outputLogfile(self, file, encoding = 'utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):
         """
             Procedure prints text file to screent - processing error keywords
-
             Args:
                 self: The reserved object 'self'
                 file: path to file to process
@@ -241,7 +237,6 @@ class GISTools10:
     def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):    
         """
             Procedure for outputing set of lines to screen with error key word recognition. (for example for log file output processing)
-
             Args:
                 self: The reserved object 'self'
                 lines: Lines to process
@@ -268,7 +263,6 @@ class GISTools10:
     def _tryCovertStringEncoding(self, txt):
         """
             Function for working with strings in diferent encodings. Converts string from input to string in correct encoding.
-
             Args:
                 self: The reserved object 'self'
                 txt: String to be converted
@@ -291,7 +285,6 @@ class GISTools10:
     def AutorizeNTWLocation(self, Adress, user, pwd):
         """
             Network directory authorization
-
             Args:
                 self: The reserved object 'self'
                 Adress: Network adress
@@ -350,7 +343,6 @@ class GISTools10:
 
     def RunPS(self, Name, Args, Path = '#'):
         ''' Procedure for the PowerShell file execution
-
             Args: 
                 self: The reserved object 'self'
                 Name: Filename without an extension
@@ -363,7 +355,6 @@ class GISTools10:
     def AddMessage(self, strMessage, newline=True):
         """
             Procedure for a message output (screen, logfile and if necessary e-mail)
-
             Args:
                 self: The reserved object 'self'
                 strMessage: Output message text
@@ -395,7 +386,6 @@ class GISTools10:
     def AddError(self, strMessage, newline=True):
         """
             Procedure for the GP object error message output (screen, logfile and if necessary e-mail)
-
             Args:
                 self: The reserved object 'self'
                 strMessage: Output message text
@@ -435,7 +425,6 @@ class GISTools10:
     def AddWarning(self, strMessage):
         """
             Procedure for the GP object warning message output (screen, logfile and if necessary e-mail)
-
             Args:
                 self: The reserved object 'self'
                 strMessage: Output message text
@@ -475,14 +464,13 @@ class GISTools10:
             Function returns formatted date for the filename output
             Args:
                 self: The reserved object 'self'
-
             Returns: Date, formatted as text
         """
         return datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d_%H-%M-%S")
 
     def MyNowOracle(self):
         """
-            Funkcija atgrieþ noformçtu datumu datu atlasei Oracle (Returns formatted date for the data selection in SQL)
+            Function returns formatted date for the data selection in SQL
             Args:
                 self: The reserved object 'self'
             Returns: Date, formatted as text
@@ -492,10 +480,8 @@ class GISTools10:
     def MyNowFileSafe(self):
         """
             Function returns formatted date for the filename output (additional compatibility)
-
             Args:
                 self: The reserved object 'self'
-
             Returns: Date, formatted as text
         """
         return datetime.datetime.strftime(datetime.datetime.now(), "%Y%m%d_%H%M%S")
@@ -503,7 +489,6 @@ class GISTools10:
     def MyNow(self):
         """
             Function returns formatted date for the output
-
             Args:
                 self: The reserved object 'self'
             Returns: Date, formatted as text
@@ -513,7 +498,6 @@ class GISTools10:
     def MyNowUTC(self):
         """
             Function returns formatted date for the UTC date output
-
             Args:
                 self: The reserved object 'self'
             Returns: Date, formatted as text
@@ -523,7 +507,6 @@ class GISTools10:
     def MyNowForParam(self, minusdays = 0):
         """
             Function returns formatted date (date now) for the GEO parameter processing
-
             Args:
                 self: The reserved object 'self'
                 minusdays: Number of days to subtract from today
@@ -536,7 +519,6 @@ class GISTools10:
     def MyDateFromParam(self, dateString):
         """
             Function converts date written in the parameter file to a date object
-
             Args:
                 self: The reserved object 'self'
         """
@@ -545,11 +527,9 @@ class GISTools10:
     def MyDateForParam(self, paramStr):
         """
             Function returns date from GEO parameter processing saved string
-
             Args:
                 self: The reserved object 'self'
                 paramStr: Parameter value as text
-
             Returns: datetime
         """
         return datetime.datetime.strptime(paramStr, "%Y-%m-%d")
@@ -557,7 +537,6 @@ class GISTools10:
     def AchiveFiles(self, Dir, AchiveDir, FileName, PrintOut = True):
         """
             Function moves log files to the archive
-
             Args:
                 self: The reserved object 'self'
                 Dir: Directory from which to archive
@@ -578,11 +557,9 @@ class GISTools10:
 
     def CorrectStr(self, Str):
         """ Function doubles symbol \ in path for some external execution compatibility
-
             Args: 
                 self: The reserved object 'self'
                 Str: Input string
-
             Returns: string
         """
         return Str.replace('\\', '\\\\')

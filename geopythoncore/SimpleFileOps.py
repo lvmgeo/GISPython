@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-     File and filesystem operations module
+    File and filesystem operations module
 """
 import os
 import shutil

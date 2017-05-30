@@ -6,7 +6,7 @@
 import SysGISToolsSysParams
 import os
 
-def main():
+if __name__ == "__main__":
     """
         Execution of the module
     """
@@ -25,6 +25,3 @@ def main():
     filenames = [ f for f in os.listdir(os.path.dirname(os.path.abspath(__file__))) if (os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)),f)) and not f[0:3].upper()=="SYS" and f[-3:].upper()=='.PY' and f.upper()!='MYERROR.PY' and f.upper()!='GISPYTHONTOOL.PY' and f.upper()!='GISPYTHONMODULE.PY' and f.upper()!='__INIT__.PY')]
     for file in filenames:
             print('             ' + file)
-
-if __name__ == "__main__":
-    main()
