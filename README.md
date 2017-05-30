@@ -48,7 +48,7 @@ LVM GEO Python Core package **_geopythoncore_** contains following modules:
 
 ---------
 ## Dependencies
-* ArcGIS 10.3.1 (recommended with newest patches and service packs)
+* ArcGIS 10.x /recommended with newest patches and service packs/ (_geopythoncore_is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
 * Python 2.7 (usually included in ArcGIS installation) (arcpy module included)
 * Additional python modules:
     * [PyCrypto](http://www.voidspace.org.uk/python/modules.shtml#pycrypto)
@@ -66,7 +66,9 @@ LVM GEO Python Core package **_geopythoncore_** contains following modules:
 ---------
 ## Configuration & basic usage
 
-Before using _geopythoncore_ modules in custom geoprocessing scripts, you need to set up your scripting environment:
+Before using _geopythoncore_ modules in custom geoprocessing scripts, you need to set up your scripting environment.
+
+Here is example or _geopythoncore_ script:
 ```python
 # -*- coding: utf-8 -*-
 """
@@ -100,10 +102,20 @@ if __name__ == "__main__":
 	Module = MainModule()
 	Module.DoJob()
 ```
->It is recommended to define additional script parameters in SysGISParams.py file, to keep the main code clean.
+Parameter file or object (e.g. SysGISParams.py) is important, because _geopythoncore_ relies of several parameters to be present to function successfully:
+
+* OutDir - directory for storing script output log files `OutDir = r'C:\GIS\Log\Outlog\' `
+* OutDirArh - directory for storing script output log file archive (all non active files) `OutDirArh = r'C:\GIS\Log\Outlog\Archive\' `
+* ErrorLogDir - directory for storing script error log files `ErrorLogDir = r'C:\GIS\Log\ErrorLog\' `(*Important! This directory can be monitored for non empty files. If this directory has a file that is non empty - this indicates that a scrypt has failed*)
+* ErrorLogDirArh - directory for storing script error log files `ErrorLogDirArh = r'C:\GIS\Log\ErrorLog\Archive' `
+* TmpFolder - Temp folder `TmpFolder = r'C:\GIS\tmp'`
+* encodingPrimary - encoding of Windows schell `encodingPrimary = 'cp775' `
+* encodingSecondary - encoding of Windows unicode language used `encodingSecondary = 'cp1257' `
+
+>It is recommended to define additional script parameters in SysGISParams.py file, to keep the main code clean. Our approach is to define all the parameters that define current system environment be kept in this one file. In case of moving environment (e.g. test system and production system) this one file has the specific connections and can be easily modified without changing the scripts.
 
 ### Recommendations
-Set up the variables at the beggining of the main function, to shorten the main code
+Set up the variables at the beggining of the main function, to shorten the main code 
 
 ```python
 Tool = self.Tool
@@ -146,9 +158,6 @@ Module defines abstract classes for the ESRI Toolbox tool definition and contain
 
 #### _SysGISTools_
 Base module which contains GISPython scripting framework, logging, error processing and automation mechanisms for different operations, and module and interface base classes.
- 
-#### _SysGISToolsSysParams_
-Module contains information about package version.
 
 ### Helper modules
 
@@ -170,22 +179,9 @@ mailSender = MailHelper.MailHelper('mail@from.com', ['***@mail.com'], 'Subject',
 mailSender.SendMessage('smtp.server.com', 587, 'username', 'password', useTLS=True) # Send e-mail
 ```
 
-#### _MyError_
-Error module, which contains class for storing an error object.
-
-_Example:_
-
-##### Raise error in the tool output
-```python
-from geopythoncore import MyError
-l = 12
-linecount = 10
-if linecount != l-2:
-    raise MyError.MyError(u'Error in line count') # Add the error in the tool output
-```
-
 #### _SimpleFileOps_
 File and filesystem operations module. Module contains functions for typical file and filesystem operations, and locking control and processing.
+This module uses windows PowerShell to address file locking situations. For module with the same functionality without PowerShell script usage use _SimpleFileOpsSafe_.
 
 _Examples:_
 
@@ -209,7 +205,7 @@ FO.BackupOneFile(newFile, backupDir)
 ```
 
 #### _SimpleFileOpsSafe_
-File and filesystem operations module. Module contains SimpleFileOpsSafe class, which contains functions for typical file and filesystem operations. Class inherits SimpleFileOps class from SimpleFileOps module. 
+File and filesystem operations module. Module contains SimpleFileOpsSafe class, which contains functions for typical file and filesystem operations. Class inherits SimpleFileOps functionality, but does not relay on Windows Powershell scripts to address locked files. 
 
 #### _TimerHelper_
 Timing module. Module contains functions for countdown procedures in a code block.
