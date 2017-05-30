@@ -1,4 +1,5 @@
 # geopythoncore
+![python_large.png](https://bitbucket.org/repo/eky5EEp/images/957292278-python_large.png)
 
 ---------
 Droši vien jāliek arī kaut kas no Katrīnas iztulkotā teksta.
@@ -238,3 +239,7 @@ Teksts ar aicinājumu līdzdarboties projektā
 ## Licensing
 Licence (par šito jāpadomā)
 [MIT, Apache vai GPL](https://choosealicense.com/)
+
+---------
+
+![BSRLogo.PNG](https://bitbucket.org/repo/eky5EEp/images/2304105760-BSRLogo.PNG)
