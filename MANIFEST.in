@@ -1,6 +1,7 @@
 include LICENSE
 include geopythoncore/PShell/*
 
+exclude docs/*
 exclude geopythoncore/*.pyc
 exclude geopythoncore/GEOToolBoxSetup.isproj
 exclude geopythoncore/GISPython.pyproj

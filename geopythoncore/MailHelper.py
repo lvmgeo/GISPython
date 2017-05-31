@@ -8,14 +8,14 @@ class MailHelper:
     """Class for easing the SMTP operations"""
 
     def __init__(self, From, recipients, Subject, Text):
-        """
-            Class initialization procedure
-            Args:
-                self: The reserved object 'self'
-                From: E-mail adress from which to send
-                recipients: Recipient array
-                Subject: E-mail subject
-                Text: E-mail text
+        """Class initialization procedure
+
+        Args:
+            self: The reserved object 'self'
+            From: E-mail adress from which to send
+            recipients: Recipient array
+            Subject: E-mail subject
+            Text: E-mail text
         """
         from email.mime.multipart import MIMEMultipart
         from email.mime.text import MIMEText
@@ -27,11 +27,11 @@ class MailHelper:
         self.recipients = recipients
 
     def AttachFile(self, FilePath):
-        """
-            Procedure to add attachments
-            Args:
-                self: The reserved object 'self'
-                FilePath: Path to the attachment
+        """Procedure to add attachments
+
+        Args:
+            self: The reserved object 'self'
+            FilePath: Path to the attachment
         """
         from email.mime.base import MIMEBase
         from email import encoders
@@ -42,16 +42,16 @@ class MailHelper:
         self.msg.attach(part)
         
     def SendMessage(self, Mailserver, port = None, user = None, password = None, useTLS = False, useSSL = False):
-        """
-            Procedure for sending an e-mail
-            Args:
-                self: The reserved object 'self'
-                Mailserver: Mailserver name
-                port: Mailserver port number
-                user: Username
-                password: Password
-                useTLS: Use TLS (Default = False)
-                useSSL: Use SSL (Default = False)
+        """Procedure for sending an e-mail
+
+        Args:
+            self: The reserved object 'self'
+            Mailserver: Mailserver name
+            port: Mailserver port number
+            user: Username
+            password: Password
+            useTLS: Use TLS (Default = False)
+            useSSL: Use SSL (Default = False)
         """
         import smtplib
         if useSSL:
@@ -73,14 +73,14 @@ class GISPythonMailHelper(MailHelper):
     """MailHelper wrapper class, which acquires parameters from the GISPython parameter file"""
 
     def __init__(self, Pr, recipients, Subject, Text):
-        """
-            Class initialization procedure
-            Args:
-                self: The reserved object 'self'
-                Pr: Parameter file with corresponding parameters
-                recipients: Recipient array
-                Subject: E-mail subject
-                Text: E-mail text
+        """Class initialization procedure
+
+        Args:
+            self: The reserved object 'self'
+            Pr: Parameter file with corresponding parameters
+            recipients: Recipient array
+            Subject: E-mail subject
+            Text: E-mail text
         """
         mailer = MailHelper(Pr.MailFromAdress, recipients, Subject, Text)
 

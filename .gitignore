@@ -13,3 +13,4 @@ JsonParamsHelper.py
 RarHelper.py
 SFTPHelper.py
 SysTools_unittest.py
+copyFromSrc.py

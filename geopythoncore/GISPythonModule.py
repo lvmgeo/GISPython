@@ -9,28 +9,29 @@ import MailHelper
 import MyError
 
 class GISPythonModule(object):
-    """
-        Interface class for all the GISPython modules. Interface class allows the code unification, and ensures the code execution from both the ArcGIS Desktop Python console and the Command Prompt.
+    """Interface class for all the GISPython modules. Interface class allows
+    the code unification, and ensures the code execution from both the
+    ArcGIS Desktop Python console and the Command Prompt.
     
-        Standalone tool execution:
-            SetName('Tool Name')
-            DoJob()
+    Standalone tool execution:
+        SetName('Tool Name')
+        DoJob()
 
-        The tool executes within an another tool:
-            SetTool(reference to SysGISTools.GISTools10)
-                Get the tool name with the command 'PrintText()'
-            mainModule()
+    The tool executes within an another tool:
+        SetTool(reference to SysGISTools.GISTools10)
+        Get the tool name with the command 'PrintText()'
+        mainModule()
     """
     def __init__(self, ToolName, SysGISParams, ExecutePatch = __file__, statusMailRecipients=[], errorMailRecipients=[]):
-        """
-            Initialize the tool and the tool parameters
-            Args:
-                self: The reserved object 'self'
-                ToolName: Tool name
-                SysGISParams: GISPython parameter module
-                ExecutePatch: # ko te likt???
-                statusMailRecipients: List with status e-mail message recipients
-                errorMailRecipients: List with error e-mail message recipients
+        """Initialize the tool and the tool parameters
+
+        Args:
+            self: The reserved object 'self'
+            ToolName: Tool name
+            SysGISParams: GISPython parameter module
+            ExecutePatch: Module execution path
+            statusMailRecipients: List with status e-mail message recipients
+            errorMailRecipients: List with error e-mail message recipients
         """
         self.ToolName = ToolName
         self.Pr = SysGISParams
@@ -54,25 +55,23 @@ class GISPythonModule(object):
                 self.DoMailErrOutput = True
         
     def runInsideJob(self, Tool):
-        """
-            Procedure executes the tool, if it's to be executed within an another Python tool
-            Args:
-                self: The reserved object 'self'
-                Tool: The tool name to execute
+        """Procedure executes the tool, if it's to be executed within an another Python tool
+
+        Args:
+            self: The reserved object 'self'
+            Tool: The tool name to execute
         """
         self.SetTool(Tool)
         self.PrintText()
         self.mainModule()
 
     def mainModule(self): 
-        """
-            Rewritable procedure which contains the logic of the module
+        """Rewritable procedure which contains the logic of the module
         """
         raise NotImplementedError
 
     def initModule(self): 
-        """
-            Procedure which initializes the GISPython environment, if the tool runs as a standalone tool
+        """Procedure which initializes the GISPython environment, if the tool runs as a standalone tool
         """
         self.Tool = SysGISTools.GISTools10(self.ToolName, self.Pr)
         sys.stderr = self.Tool.fLog
@@ -80,34 +79,29 @@ class GISPythonModule(object):
         
 
     def SetTool(self, Tool):
-        """
-            Sets up the GISPython environment object, if the tool runs within an another tool
+        """Sets up the GISPython environment object, if the tool runs within an another tool
         """
         self.Tool = Tool
 
     def PrintText(self):
-        """
-            The auxiliary procedure for the tool name output
+        """The auxiliary procedure for the tool name output
         """
         self.Tool.AddMessage("--------------------------------------------")
         self.Tool.AddMessage(self.ToolName)
         self.Tool.AddMessage("--------------------------------------------")
 
     def MyEnd(self):
-        """
-            Procedure for the tool end message output, if the tool runs as a standalone tool
+        """Procedure for the tool end message output, if the tool runs as a standalone tool
         """
         self.Tool.MyEnd()
 
     def MyDispose(self):
-        """
-            Procedure which closes the tool environment after running it (in case the tool runs as a standalone tool)
+        """Procedure which closes the tool environment after running it (in case the tool runs as a standalone tool)
         """
         self.Tool.MyDispose()
 
     def DoJob(self):
-        """
-            Procedure which runs the tool with environment preparation and deletion (in case the tool runs as a standalone tool)
+        """Procedure which runs the tool with environment preparation and deletion (in case the tool runs as a standalone tool)
         """
         try:
             self.initModule()
@@ -171,11 +165,10 @@ class GISPythonModule(object):
                 raise
 
 class GISPythonModuleArgsHelper(object):
-    """
-        Class for handling the argument passing for the module in three different places:
-            1. In the class initialization process.
-            2. In the arguments.
-            3. In the "main" operation call.
+    """Class for handling the argument passing for the module in three different places:
+    1. In the class initialization process.
+    2. In the arguments.
+    3. In the "main" operation call.
     """
     def __init__(self, InitValue=None):
         self.argumentValue = None
@@ -184,11 +177,11 @@ class GISPythonModuleArgsHelper(object):
         self.SetInitValue(InitValue)
 
     def processArgument(self, argumentNumber = 1):
-        """
-            Procedure processes a parameter acquisition from the argument
-            Args:
-                self: The reserved object 'self'
-                argumentNumber: Argument from which to read the data
+        """Procedure processes a parameter acquisition from the argument
+
+        Args:
+            self: The reserved object 'self'
+            argumentNumber: Argument from which to read the data
         """
         if len(sys.argv) > argumentNumber:
             self.argumentValue = sys.argv[argumentNumber]
@@ -197,33 +190,33 @@ class GISPythonModuleArgsHelper(object):
 
 
     def SetInitValue(self, value):
-        """
-            Procedure processes a parameter setup from the tool initialization procedure
-            Args:
-                self: The reserved object 'self'
-                value: Setup value
+        """Procedure processes a parameter setup from the tool initialization procedure
+
+        Args:
+            self: The reserved object 'self'
+            value: Setup value
         """
         self.initValue = value
         if self.initValue == '#':
                 self.initValue = None
 
     def SetMainModuleValue(self, value):
-        """
-            Procedure processes a parameter setup from the base module of the tool
-            Args:
-                self: The reserved object 'self'
-                value: Setup value
+        """Procedure processes a parameter setup from the base module of the tool
+
+        Args:
+            self: The reserved object 'self'
+            value: Setup value
         """
         self.mainModuleValue = value
         if self.mainModuleValue == '#':
                 self.mainModuleValue = None
 
     def GetResultValue(self, asBool = False, Default = None):
-        """
-            Procedure makes a choice from the given attributes
-            Args:
-                self: The reserved object self
-                value: Setup value
+        """Procedure makes a choice from the given attributes
+
+        Args:
+            self: The reserved object self
+            value: Setup value
         """
         candidate = Default
         

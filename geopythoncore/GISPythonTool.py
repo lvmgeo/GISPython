@@ -20,7 +20,7 @@ class GISPythonTool(object):
 
     def updateParameters(self, parameters):
         """This method is called in case the parameters are changed,
-           and is used for setting up the parameters
+        and is used for setting up the parameters
         """
         validator = getattr(self, 'ToolValidator', None)
         if validator:
@@ -28,7 +28,7 @@ class GISPythonTool(object):
 
     def updateMessages(self, parameters):
         """This method is called after an inner validation,
-           and is intended for carrying out an additional validations
+        and is intended for carrying out an additional validations
         """
         validator = getattr(self, 'ToolValidator', None)
         if validator:
@@ -40,7 +40,7 @@ class GISPythonTool(object):
 
 class ToolValidator(object):
       """Class for validating the tool's parameter values and controlling
-         the behavior of the tool's dialog.
+      the behavior of the tool's dialog.
       """
 
       def __init__(self, parameters):

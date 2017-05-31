@@ -20,19 +20,17 @@ import GDBHelper
 from multiprocessing import Process, Queue
 
 class GISTools10:
-    """
-        Class for storing the auxiliary batch processing and GIS geoprocesing functions
-    """
+    """Class for storing the auxiliary batch processing and GIS geoprocesing functions"""
     def __init__(self, ToolName, Params):
-        """
-            Class initialization procedure
-            Args:
-                self: The reserved object 'self'
-                ToolName: Name of the tool (used for output)
-                LogDir: Error output directory
-                LogDirArh: Archive directory of the error output files
-                OutDir: Output directory
-                OutDirArh: Archive directory of the output files
+        """Class initialization procedure
+
+        Args:
+            self: The reserved object 'self'
+            ToolName: Name of the tool (used for output)
+            LogDir: Error output directory
+            LogDirArh: Archive directory of the error output files
+            OutDir: Output directory
+            OutDirArh: Archive directory of the output files
         """
         self.Pr = Params
         LogDir = self.Pr.ErrorLogDir
@@ -67,24 +65,24 @@ class GISTools10:
         self.AddMessage(u'==================================================\n')
 
     def callGP(self, functionName, *args):
-        """
-            Function to call the arcPy GP functions with automatic output messge display and output result returning
-            Args:
-                self: The reserved object 'self'
-                functionName: Name of the arcPy GP function
-                args: arguments as Tuple
+        """Function to call the arcPy GP functions with automatic output messge display and output result returning
+
+        Args:
+            self: The reserved object 'self'
+            functionName: Name of the arcPy GP function
+            args: arguments as Tuple
         """
         gpOutput = self.callGPSilent(functionName, *args)
         self.OutputMessages()
         return gpOutput
     
     def callGPSilent(self, functionName, *args):
-        """
-            Function to call the arcPy GP functions without output
-            Args:
-                self: The reserved object 'self'
-                functionName: Name of the arcPy GP function
-                args: arguments as Tuple
+        """Function to call the arcPy GP functions without output
+
+        Args:
+            self: The reserved object 'self'
+            functionName: Name of the arcPy GP function
+            args: arguments as Tuple
         """
         gpFunction = getattr(self.gp, functionName)
         rezult = gpFunction(*args)
@@ -95,10 +93,10 @@ class GISTools10:
         return gpOutput
 
     def MyEnd(self):
-        """
-            End of the process
-            Args:
-                self: The reserved object 'self'
+        """End of the process
+
+        Args:
+            self: The reserved object 'self'
         """
         self.AddMessage(u'End tool ' + self.ToolName + u' execution ' + self.MyNow())
         TD = datetime.datetime.now()- self.StartTime
@@ -106,10 +104,10 @@ class GISTools10:
         self.State = "Done"
 
     def MyDispose(self):
-        """
-            Disposal of the class
-            Args:
-                self: The reserved object 'self'
+        """Disposal of the class
+
+        Args:
+            self: The reserved object 'self'
         """
         if self.State == "Started":
             self.MyEnd()
@@ -118,10 +116,10 @@ class GISTools10:
         self.State = "Disposed"
 
     def OutputMessages(self, ErrorSeverity = 2):
-        """
-            Procedure to output messages stored in the GP object
-            Args:
-                self: The reserved object 'self'
+        """Procedure to output messages stored in the GP object
+
+        Args:
+            self: The reserved object 'self'
         """
         self.AddMessage('\n--------------------------------------------')
         maxSeverity = self.gp.GetMaxSeverity()
@@ -143,12 +141,11 @@ class GISTools10:
 
 
     def OutputErrors(self):
-        """
-            Procedure to output messages and errors stored in the GP object.
-            !!! Depricated - Left for backwards compatibility - use OutputMessages with ErrorSeverity 0 !!!
+        """Procedure to output messages and errors stored in the GP object.
+        !!! Depricated - Left for backwards compatibility - use OutputMessages with ErrorSeverity 0 !!!
 
-            Args:
-                self: The reserved object 'self'
+        Args:
+            self: The reserved object 'self'
         """
         self.AddMessage('')
         self.AddMessage('--------------------------------------------')
@@ -168,12 +165,14 @@ class GISTools10:
         self.AddMessage('--------------------------------------------')
 
     def _runProcess(self, exe, noErr=False, Detached = False):  
-        """
-            Shell command execution support function (see the runShell function)
-            Args:
-                self: The reserved object 'self'
-                exe: Executable command
-            Return: stdoutdata
+        """Shell command execution support function (see the runShell function)
+
+        Args:
+            self: The reserved object 'self'
+            exe: Executable command
+
+        Return:
+            stdoutdata
         """
         lines = list()
         if Detached == True:
@@ -200,14 +199,14 @@ class GISTools10:
         return lines
 
     def runShell(self, exe, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Detached = False, Silent=False): 
-        """
-            Shell command execution procedure. It can detect errors in execution and can output results to screen.
-            Args:
-                self: The reserved object 'self'
-                exe: Executable command
-                noErr: 'True' indicates that the errors doesn't have to be logged
-                ErrorStrings: List of error strings to look for in the output. Found error will be considered as an error in the execution process
-                Detached: Whether to execute seperately from the main process (Default: False)
+        """Shell command execution procedure. It can detect errors in execution and can output results to screen.
+
+        Args:
+            self: The reserved object 'self'
+            exe: Executable command
+            noErr: 'True' indicates that the errors doesn't have to be logged
+            ErrorStrings: List of error strings to look for in the output. Found error will be considered as an error in the execution process
+            Detached: Whether to execute seperately from the main process (Default: False)
         """
         args = shlex.split(exe)
         _StartTime = datetime.datetime.now()
@@ -221,28 +220,27 @@ class GISTools10:
             self.AddMessage(u'>Done executing the Shell command. Execution time '  + str(_TD))
 
     def outputLogfile(self, file, encoding = 'utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):
-        """
-            Procedure prints text file to screent - processing error keywords
-            Args:
-                self: The reserved object 'self'
-                file: path to file to process
-                noErr: True ir no error logging is necesery
-                ErrorStrings: List or keywords with will be recognized as errors
-                Silent: if True no Errors will be rised
+        """Procedure prints text file to screent - processing error keywords
 
+        Args:
+            self: The reserved object 'self'
+            file: path to file to process
+            noErr: True ir no error logging is necesery
+            ErrorStrings: List or keywords with will be recognized as errors
+            Silent: if True no Errors will be rised
         """
         with codecs.open(file, 'r', encoding) as fin:
             self._outputLines(fin.readlines(), True, noErr, ErrorStrings, Silent)
 
     def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):    
-        """
-            Procedure for outputing set of lines to screen with error key word recognition. (for example for log file output processing)
-            Args:
-                self: The reserved object 'self'
-                lines: Lines to process
-                noErr: True ir no error logging is necesery
-                ErrorStrings: List or keywords with will be recognized as errors
-                Silent: if True no Errors will be rised
+        """Procedure for outputing set of lines to screen with error key word recognition. (for example for log file output processing)
+
+        Args:
+            self: The reserved object 'self'
+            lines: Lines to process
+            noErr: True ir no error logging is necesery
+            ErrorStrings: List or keywords with will be recognized as errors
+            Silent: if True no Errors will be rised
         """
         isError = False
         for line in lines:
@@ -261,13 +259,14 @@ class GISTools10:
                         self.AddWarning('>>>>' + line)
 
     def _tryCovertStringEncoding(self, txt):
-        """
-            Function for working with strings in diferent encodings. Converts string from input to string in correct encoding.
-            Args:
-                self: The reserved object 'self'
-                txt: String to be converted
+        """Function for working with strings in diferent encodings. Converts string from input to string in correct encoding.
 
-            Returns: converted string
+        Args:
+            self: The reserved object 'self'
+            txt: String to be converted
+
+        Returns:
+            converted string
         """
         if isinstance (txt,str):
             try:
@@ -283,40 +282,41 @@ class GISTools10:
         return txt
 
     def AutorizeNTWLocation(self, Adress, user, pwd):
-        """
-            Network directory authorization
-            Args:
-                self: The reserved object 'self'
-                Adress: Network adress
-                user: Username
-                pwd: Password
+        """Network directory authorization
+
+        Args:
+            self: The reserved object 'self'
+            Adress: Network adress
+            user: Username
+            pwd: Password
         """
         self.runShell(self.CorrectStr(r"net use " + Adress + r" /delete /y"), True, [])
         self.runShell(self.CorrectStr(r'net use ' + Adress + r' "' + pwd + r'" /user:' + user), True, [])
 
     def GetSQL(self, Name):
-        """
-            Function gets the SQL file location from the installation directory
-            Args: 
-                self: The reserved object 'self'
-                Name: Filename without an extension
-            Returns:
-                SQL file full path
+        """Function gets the SQL file location from the installation directory
+
+        Args: 
+            self: The reserved object 'self'
+            Name: Filename without an extension
+
+        Returns:
+            SQL file full path
         """
         import inspect
         return self.ExecutePatch + '\\SQL\\' + Name + '.sql'
 
     def RunSQL(self, Name, user = "#", pwd = "#", SpoolFile = '#', ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], params = [], DBType = 'Oracle'):
-        """
-            Procedure for SQL file execution (only Oracle sqlplus supported)
-                Typically used for execution, passing only SQL filename parameter
-            Args: 
-                self: The reserved object 'self' 
-                Name: Filename without an extension
-                u: Username
-                p: Password
-                SpoolFile: SQL output
-                ErrorStrings: A list of keyword error strings that defines an error in the execution
+        """Procedure for SQL file execution (only Oracle sqlplus supported)
+        Typically used for execution, passing only SQL filename parameter
+
+        Args: 
+            self: The reserved object 'self' 
+            Name: Filename without an extension
+            u: Username
+            p: Password
+            SpoolFile: SQL output
+            ErrorStrings: A list of keyword error strings that defines an error in the execution
         """
         if DBType.upper() == 'ORACLE':
             if pwd == "#":
@@ -331,34 +331,35 @@ class GISTools10:
             raise AttributeError('Provided DB Type is not supported!')
 
     def GetPS(self, Name, Path = '#'):
-        '''
-            Function gets the PowerShell file location from the installation directory
-            Args:
-                self: The reserved object 'self'
-                Name: Filename without an extension
-        '''
+        """Function gets the PowerShell file location from the installation directory
+
+        Args:
+            self: The reserved object 'self'
+            Name: Filename without an extension
+        """
         if Path == '#':
             self.ExecutePatch
         return Path + '\\PShell\\' + Name + '.ps1'
 
     def RunPS(self, Name, Args, Path = '#'):
-        ''' Procedure for the PowerShell file execution
-            Args: 
-                self: The reserved object 'self'
-                Name: Filename without an extension
-                Args: Arguments
-        '''
+        """Procedure for the PowerShell file execution
+
+        Args: 
+            self: The reserved object 'self'
+            Name: Filename without an extension
+            Args: Arguments
+        """
         if Path == '#':
             self.ExecutePatch
         self.runShell('powershell -File "' + self.GetPS(Name, Path) + '" ' + Args)
 
     def AddMessage(self, strMessage, newline=True):
-        """
-            Procedure for a message output (screen, logfile and if necessary e-mail)
-            Args:
-                self: The reserved object 'self'
-                strMessage: Output message text
-                newline: Flag that marks that the output must be continued in a new line
+        """Procedure for a message output (screen, logfile and if necessary e-mail)
+
+        Args:
+            self: The reserved object 'self'
+            strMessage: Output message text
+            newline: Flag that marks that the output must be continued in a new line
         """
         if strMessage == None:
             strMessage = ''
@@ -384,11 +385,11 @@ class GISTools10:
         self.fOut.flush()
 
     def AddError(self, strMessage, newline=True):
-        """
-            Procedure for the GP object error message output (screen, logfile and if necessary e-mail)
-            Args:
-                self: The reserved object 'self'
-                strMessage: Output message text
+        """Procedure for the GP object error message output (screen, logfile and if necessary e-mail)
+
+        Args:
+            self: The reserved object 'self'
+            strMessage: Output message text
         """
         if strMessage == None:
             strMessage = ''
@@ -423,11 +424,11 @@ class GISTools10:
         self.fOut.flush()
 
     def AddWarning(self, strMessage):
-        """
-            Procedure for the GP object warning message output (screen, logfile and if necessary e-mail)
-            Args:
-                self: The reserved object 'self'
-                strMessage: Output message text
+        """Procedure for the GP object warning message output (screen, logfile and if necessary e-mail)
+
+        Args:
+            self: The reserved object 'self'
+            strMessage: Output message text
         """
         if strMessage == None:
             strMessage = ''
@@ -460,88 +461,101 @@ class GISTools10:
         self.fOut.flush()
 
     def MyNowFile(self):
-        """
-            Function returns formatted date for the filename output
-            Args:
-                self: The reserved object 'self'
-            Returns: Date, formatted as text
+        """Function returns formatted date for the filename output
+
+        Args:
+            self: The reserved object 'self'
+
+        Returns:
+            Date, formatted as text
         """
         return datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d_%H-%M-%S")
 
     def MyNowOracle(self):
-        """
-            Function returns formatted date for the data selection in SQL
-            Args:
-                self: The reserved object 'self'
-            Returns: Date, formatted as text
+        """Function returns formatted date for the data selection in SQL
+
+        Args:
+            self: The reserved object 'self'
+
+        Returns:
+            Date, formatted as text
         """
         return "TO_DATE('" + datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d %H:%M:%S") + "', 'YYYY-MM-DD HH24:MI:SS')"
 
     def MyNowFileSafe(self):
-        """
-            Function returns formatted date for the filename output (additional compatibility)
-            Args:
-                self: The reserved object 'self'
-            Returns: Date, formatted as text
+        """Function returns formatted date for the filename output (additional compatibility)
+
+        Args:
+            self: The reserved object 'self'
+
+        Returns:
+            Date, formatted as text
         """
         return datetime.datetime.strftime(datetime.datetime.now(), "%Y%m%d_%H%M%S")
 
     def MyNow(self):
-        """
-            Function returns formatted date for the output
-            Args:
-                self: The reserved object 'self'
-            Returns: Date, formatted as text
+        """Function returns formatted date for the output
+
+        Args:
+            self: The reserved object 'self'
+
+        Returns:
+            Date, formatted as text
         """
         return datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d %H:%M:%S")
 
     def MyNowUTC(self):
-        """
-            Function returns formatted date for the UTC date output
-            Args:
-                self: The reserved object 'self'
-            Returns: Date, formatted as text
+        """Function returns formatted date for the UTC date output
+
+        Args:
+            self: The reserved object 'self'
+
+        Returns:
+            Date, formatted as text
         """
         return datetime.datetime.strftime(datetime.datetime.utcnow(), "%Y-%m-%d %H:%M:%S")
 
     def MyNowForParam(self, minusdays = 0):
-        """
-            Function returns formatted date (date now) for the GEO parameter processing
-            Args:
-                self: The reserved object 'self'
-                minusdays: Number of days to subtract from today
+        """Function returns formatted date (date now) for the GEO parameter processing
 
-            Returns: Date, formatted as text
+        Args:
+            self: The reserved object 'self'
+            minusdays: Number of days to subtract from today
+
+        Returns:
+            Date, formatted as text
         """
         DD = datetime.timedelta(days=minusdays)
         return datetime.datetime.strftime((datetime.datetime.now() - DD), "%Y-%m-%d")
 
     def MyDateFromParam(self, dateString):
-        """
-            Function converts date written in the parameter file to a date object
-            Args:
-                self: The reserved object 'self'
+        """Function converts date written in the parameter file to a date object
+
+        Args:
+            self: The reserved object 'self'
         """
         return datetime.datetime.strptime(dateString, "%Y-%m-%d")
 
     def MyDateForParam(self, paramStr):
-        """
-            Function returns date from GEO parameter processing saved string
-            Args:
-                self: The reserved object 'self'
-                paramStr: Parameter value as text
-            Returns: datetime
+        """Function returns date from GEO parameter processing saved string
+
+        Args:
+            self: The reserved object 'self'
+            paramStr: Parameter value as text
+
+        Returns:
+            datetime
         """
         return datetime.datetime.strptime(paramStr, "%Y-%m-%d")
 
     def AchiveFiles(self, Dir, AchiveDir, FileName, PrintOut = True):
-        """
-            Function moves log files to the archive
-            Args:
-                self: The reserved object 'self'
-                Dir: Directory from which to archive
-                AchiveDir: Archive directory
-                FileName: Parameter for searching a file (full or partial filename)
+        """Function moves log files to the archive
+
+        Args:
+            self: The reserved object 'self'
+            Dir: Directory from which to archive
+            AchiveDir: Archive directory
+            FileName: Parameter for searching a file (full or partial filename)
         """
         # Check if Archive directory exists
         if os.path.exists(AchiveDir):
@@ -556,23 +570,27 @@ class GISTools10:
                         print("        archiving failed : "  + Dir + "\\" + name + " -> " + AchiveDir + "\\" + name + "\n")
 
     def CorrectStr(self, Str):
-        """ Function doubles symbol \ in path for some external execution compatibility
-            Args: 
-                self: The reserved object 'self'
-                Str: Input string
-            Returns: string
+        """Function doubles symbol \ in path for some external execution compatibility
+        Args: 
+            self: The reserved object 'self'
+            Str: Input string
+
+        Returns:
+            string
         """
         return Str.replace('\\', '\\\\')
 
     def run_with_limited_time(self, func, args, kwargs, time):
         """Runs a function with time limit
-            Args:
-                self: The reserved object 'self'
-                func: The function to run
-                args: The functions args, given as a tuple
-                kwargs: The functions args, given as a tuple
-                time: The time limit in seconds
-            Returns: True if the function ended successfully. False if it was terminated.
+        Args:
+            self: The reserved object 'self'
+            func: The function to run
+            args: The functions args, given as a tuple
+            kwargs: The functions args, given as a tuple
+            time: The time limit in seconds
+
+        Returns:
+            True if the function ended successfully. False if it was terminated.
         """
         p = Process(target=func, args=args, kwargs = kwargs)
         p.start()
@@ -584,14 +602,12 @@ class GISTools10:
 
 
 class MySR():
-    """
-        Class for storing often used coordinate system parameters
-    """
+    """Class for storing often used coordinate system parameters"""
     def __init__(self):
-        """
-            Class initialization procedure
-            Args:
-                self: The reserved object 'self'
+        """Class initialization procedure
+
+        Args:
+            self: The reserved object 'self'
         """
         self.LKS92_0="PROJCS['LKS_1992_Latvia_TM_0',GEOGCS['GCS_LKS_1992',DATUM['D_Latvia_1992',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Transverse_Mercator'],PARAMETER['False_Easting',500000.0],PARAMETER['False_Northing',0.0],PARAMETER['Central_Meridian',24.0],PARAMETER['Scale_Factor',0.9996],PARAMETER['Latitude_Of_Origin',0.0],UNIT['Meter',1.0]]"
         self.LKS92="PROJCS['LKS_1992_Latvia_TM',GEOGCS['GCS_LKS_1992',DATUM['D_Latvia_1992',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Transverse_Mercator'],PARAMETER['False_Easting',500000.0],PARAMETER['False_Northing',-6000000.0],PARAMETER['Central_Meridian',24.0],PARAMETER['Scale_Factor',0.9996],PARAMETER['Latitude_Of_Origin',0.0],UNIT['Meter',1.0]]"

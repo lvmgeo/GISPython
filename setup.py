@@ -1,4 +1,17 @@
 from setuptools import setup
+import os
+import shutil
+
+# Copy files from GISPython directory to geopythoncore (except __init__.py)
+src = r'C:\TFS\GEOPython10-GIT\GEOPython10\GISPython'
+dest = 'C:\TFS\GEOPython10-GIT\GEOPython10\geopythoncore\geopythoncore'
+baseFileList = ['GISPythonModule.py', 'GISPythonTool.py', 'MailHelper.py', 'MyError.py', 'SimpleFileOps.py', 'SimpleFileOpsSafe.py', 'SysGISTools.py', 'SysGISToolsSysParams.py', 'TimerHelper.py', 'ZipHelper.py', 'GDBHelper.py']
+for bf in baseFileList:
+    srcFile = os.path.join(src, bf)
+    if os.path.isfile(srcFile):
+        shutil.copy(srcFile, dest)
+
+
 
 setup(
 	name = 'geopythoncore',

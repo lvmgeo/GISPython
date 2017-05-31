@@ -4,9 +4,7 @@
 """
 
 class MyError(Exception):
-    """
-        Class for storing an error object
-    """
+    """Class for storing an error object"""
     def __init__(self, strerror):
         self.strerror = strerror
     def __str__(self):
