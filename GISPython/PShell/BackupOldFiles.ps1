@@ -5,7 +5,7 @@ $OutFolder = $args[1]
 $LastWrite = $Now.AddDays(-$Days)
 
 echo ("")
-echo ("--- Arhivejam direktoriju " + $InFolder + " uz " + $OutFolder + " pa pedejam " + $Days + " dienam - " + (Get-Date -format "HH:mm:ss"))
+echo ("--- Archiving of directory " + $InFolder + " to " + $OutFolder + " for last " + $Days + " days - " + (Get-Date -format "HH:mm:ss"))
 $Files = get-childitem -path $InFolder | 
 Where {$_.psIsContainer -eq $false} | 
 Where {$_.LastWriteTime -le "$LastWrite"} 
@@ -13,11 +13,11 @@ Where {$_.LastWriteTime -le "$LastWrite"}
     foreach ($File in $Files)
     {if ($File -ne $NULL)
     {
-    echo ("         Arhivejam: " + $InFolder + "\" + $File)
+    echo ("         Archiving: " + $InFolder + "\" + $File)
     Move-Item -Path ($InFolder + "\" + $File) -Destination ($OutFolder + "\" + $File) -Force
     }
     ELSE
-    {echo ("         Faili nav atrasti")
+    {echo ("         No files found")
      exit}
     }
 exit

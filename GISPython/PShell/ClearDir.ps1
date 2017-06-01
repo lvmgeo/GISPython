@@ -6,12 +6,12 @@ function Remove-Tree($Path,$Include='*') {
     (Get-ChildItem $Path -Force -Filter $Include) | 
     Foreach { 
         Remove-Item -force -recurse ($Path + "\" + $_)
-        echo ("`t`tDzesam: [" + $Path + "\" + $_ + "]")
+        echo ("`t`tRemovinge file: [" + $Path + "\" + $_ + "]")
     }
 } 
 
 echo ("")
-echo ("--- Tiram direktoriju: [" + $InFolder + "]" )
+echo ("--- Removing folder: [" + $InFolder + "]" )
 Remove-Tree $InFolder $InWhat
 
 exit
