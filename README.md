@@ -323,7 +323,7 @@ ZH.ExtractZipFile(zipFile, workDir)
 
 ---------
 ## Contributing
-Teksts ar aicinājumu līdzdarboties projektā
+We encourage developers to use LVM GEO Python Core code and also contribute to the project. LVM GEO team is open for cooperation in developing new solutions, provides LVM GEO Python courses and offers to implement a fully functional automation platform for companies and organizations for their business needs.
 
 ---------
 ## Licensing
