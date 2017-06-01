@@ -16,10 +16,10 @@ for bf in baseFileList:
 setup(
 	name = 'geopythoncore',
 	version = '0.1.3', # version number according to PEP440 https://www.python.org/dev/peps/pep-0440/
-	description = 'Additional tools for administering and automating different arcpy geoprocessing operations. Package is intended for use with ArcGIS 10.3.1.', # short package description
+	description = 'Additional tools for administering and automating different arcpy geoprocessing operations. Package is intended for use with ArcGIS 10.2.1 and later (has been tested on ArcGIS 10.4)', # short package description
 	long_description = 'For readme see GitHub https://bitbucket.org/arturspd/geopythontest', # if needed (entire documentation)
-	# url = 'https://bitbucket.org/arturspd/geopythontest', # GitHub url
-    url = 'https://localhost:8081/simple', # private url
+	url = 'https://bitbucket.org/arturspd/geopythontest', # GitHub url
+    # url = 'https://localhost:8081/simple', # private url
 	author = 'LVM BSR', # author
     author_email = '', # email
     license = 'LICENSE.txt', # license
@@ -32,7 +32,7 @@ setup(
 		'Intended Audience :: Developers',
 		'Topic :: Scientific/Engineering :: GIS',
 		# License https://choosealicense.com/
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
 		# Operating system
 		'Operating System :: Microsoft :: Windows',
 

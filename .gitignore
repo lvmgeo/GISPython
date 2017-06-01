@@ -1,7 +1,7 @@
 *.pyc
 *.egg-info
 dist/
-docs/
+geopythoncore/docs/
 GEOToolBoxSetup.isproj
 GISPython.pyproj
 GISPython.pyproj.vspscc
