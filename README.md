@@ -327,8 +327,7 @@ Teksts ar aicinājumu līdzdarboties projektā
 
 ---------
 ## Licensing
-Licence (par šito jāpadomā)
-[MIT, Apache vai GPL](https://choosealicense.com/)
+[GPL-3.0+](https://choosealicense.com/licenses/gpl-3.0/)
 
 ---------
 
