@@ -330,6 +330,6 @@ Teksts ar aicinājumu līdzdarboties projektā
 [GPL-3.0+](https://choosealicense.com/licenses/gpl-3.0/)
 
 ---------
-Copyright (c) 2017 LVM BSR
-
 ![BSRLogo.PNG](https://bitbucket.org/repo/eky5EEp/images/2304105760-BSRLogo.PNG)
+
+Copyright (c) 2017 LVM BSR
