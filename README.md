@@ -248,6 +248,7 @@ from  GISPython import MailHelper
 MailHelper.GISPythonMailHelper(self.Pr, ['***@mail.com'], 'Subject', 'e-mail content')
 ```
 This script depends on following parameters which needs to be configured in _SysGISParams.py_ file:
+
 * Mailserver - mail server name `Mailserver = 'mail.server.com'`
 * MailserverPort - mail server port number `MailserverPort = 587`
 * MailserverUseTLS - use TLS in mail server? `MailserverUseTLS = True`
