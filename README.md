@@ -22,10 +22,10 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
 
 LVM GEO Python Core package **_GISPython_** contains following modules:
 
-* [Main modules](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-main-modules):
-    * [GISPythonModule](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-gispythonmodule)
-    * [GISPythonTool](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-gispythontool)
-    * [SysGISTools](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-sysgistools)
+* [Main modules](https://github.com/lvmgeo/GISPython/blob/master/README.md#main-modules):
+    * [GISPythonModule](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythonmodule)
+    * [GISPythonTool](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythontool)
+    * [SysGISTools](https://github.com/lvmgeo/GISPython/blob/master/README.md#sysgistools)
     * [SysGISToolsSysParams](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-sysgistoolssysparams)
     * SysTools_unittest (Coming soon)
 * [Helper modules](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-helper-modules):
@@ -228,6 +228,9 @@ with TimerHelper.TimedSubprocess(Tool, u'prepare environment'): # Adds a message
     DirHelper.ClearDir(Tool.CorrectStr(tmpFolder)) # Clear tmp directory (with modified path seperators)
 ```
 
+#### _SysGISToolsSysParams_
+Module stores information about current **_GISPython_** package version
+
 ### Helper modules
 
 #### _MailHelper_
@@ -296,7 +299,7 @@ from  GISPython import TimerHelper
 with TimerHelper.TimedSubprocess(self.Tool, u'some process'):
     self.Tool.AddMessage(u'some action')
 ```
-![img_time.png](https://bitbucket.org/repo/p44x65A/images/420010640-img_time.png)
+![img_time.png](https://github.com/lvmgeo/GISPython/blob/master/img/img_time.png)
 
 
 #### _ZipHelper_
@@ -332,6 +335,6 @@ We encourage developers to use LVM GEO Python Core code and also contribute to t
 
 ## Copyright
 
-![BSRLogo.PNG](https://bitbucket.org/repo/eky5EEp/images/2304105760-BSRLogo.PNG)
+![BSRLogo.PNG](https://github.com/lvmgeo/GISPython/blob/master/img/BSRLogo.PNG)
 
 Copyright (c) 2017 LVM BSR
