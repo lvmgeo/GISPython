@@ -3,7 +3,6 @@
 LVM GEO Python Core is an open source automation and scripting core developed by the LVM GEO team. Based on this core any developer can build simple and structured Python programming scripts with a rich functionality. The programming core allows management of all system's maintenance processes within a unified environment.
 
 There are many automated maintenance operations necessary for every large geospatial information system (GIS). These operations are required for database and server maintenance, data validations and calculations, map preparing and caching, or data exchange with other systems. Within ERSI platform maintenance scripting is done by Python programming language and ArcPy library. The LVM GEO team has worked with ArcPy library for many years and has developed the LVM GEO Python Core complementing and enriching the Platform maintenance possibilities of the ESRI library that are not provided in the ArcPy standard:
-
 * monitoring of automated scripts (for example Zabbix)
 * script audit storage
 * generation of automated e-mails (script progress status reports as well as automated data validation warning e-mails, etc.)
@@ -11,7 +10,6 @@ There are many automated maintenance operations necessary for every large geospa
 * SQL, PowerShell, Windows Shell file initiation and progress monitoring within an unified environment with ArcPy geoprocessing tools
 
 The Core also includes tools that simplify usage of ArcPy and Python functions, significantly easing the development process:
-
 * scripting of ArcGIS server administration
 * scripting of file operations
 * scripting of service caching
@@ -21,7 +19,6 @@ The Core also includes tools that simplify usage of ArcPy and Python functions, 
 The LVM GEO Python Core is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day. LVM GEO offers courses about LVM GEO Python to support development of an automation platform for companies and organizations.
 
 ### LVM GEO Python Core package _GISPython_ contains following modules:
-
 * [**Main modules**](https://github.com/lvmgeo/GISPython/blob/master/README.md#main-modules):
     * [GISPythonModule](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythonmodule)
     * [GISPythonTool](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythontool)
@@ -43,6 +40,7 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
     * [ZipHelper](https://github.com/lvmgeo/GISPython#ziphelper)
 
 ## Dependencies
+
 * ArcGIS 10.x /recommended with newest patches and service packs/ (**_GISPython_** is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
 * Python 2.7 (usually included in ArcGIS installation) (arcpy module included)
 * Additional python modules:
@@ -59,8 +57,7 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
 ## Configuration & basic usage
 
 Before using **_GISPython_** modules in custom geoprocessing scripts, you need to set up your scripting environment.
-
-Here is example of **_GISPython_** script:
+Here is an example of **_GISPython_** script:
 ```python
 # -*- coding: utf-8 -*-
 """
@@ -95,7 +92,6 @@ if __name__ == "__main__":
 	Module.DoJob()
 ```
 Parameter file or object (e.g. SysGISParams.py) is important, because **_GISPython_** relies of several parameters to be present to function successfully:
-
 * OutDir - directory for storing script output log files `OutDir = r'C:\GIS\Log\Outlog\' `
 * OutDirArh - directory for storing script output log file archive (all non active files) `OutDirArh = r'C:\GIS\Log\Outlog\Archive\' `
 * ErrorLogDir - directory for storing script error log files `ErrorLogDir = r'C:\GIS\Log\ErrorLog\' `(*Important! This directory can be monitored for non empty files. If this directory has a file that is non empty - this indicates that a script has failed*)
@@ -108,7 +104,6 @@ Parameter file or object (e.g. SysGISParams.py) is important, because **_GISPyth
 
 ### Recommendations
 Set up the variables at the beggining of the main function, to shorten the main code:
-
 ```python
 Tool = self.Tool
 gp = Tool.gp
@@ -118,7 +113,6 @@ pj = os.path.join
 
 ### Basic operations:
 ArcPy function call:
-
 ```python
 gpCaller = self.Tool.callGP
 slay = 'some_layer'
@@ -127,9 +121,7 @@ callGP('AddField_management', slay, 'CAR', 'TEXT', '#', '#', 128)
 callGP('AddField_management', slay, 'WorkID', 'DOUBLE', 12, 0)
 callGP('AddField_management', slay, 'REC_DATE_FROM', 'DATE')
 ```
-
 Tool message output:
-
 ```python
 Tool = self.Tool
 self.Tool.AddMessage(u'This is a message')
@@ -143,9 +135,7 @@ self.Tool.AddError(u'This is an error')
 
 #### _GISPythonModule_
 Main module, which contains frame for all  GISPython package modules. Module allows the code unification, and ensures the code execution from both the ArcGIS Desktop Python console and the Command Prompt.
-
 _Examples:_
-
 ##### Executes the tool if it's to be executed within an another Python tool
 ```Python
 from  GISPython import TimerHelper
@@ -158,9 +148,7 @@ with TimerHelper.TimedSubprocess(Tool, u'Compress DB'): # Adds a message to the 
 
 #### _GISPythonTool_
 Module defines abstract classes for the ESRI Toolbox tool definition and contains functions which helps to create an ArcGIS Toolbox, validates the tool's parameter values and controls a behavior of the tool's dialog.
-
 _Examples:_
-
 ##### Define parameters in ESRI Python toolbox
 ```Python
 from  GISPython import GISPythonTool
@@ -190,7 +178,6 @@ class ToolManageArcGISServer(GISPythonTool.GISPythonTool): # Custom Python tool
 Base module which contains GISPython scripting framework, logging, error processing and automation mechanisms for different operations, and module and interface base classes.
 
 _Examples:_
-
 ##### Run a script from Shell with parameters
 ```Python
 Tool = self.Tool
@@ -230,16 +217,13 @@ with TimerHelper.TimedSubprocess(Tool, u'prepare environment'): # Adds a message
 
 #### _MailHelper_
 Module for e-mail operations. Module contains functions for typical SMTP operations, and parameter processing from user parameter file.
-
 _Examples:_
-
 ##### Send e-mail using parameters from parameter file
 ```python
 from  GISPython import MailHelper
 MailHelper.GISPythonMailHelper(self.Pr, ['***@mail.com'], 'Subject', 'e-mail content')
 ```
 This script depends on following parameters which needs to be configured in _SysGISParams.py_ file:
-
 * Mailserver - mail server name `Mailserver = 'mail.server.com'`
 * MailserverPort - mail server port number `MailserverPort = 587`
 * MailserverUseTLS - use TLS in mail server? `MailserverUseTLS = True`
@@ -258,9 +242,7 @@ mailSender.SendMessage('smtp.server.com', 587, 'username', 'password', useTLS=Tr
 #### _SimpleFileOps_
 File and filesystem operations module. Module contains functions for typical file and filesystem operations, and locking control and processing.
 This module uses windows PowerShell to address file locking situations. For module with the same functionality without PowerShell script usage use _SimpleFileOpsSafe_.
-
 _Examples:_
-
 ##### Check for the directory, and clear its contents
 ```python
 from  GISPython import SimpleFileOps
@@ -285,9 +267,7 @@ File and filesystem operations module. Module contains SimpleFileOpsSafe class, 
 
 #### _TimerHelper_
 Timing module. Module contains functions for countdown procedures in a code block.
-
 _Example:_
-
 ##### Add a message to the tool output
 ```python
 from  GISPython import TimerHelper
@@ -296,12 +276,9 @@ with TimerHelper.TimedSubprocess(self.Tool, u'some process'):
 ```
 ![img_time.png](https://github.com/lvmgeo/GISPython/blob/master/img/img_time.png)
 
-
 #### _ZipHelper_
 Zip file operations module. Module contains functions for common Zip file operations.
-
 _Examples:_
-
 ##### Archiving procedure
 ```python
 from  GISPython import ZipHelper
@@ -324,12 +301,11 @@ ZH.ExtractZipFile(zipFile, workDir)
 ## Contributing
 We encourage developers to use LVM GEO Python Core code and also contribute to the project. LVM GEO team is open for cooperation in developing new solutions, provides LVM GEO Python courses and offers to implement a fully functional automation platform for companies and organizations for their business needs.
 
----------
 ## Licensing
+
 [GPL-3.0+](https://choosealicense.com/licenses/gpl-3.0/)
 
 ## Copyright
 
 ![BSRLogo.PNG](https://github.com/lvmgeo/GISPython/blob/master/img/BSRLogo.PNG)
-
 Copyright (c) 2017 LVM BSR
