@@ -183,7 +183,8 @@ class GISTools10:
             while(True):
                 retcode = p.poll() #returns None while subprocess is running
                 str = p.stdout.readline()
-                self.AddMessage(self._tryCovertStringEncoding(str))
+                if str!='':
+                    self.AddMessage(u'>>>>' + self._tryCovertStringEncoding(str), True)
                 lines.append(str)
                 if(retcode is not None):
                     break
