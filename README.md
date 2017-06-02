@@ -20,7 +20,7 @@ The Core also includes tools that simplify usage of ArcPy and Python functions, 
 
 The LVM GEO Python Core is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day. LVM GEO offers courses about LVM GEO Python to support development of an automation platform for companies and organizations.
 
-LVM GEO Python Core package **_GISPython_** contains following modules:
+### LVM GEO Python Core package _GISPython_ contains following modules:
 
 * [**Main modules**](https://github.com/lvmgeo/GISPython/blob/master/README.md#main-modules):
     * [GISPythonModule](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythonmodule)
