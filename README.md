@@ -1,6 +1,5 @@
 # LVM GEO Python Core (_GISPython_)
 
----------
 LVM GEO Python Core is an open source automation and scripting core developed by the LVM GEO team. Based on this core any developer can build simple and structured Python programming scripts with a rich functionality. The programming core allows management of all system's maintenance processes within a unified environment.
 
 There are many automated maintenance operations necessary for every large geospatial information system (GIS). These operations are required for database and server maintenance, data validations and calculations, map preparing and caching, or data exchange with other systems. Within ERSI platform maintenance scripting is done by Python programming language and ArcPy library. The LVM GEO team has worked with ArcPy library for many years and has developed the LVM GEO Python Core complementing and enriching the Platform maintenance possibilities of the ESRI library that are not provided in the ArcPy standard:
@@ -21,7 +20,6 @@ The Core also includes tools that simplify usage of ArcPy and Python functions, 
 
 The LVM GEO Python Core is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day. LVM GEO offers courses about LVM GEO Python to support development of an automation platform for companies and organizations.
 
----------
 LVM GEO Python Core package **_ GISPython_** contains following modules:
 
 * [Main modules](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-main-modules):
@@ -46,7 +44,6 @@ LVM GEO Python Core package **_ GISPython_** contains following modules:
     * [TimerHelper](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-timerhelper)
     * [ZipHelper](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-ziphelper)
 
----------
 ## Dependencies
 * ArcGIS 10.x /recommended with newest patches and service packs/ (**_ GISPython_** is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
 * Python 2.7 (usually included in ArcGIS installation) (arcpy module included)
@@ -57,13 +54,10 @@ LVM GEO Python Core package **_ GISPython_** contains following modules:
     
 >If pip isn’t installed, you can get it [**here**](https://packaging.python.org/installing/#install-pip-setuptools-and-wheel)!
 
----------
-
 ## Installation
 
 **_ GISPython_** is available on the Python Package Index (te nāks iekšā links), so you can get it via pip: `pip install GISPython`
 
----------
 ## Configuration & basic usage
 
 Before using **_ GISPython_** modules in custom geoprocessing scripts, you need to set up your scripting environment.
@@ -145,7 +139,6 @@ self.Tool.AddWarning(u'This is a warning')
 self.Tool.AddError(u'This is an error')
 ```
 
----------
 ## Modules & examples of use
 
 ### Main modules
@@ -330,7 +323,6 @@ zipFile = 'c:\\tmp\fileName{0}.zip'.format(self.Tool.MyNowFileSafe()) # Zip file
 ZH.ExtractZipFile(zipFile, workDir)
 ```
 
----------
 ## Contributing
 We encourage developers to use LVM GEO Python Core code and also contribute to the project. LVM GEO team is open for cooperation in developing new solutions, provides LVM GEO Python courses and offers to implement a fully functional automation platform for companies and organizations for their business needs.
 
@@ -338,7 +330,6 @@ We encourage developers to use LVM GEO Python Core code and also contribute to t
 ## Licensing
 [GPL-3.0+](https://choosealicense.com/licenses/gpl-3.0/)
 
----------
 ## Copyright
 
 ![BSRLogo.PNG](https://bitbucket.org/repo/eky5EEp/images/2304105760-BSRLogo.PNG)
