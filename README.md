@@ -20,7 +20,7 @@ The Core also includes tools that simplify usage of ArcPy and Python functions, 
 
 The LVM GEO Python Core is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day. LVM GEO offers courses about LVM GEO Python to support development of an automation platform for companies and organizations.
 
-LVM GEO Python Core package **_ GISPython_** contains following modules:
+LVM GEO Python Core package **_GISPython_** contains following modules:
 
 * [Main modules](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-main-modules):
     * [GISPythonModule](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-gispythonmodule)
@@ -56,13 +56,13 @@ LVM GEO Python Core package **_ GISPython_** contains following modules:
 
 ## Installation
 
-**_ GISPython_** is available on the Python Package Index (te nāks iekšā links), so you can get it via pip: `pip install GISPython`
+**_GISPython_** is available on the Python Package Index (te nāks iekšā links), so you can get it via pip: `pip install GISPython`
 
 ## Configuration & basic usage
 
-Before using **_ GISPython_** modules in custom geoprocessing scripts, you need to set up your scripting environment.
+Before using **_GISPython_** modules in custom geoprocessing scripts, you need to set up your scripting environment.
 
-Here is example of **_ GISPython_** script:
+Here is example of **_GISPython_** script:
 ```python
 # -*- coding: utf-8 -*-
 """
@@ -96,7 +96,7 @@ if __name__ == "__main__":
 	Module = MainModule()
 	Module.DoJob()
 ```
-Parameter file or object (e.g. SysGISParams.py) is important, because **_ GISPython_** relies of several parameters to be present to function successfully:
+Parameter file or object (e.g. SysGISParams.py) is important, because **_GISPython_** relies of several parameters to be present to function successfully:
 
 * OutDir - directory for storing script output log files `OutDir = r'C:\GIS\Log\Outlog\' `
 * OutDirArh - directory for storing script output log file archive (all non active files) `OutDirArh = r'C:\GIS\Log\Outlog\Archive\' `
