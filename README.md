@@ -1,4 +1,4 @@
-# geopythoncore
+# GISPython
 
 ---------
 There are many automated maintenance operations necessary for every large geospatial information system (GIS). These operations usually are connected with database and server maintenance, data validations and calculations, map preparing and caching, data exchange with other systems and other necessities. Within ERSI platform maintenance scripting is done by Python programming language and [ArcPy](http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm) library. LVM GEO developer team has worked with ArcPy library for many years and has developed LVM GEO Python Core complementing and enriching the functional possibilities of the ESRI library that are not provided in the ArcPy standard:
@@ -22,7 +22,7 @@ LVM GEO Python Core is an open source automation and scripting core developed by
 LVM GEO also offers courses about LVM GEO Python and to develop an automation platform for companies and organizations. LVM GEO scripting platform is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day.
 
 ---------
-LVM GEO Python Core package **_geopythoncore_** contains following modules:
+LVM GEO Python Core package **_ GISPython_** contains following modules:
 
 * [Main modules](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-main-modules):
     * [GISPythonModule](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-gispythonmodule)
@@ -48,7 +48,7 @@ LVM GEO Python Core package **_geopythoncore_** contains following modules:
 
 ---------
 ## Dependencies
-* ArcGIS 10.x /recommended with newest patches and service packs/ (**_geopythoncore_** is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
+* ArcGIS 10.x /recommended with newest patches and service packs/ (**_ GISPython_** is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
 * Python 2.7 (usually included in ArcGIS installation) (arcpy module included)
 * Additional python modules:
     * [PyCrypto](http://www.voidspace.org.uk/python/modules.shtml#pycrypto)
@@ -61,14 +61,14 @@ LVM GEO Python Core package **_geopythoncore_** contains following modules:
 
 ## Installation
 
-**_geopythoncore_** is available on the Python Package Index (te nāks iekšā links), so you can get it via pip: `pip install geopythoncore`
+**_ GISPython_** is available on the Python Package Index (te nāks iekšā links), so you can get it via pip: `pip install GISPython`
 
 ---------
 ## Configuration & basic usage
 
-Before using **_geopythoncore_** modules in custom geoprocessing scripts, you need to set up your scripting environment.
+Before using **_ GISPython_** modules in custom geoprocessing scripts, you need to set up your scripting environment.
 
-Here is example of **_geopythoncore_** script:
+Here is example of **_ GISPython_** script:
 ```python
 # -*- coding: utf-8 -*-
 """
@@ -76,8 +76,8 @@ Here is example of **_geopythoncore_** script:
 """
 import SysGISParams as Pr # Import custom parameter file
 import sys, os # Import built in Python modules for basic operations
-from geopythoncore import GISPythonModule # Import scripting framework from geopythoncore package
-# you can import additional geopythoncore modules, based on the tool's needs
+from  GISPython import GISPythonModule # Import scripting framework from  GISPython package
+# you can import additional  GISPython modules, based on the tool's needs
 
 #Base class of the module
 class MainModule(GISPythonModule.GISPythonModule): # Inherits GISPythonModule class
@@ -102,7 +102,7 @@ if __name__ == "__main__":
 	Module = MainModule()
 	Module.DoJob()
 ```
-Parameter file or object (e.g. SysGISParams.py) is important, because **_geopythoncore_** relies of several parameters to be present to function successfully:
+Parameter file or object (e.g. SysGISParams.py) is important, because **_ GISPython_** relies of several parameters to be present to function successfully:
 
 * OutDir - directory for storing script output log files `OutDir = r'C:\GIS\Log\Outlog\' `
 * OutDirArh - directory for storing script output log file archive (all non active files) `OutDirArh = r'C:\GIS\Log\Outlog\Archive\' `
@@ -151,13 +151,13 @@ self.Tool.AddError(u'This is an error')
 ### Main modules
 
 #### _GISPythonModule_
-Main module, which contains frame for all geopythoncore package modules. Module allows the code unification, and ensures the code execution from both the ArcGIS Desktop Python console and the Command Prompt.
+Main module, which contains frame for all  GISPython package modules. Module allows the code unification, and ensures the code execution from both the ArcGIS Desktop Python console and the Command Prompt.
 
 _Examples:_
 
 ##### Executes the tool if it's to be executed within an another Python tool
 ```Python
-from geopythoncore import TimerHelper
+from  GISPython import TimerHelper
 import OnlineCompress
 with TimerHelper.TimedSubprocess(Tool, u'Compress DB'): # Adds a message to the tool output
     with TimerHelper.TimedSubprocess(Tool, u'disconnect users from DB', 2): # Adds a message to the tool output
@@ -172,7 +172,7 @@ _Examples:_
 
 ##### Define parameters in ESRI Python toolbox
 ```Python
-from geopythoncore import GISPythonTool
+from  GISPython import GISPythonTool
 class ToolManageArcGISServer(GISPythonTool.GISPythonTool): # Custom Python tool
     def __init__(self): # Class initialization procedure
         """Define the tool (tool name is the class name)"""
@@ -213,7 +213,7 @@ time.sleep(10) # after 10 seconds launch another runShell process
 
 ##### Executes a custom SQL script file (only Oracle sqlplus supported)
 ```Python
-from geopythoncore import TimerHelper
+from  GISPython import TimerHelper
 Tool = self.Tool
 # Executes process from SQL file
 with TimerHelper.TimedSubprocess(self.Tool, u'datu atlasi no nogabaliem'): # Adds a message to the tool output
@@ -222,8 +222,8 @@ with TimerHelper.TimedSubprocess(self.Tool, u'datu atlasi no nogabaliem'): # Add
 
 ##### Double path seperator symbol '\' for external execution compatibility
 ```Python
-from geopythoncore import SimpleFileOps
-from geopythoncore import TimerHelper
+from  GISPython import SimpleFileOps
+from  GISPython import TimerHelper
 Tool = self.Tool
 #...
 with TimerHelper.TimedSubprocess(Tool, u'prepare environment'): # Adds a message to the tool output
@@ -244,13 +244,13 @@ _Examples:_
 
 ##### Send e-mail using parameters from parameter file
 ```python
-from geopythoncore import MailHelper
+from  GISPython import MailHelper
 MailHelper.GISPythonMailHelper(self.Pr, ['***@mail.com'], 'Subject', 'e-mail content')
 ```
 
 ##### Send e-mail
 ```python
-from geopythoncore import MailHelper
+from  GISPython import MailHelper
 mailSender = MailHelper.MailHelper('mail@from.com', ['***@mail.com'], 'Subject', u'e-mail content') # Set up the e-mail for sending
 mailSender.SendMessage('smtp.server.com', 587, 'username', 'password', useTLS=True) # Send e-mail
 ```
@@ -263,7 +263,7 @@ _Examples:_
 
 ##### Check for the directory, and clear its contents
 ```python
-from geopythoncore import SimpleFileOps
+from  GISPython import SimpleFileOps
 FO = SimpleFileOps.SimpleFileOps(self.Tool)
 workDir = pj(Pr.TmpFolder, 'WorkingDirectory') # Set the working directory
 FO.CheckCreateDir(workDir) # Check if directory exists, if not, create the directory
@@ -272,7 +272,7 @@ FO.ClearDir(workDir) # Clear directory contents
 
 ##### Find the newest file in the directory and create a backup
 ```python
-from geopythoncore import SimpleFileOps
+from  GISPython import SimpleFileOps
 FO = SimpleFileOps.SimpleFileOps(self.Tool)
 workDir = pj(Pr.TmpFolder, 'WorkingDirectory') # Set the working directory
 backupDir = pj(Pr.TmpFolder, 'BackupDirectory') # Set the working directory
@@ -290,7 +290,7 @@ _Example:_
 
 ##### Add a message to the tool output
 ```python
-from geopythoncore import TimerHelper
+from  GISPython import TimerHelper
 with TimerHelper.TimedSubprocess(self.Tool, u'some process'):
     self.Tool.AddMessage(u'some action')
 ```
@@ -304,7 +304,7 @@ _Examples:_
 
 ##### Archiving procedure
 ```python
-from geopythoncore import ZipHelper
+from  GISPython import ZipHelper
 ZH = ZipHelper.ZipHelper()
 workDir = 'c:\\tmp\someDirectory' # Directory to archive
 zipFile = 'c:\\tmp\fileName' + self.Tool.MyNowFileSafe() + '.zip' # New zip file with formatted date (simple example)
@@ -314,7 +314,7 @@ ZH.CompressDir(workDir, zipFile)
 
 ##### Extraction procedure
 ```python
-from geopythoncore import ZipHelper
+from  GISPython import ZipHelper
 ZH = ZipHelper.ZipHelper()
 workDir = 'c:\\tmp\someDirectory' # Directory in which to extract the Zip file
 zipFile = 'c:\\tmp\fileName{0}.zip'.format(self.Tool.MyNowFileSafe()) # Zip file with formatted date
