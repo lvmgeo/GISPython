@@ -22,30 +22,28 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
 
 LVM GEO Python Core package **_GISPython_** contains following modules:
 
-* [Main modules](https://github.com/lvmgeo/GISPython/blob/master/README.md#main-modules):
+* **[Main modules]**(https://github.com/lvmgeo/GISPython/blob/master/README.md#main-modules):
     * [GISPythonModule](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythonmodule)
     * [GISPythonTool](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythontool)
     * [SysGISTools](https://github.com/lvmgeo/GISPython/blob/master/README.md#sysgistools)
-    * [SysGISToolsSysParams](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-sysgistoolssysparams)
     * SysTools_unittest (Coming soon)
-* [Helper modules](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-helper-modules):
+* **[Helper modules]**(https://github.com/lvmgeo/GISPython#helper-modules):
     * AGServerHelper (Coming soon)
     * CachingHelper (Coming soon)
     * FTPHelper (Coming soon)
     * GDBHelper (Coming soon)
     * GDPSynchroniserHelper (Coming soon)
     * JsonParamsHelper (Coming soon)
-    * [MailHelper](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-mailhelper)
-    * [MyError](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-myerror)
+    * [MailHelper](https://github.com/lvmgeo/GISPython#mailhelper)
     * RarHelper (Coming soon)
     * SFTPHelper (Coming soon)
-    * [SimpleFileOps](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-simplefileops)
-    * [SimpleFileOpsSafe](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-simplefileopssafe)
-    * [TimerHelper](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-timerhelper)
-    * [ZipHelper](https://bitbucket.org/arturspd/geopythontest/overview#markdown-header-ziphelper)
+    * [SimpleFileOps](https://github.com/lvmgeo/GISPython#simplefileops)
+    * [SimpleFileOpsSafe](https://github.com/lvmgeo/GISPython#simplefileopssafe)
+    * [TimerHelper](https://github.com/lvmgeo/GISPython#timerhelper)
+    * [ZipHelper](https://github.com/lvmgeo/GISPython#ziphelper)
 
 ## Dependencies
-* ArcGIS 10.x /recommended with newest patches and service packs/ (**_ GISPython_** is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
+* ArcGIS 10.x /recommended with newest patches and service packs/ (**_GISPython_** is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
 * Python 2.7 (usually included in ArcGIS installation) (arcpy module included)
 * Additional python modules:
     * [PyCrypto](http://www.voidspace.org.uk/python/modules.shtml#pycrypto)
@@ -227,9 +225,6 @@ with TimerHelper.TimedSubprocess(Tool, u'prepare environment'): # Adds a message
     DirHelper.CheckCreateDir(Tool.CorrectStr(tmpFolder)) # Check/create tmp directory (with modified path seperators)
     DirHelper.ClearDir(Tool.CorrectStr(tmpFolder)) # Clear tmp directory (with modified path seperators)
 ```
-
-#### _SysGISToolsSysParams_
-Module stores information about current **_GISPython_** package version
 
 ### Helper modules
 
