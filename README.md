@@ -22,12 +22,12 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
 
 LVM GEO Python Core package **_GISPython_** contains following modules:
 
-* **[Main modules]**(https://github.com/lvmgeo/GISPython/blob/master/README.md#main-modules):
+* [**Main modules**](https://github.com/lvmgeo/GISPython/blob/master/README.md#main-modules):
     * [GISPythonModule](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythonmodule)
     * [GISPythonTool](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythontool)
     * [SysGISTools](https://github.com/lvmgeo/GISPython/blob/master/README.md#sysgistools)
     * SysTools_unittest (Coming soon)
-* **[Helper modules]**(https://github.com/lvmgeo/GISPython#helper-modules):
+* [**Helper modules**](https://github.com/lvmgeo/GISPython#helper-modules):
     * AGServerHelper (Coming soon)
     * CachingHelper (Coming soon)
     * FTPHelper (Coming soon)
