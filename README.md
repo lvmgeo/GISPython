@@ -1,15 +1,17 @@
-# GISPython
+# GEO Python Core (_GISPython_)
 
 ---------
-There are many automated maintenance operations necessary for every large geospatial information system (GIS). These operations usually are connected with database and server maintenance, data validations and calculations, map preparing and caching, data exchange with other systems and other necessities. Within ERSI platform maintenance scripting is done by Python programming language and [ArcPy](http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm) library. LVM GEO developer team has worked with ArcPy library for many years and has developed LVM GEO Python Core complementing and enriching the functional possibilities of the ESRI library that are not provided in the ArcPy standard:
+LVM GEO Python Core is an open source automation and scripting core developed by the LVM GEO team. Based on this core any developer can build simple and structured Python programming scripts with a rich functionality. The programming core allows management of all system's maintenance processes within a unified environment.
 
-* monitoring possibilities for the automated scripts (for example Zabbix)
-* script audit storage possibilities
+There are many automated maintenance operations necessary for every large geospatial information system (GIS). These operations are required for database and server maintenance, data validations and calculations, map preparing and caching, or data exchange with other systems. Within ERSI platform maintenance scripting is done by Python programming language and ArcPy library. The LVM GEO team has worked with ArcPy library for many years and has developed the LVM GEO Python Core complementing and enriching the Platform maintenance possibilities of the ESRI library that are not provided in the ArcPy standard:
+
+* monitoring of automated scripts (for example Zabbix)
+* script audit storage
 * generation of automated e-mails (script progress status reports as well as automated data validation warning e-mails, etc.)
 * data transfer using FTP and SFTP, data compressing and uncompressing
 * SQL, PowerShell, Windows Shell file initiation and progress monitoring within an unified environment with ArcPy geoprocessing tools
 
-The core also includes tools that simplify usage of ArcPy and Python functions, significantly easing the development process:
+The Core also includes tools that simplify usage of ArcPy and Python functions, significantly easing the development process:
 
 * scripting of ArcGIS server administration
 * scripting of file operations
@@ -17,9 +19,7 @@ The core also includes tools that simplify usage of ArcPy and Python functions, 
 * unified script initiation from ArcGIS environment, Python Shell and from other tools
 * etc.
 
-LVM GEO Python Core is an open source automation and scripting core developed by the LVM GEO team. Based on this core any developer can build their simple and structured Python programming scripts with a rich functionality.
-
-LVM GEO also offers courses about LVM GEO Python and to develop an automation platform for companies and organizations. LVM GEO scripting platform is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day.
+The LVM GEO Python Core is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day. LVM GEO offers courses about LVM GEO Python to support development of an automation platform for companies and organizations.
 
 ---------
 LVM GEO Python Core package **_ GISPython_** contains following modules:
@@ -339,6 +339,8 @@ We encourage developers to use LVM GEO Python Core code and also contribute to t
 [GPL-3.0+](https://choosealicense.com/licenses/gpl-3.0/)
 
 ---------
+## Copyright
+
 ![BSRLogo.PNG](https://bitbucket.org/repo/eky5EEp/images/2304105760-BSRLogo.PNG)
 
 Copyright (c) 2017 LVM BSR
