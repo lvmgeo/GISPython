@@ -135,8 +135,9 @@ self.Tool.AddError(u'This is an error')
 
 #### _GISPythonModule_
 Main module, which contains frame for all  GISPython package modules. Module allows the code unification, and ensures the code execution from both the ArcGIS Desktop Python console and the Command Prompt.
+
 _Examples:_
-##### Executes the tool if it's to be executed within an another Python tool
+###### Executes the tool if it's to be executed within an another Python tool
 ```Python
 from  GISPython import TimerHelper
 import OnlineCompress
@@ -148,8 +149,9 @@ with TimerHelper.TimedSubprocess(Tool, u'Compress DB'): # Adds a message to the 
 
 #### _GISPythonTool_
 Module defines abstract classes for the ESRI Toolbox tool definition and contains functions which helps to create an ArcGIS Toolbox, validates the tool's parameter values and controls a behavior of the tool's dialog.
+
 _Examples:_
-##### Define parameters in ESRI Python toolbox
+###### Define parameters in ESRI Python toolbox
 ```Python
 from  GISPython import GISPythonTool
 class ToolManageArcGISServer(GISPythonTool.GISPythonTool): # Custom Python tool
@@ -178,7 +180,7 @@ class ToolManageArcGISServer(GISPythonTool.GISPythonTool): # Custom Python tool
 Base module which contains GISPython scripting framework, logging, error processing and automation mechanisms for different operations, and module and interface base classes.
 
 _Examples:_
-##### Run a script from Shell with parameters
+###### Run a script from Shell with parameters
 ```Python
 Tool = self.Tool
 # Executes your custom process script (mainly maintenance scripts) within runShell function,
@@ -189,7 +191,7 @@ Tool.runShell('SomeProcess.py', Detached = True, noErr = True)
 time.sleep(10) # after 10 seconds launch another runShell process
 ```
 
-##### Executes a custom SQL script file (only Oracle sqlplus supported)
+###### Executes a custom SQL script file (only Oracle sqlplus supported)
 ```Python
 from  GISPython import TimerHelper
 Tool = self.Tool
@@ -198,7 +200,7 @@ with TimerHelper.TimedSubprocess(self.Tool, u'datu atlasi no nogabaliem'): # Add
     Tool.RunSQL('LoadSomeDataFromTable') # Runs SQL file within RunSQL function, which implements GetSQL function (gets the SQL file location)
 ```
 
-##### Double path seperator symbol '\' for external execution compatibility
+###### Double path seperator symbol '\' for external execution compatibility
 ```Python
 from  GISPython import SimpleFileOps
 from  GISPython import TimerHelper
@@ -217,8 +219,9 @@ with TimerHelper.TimedSubprocess(Tool, u'prepare environment'): # Adds a message
 
 #### _MailHelper_
 Module for e-mail operations. Module contains functions for typical SMTP operations, and parameter processing from user parameter file.
+
 _Examples:_
-##### Send e-mail using parameters from parameter file
+###### Send e-mail using parameters from parameter file
 ```python
 from  GISPython import MailHelper
 MailHelper.GISPythonMailHelper(self.Pr, ['***@mail.com'], 'Subject', 'e-mail content')
@@ -232,7 +235,7 @@ This script depends on following parameters which needs to be configured in _Sys
 * MailserverPWD - user password `MailserverPWD = r'userPassword'`
 * MailFromAdress - e-mail adress from which to send the e-mail `MailFromAdress = 'userAdress@mail.com'`
 
-##### Send e-mail
+###### Send e-mail
 ```python
 from  GISPython import MailHelper
 mailSender = MailHelper.MailHelper('mail@from.com', ['***@mail.com'], 'Subject', u'e-mail content') # Set up the e-mail for sending
@@ -242,8 +245,9 @@ mailSender.SendMessage('smtp.server.com', 587, 'username', 'password', useTLS=Tr
 #### _SimpleFileOps_
 File and filesystem operations module. Module contains functions for typical file and filesystem operations, and locking control and processing.
 This module uses windows PowerShell to address file locking situations. For module with the same functionality without PowerShell script usage use _SimpleFileOpsSafe_.
+
 _Examples:_
-##### Check for the directory, and clear its contents
+###### Check for the directory, and clear its contents
 ```python
 from  GISPython import SimpleFileOps
 FO = SimpleFileOps.SimpleFileOps(self.Tool)
@@ -252,7 +256,7 @@ FO.CheckCreateDir(workDir) # Check if directory exists, if not, create the direc
 FO.ClearDir(workDir) # Clear directory contents
 ```
 
-##### Find the newest file in the directory and create a backup
+###### Find the newest file in the directory and create a backup
 ```python
 from  GISPython import SimpleFileOps
 FO = SimpleFileOps.SimpleFileOps(self.Tool)
@@ -267,8 +271,9 @@ File and filesystem operations module. Module contains SimpleFileOpsSafe class, 
 
 #### _TimerHelper_
 Timing module. Module contains functions for countdown procedures in a code block.
+
 _Example:_
-##### Add a message to the tool output
+###### Add a message to the tool output
 ```python
 from  GISPython import TimerHelper
 with TimerHelper.TimedSubprocess(self.Tool, u'some process'):
@@ -278,8 +283,9 @@ with TimerHelper.TimedSubprocess(self.Tool, u'some process'):
 
 #### _ZipHelper_
 Zip file operations module. Module contains functions for common Zip file operations.
+
 _Examples:_
-##### Archiving procedure
+###### Archiving procedure
 ```python
 from  GISPython import ZipHelper
 ZH = ZipHelper.ZipHelper()
@@ -289,7 +295,7 @@ zipFile = 'c:\\tmp\fileName{0}.zip'.format(self.Tool.MyNowFileSafe()) # New zip 
 ZH.CompressDir(workDir, zipFile)
 ```
 
-##### Extraction procedure
+###### Extraction procedure
 ```python
 from  GISPython import ZipHelper
 ZH = ZipHelper.ZipHelper()
