@@ -1,23 +1,6 @@
 from setuptools import setup
 import os
-import shutil
 import re
-
-# Copy files from GISPython directory to geopythoncore (except __init__.py)
-src = r'C:\TFS\GEOPython10-GIT\GEOPython10\GISPython'
-dest = 'C:\TFS\GEOPython10-GIT\GEOPython10\geopythoncore\GISPython'
-excl = '__init__.py'
-
-baseFileList = [bf for bf in os.listdir(src) if not (bf.endswith('pyc') or bf == excl)]
-PShellList = os.listdir(os.path.join(src, 'PShell'))
-
-for bf in baseFileList:
-    srcFile = os.path.join(src, bf)
-    if bf == 'PShell':
-        for pf in PShellList:
-            shutil.copy(os.path.join(src, 'PShell', pf), os.path.join(dest, bf))
-    else:
-        shutil.copy(srcFile, dest)
 
 def get_version():
     """Get version number from SysGISToolsSysParams file"""
