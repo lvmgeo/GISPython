@@ -307,5 +307,4 @@ We encourage developers to use LVM GEO Python Core code and also contribute to t
 
 ## Copyright
 
-![BSRLogo.PNG](https://github.com/lvmgeo/GISPython/blob/master/img/BSRLogo.PNG)
-Copyright (c) 2017 LVM BSR
+![BSR](https://github.com/lvmgeo/GISPython/blob/master/img/BSRLogo.PNG "Copyright (c) 2017 LVM BSR")
