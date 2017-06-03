@@ -20,7 +20,7 @@ class SimpleFileOps(object):
         """
         self.Tool = _Tool
 
-    def ClearDir(self, DirName, searchPatern = '*'): # Overriding 
+    def ClearDir(self, DirName, searchPatern='*'): # Overriding
         """Directory cleaning automation procedure
 
         Args:
@@ -30,7 +30,7 @@ class SimpleFileOps(object):
         self.Tool.AddMessage(u"\n----------- Cleaning directory [" +  DirName + u"] searching: {" + searchPatern + "} -------" + self.Tool.MyNow())
         self.Tool.RunPS("ClearDir", '"' + self.Tool.CorrectStr(DirName) + '" ' + searchPatern, os.path.dirname(__file__))
 
-    def DelClearDir(self, DirName): # Overriding 
+    def DelClearDir(self, DirName): # Overriding
         """Delete non-empty directory
 
         Args:
@@ -42,7 +42,7 @@ class SimpleFileOps(object):
         os.rmdir(DirName)
         self.Tool.AddMessage(u"    ... directory [" +  DirName + u"] deleted ")
 
-    def BackupFiles(self, InDirName, OutDirName, D): # Overriding 
+    def BackupFiles(self, InDirName, OutDirName, D): # Overriding
         """File archiving automation procedure (Overriding)
 
         Args:
@@ -53,7 +53,7 @@ class SimpleFileOps(object):
         """
         self.Tool.RunPS("BackupOldFiles", '"' + self.Tool.CorrectStr(InDirName) + '" "' + self.Tool.CorrectStr(OutDirName) + '" ' + str(D), os.path.dirname(__file__))
 
-    def GetLog(self, server, EventLogOutputDir, D): # NoneOverriding 
+    def GetLog(self, server, EventLogOutputDir, D): # NoneOverriding
         """File archiving automation procedure (None overriding)
 
         Args:
@@ -63,8 +63,8 @@ class SimpleFileOps(object):
             D: How old files to archive (number of days)
         """
         self.Tool.RunPS("GetLog", '"' + server + '" "' + self.Tool.CorrectStr(EventLogOutputDir) + '" '+ str(D), os.path.dirname(__file__))
-    
-    def BackupOneFile(self, InFileName, OutDirName): # Overriding 
+
+    def BackupOneFile(self, InFileName, OutDirName): # Overriding
         """Specific file archiving automation procedure
 
         Args:
@@ -89,7 +89,7 @@ class SimpleFileOps(object):
         if not os.path.exists(OutDirName):
             os.makedirs(OutDirName)
 
-    def GetSafeName(self, text, substituteChar = '_', aditionalScaryChars='', aditionalSpaceChars='', noDotsInName = False):
+    def GetSafeName(self, text, substituteChar='_', aditionalScaryChars='', aditionalSpaceChars='', noDotsInName=False):
         """Modifies the text for use in the filesystem
 
         Args:
@@ -101,22 +101,22 @@ class SimpleFileOps(object):
             noDotsInName: Forbid dots in filename (except the file extension seperator) (Default = False)
 
         Returns:
-            Modified text as string
+            * Modified text as string
         """
         if type(text) is unicode:
-            text=unicodedata.normalize('NFD', text).encode('ascii', 'ignore')
+            text = unicodedata.normalize('NFD', text).encode('ascii', 'ignore')
         checkChars = ''.join(set(r'[]/\;,><&*:%=+@!#^()|?^-' + aditionalScaryChars))
         for c in checkChars:
-            text = text.replace(c,'')
+            text = text.replace(c, '')
         checkSpaceChars = ''.join(set(' ' + aditionalSpaceChars))
         for c in checkSpaceChars:
-            text = text.replace(c,substituteChar)
+            text = text.replace(c, substituteChar)
         if noDotsInName:
             lastDot = text.rfind('.')
             if lastDot != -1:
-                text = (text[:lastDot]).replace('.',substituteChar) + text[lastDot:]
-        while text.find(substituteChar+substituteChar)>-1:
-            text = text.replace(substituteChar+substituteChar,substituteChar)
+                text = (text[:lastDot]).replace('.', substituteChar) + text[lastDot:]
+        while text.find(substituteChar+substituteChar) > -1:
+            text = text.replace(substituteChar+substituteChar, substituteChar)
         return text
 
     def FindNewestFile(self, Dir, Ext='*'):
@@ -128,20 +128,20 @@ class SimpleFileOps(object):
             Ext: The extension to search for ('*' - search any file)
         """
         if not Ext == '*':
-                dated_files = [(os.path.getmtime(Dir + "\\" + fn), os.path.basename(Dir + "\\" + fn)) 
-                                for fn in os.listdir(Dir) 
-                              ]
+            dated_files = [(os.path.getmtime(Dir + "\\" + fn), os.path.basename(Dir + "\\" + fn))
+                           for fn in os.listdir(Dir)
+                          ]
         else:
-                dated_files = [(os.path.getmtime(Dir + "\\" + fn), os.path.basename(Dir + "\\" + fn)) 
-                                for fn in os.listdir(Dir) 
-                                    if fn.lower().endswith('.' + (Ext.lower()))
-                              ]
+            dated_files = [(os.path.getmtime(Dir + "\\" + fn), os.path.basename(Dir + "\\" + fn))
+                           for fn in os.listdir(Dir)
+                           if fn.lower().endswith('.' + (Ext.lower()))
+                          ]
         dated_files.sort()
         dated_files.reverse()
         newest = dated_files[0][1]
         return Dir + "\\" + newest
 
-    def FindFileByDate(self, Dir, Ext='*', Date=datetime.now(), Mode = 'New'):
+    def FindFileByDate(self, Dir, Ext='*', Date=datetime.now(), Mode='New'):
         """Find files in the given directory which are newer than the given date
 
         Args:
@@ -152,18 +152,18 @@ class SimpleFileOps(object):
             Mode: File searching modes: New - search newer files; Old - search older files (Default = New)
         """
         if Ext == '*':
-             dated_files = [Dir + "\\" + fn
-                 for fn in os.listdir(Dir) 
-                     if ((Mode == 'New' and datetime.fromtimestamp(os.path.getmtime(Dir + "\\" + fn))>=  Date) or
-                         (Mode == 'Old' and datetime.fromtimestamp(os.path.getmtime(Dir + "\\" + fn))<=  Date))
-                 ]
+            dated_files = [Dir + "\\" + fn
+                           for fn in os.listdir(Dir)
+                           if ((Mode == 'New' and datetime.fromtimestamp(os.path.getmtime(Dir + "\\" + fn)) >= Date) or
+                               (Mode == 'Old' and datetime.fromtimestamp(os.path.getmtime(Dir + "\\" + fn)) <= Date))
+                          ]
         else:
-             dated_files = [Dir + "\\" + fn
-                 for fn in os.listdir(Dir) 
-                     if ((Mode == 'New' and datetime.fromtimestamp(os.path.getmtime(Dir + "\\" + fn))>=  Date) or
-                         (Mode == 'Old' and datetime.fromtimestamp(os.path.getmtime(Dir + "\\" + fn))<=  Date))
-                     and fn.lower().endswith('.' + (Ext.lower()))
-                 ]
+            dated_files = [Dir + "\\" + fn
+                           for fn in os.listdir(Dir)
+                           if ((Mode == 'New' and datetime.fromtimestamp(os.path.getmtime(Dir + "\\" + fn)) >= Date) or
+                               (Mode == 'Old' and datetime.fromtimestamp(os.path.getmtime(Dir + "\\" + fn)) <= Date))
+                           and fn.lower().endswith('.' + (Ext.lower()))
+                          ]
         dated_files.sort()
         return dated_files
 
@@ -176,11 +176,11 @@ class SimpleFileOps(object):
             Ext: The extension to search for
         """
         dated_files = [Dir + "\\" + fn
-        for fn in os.listdir(Dir) if fn.lower().endswith('.' + (Ext.lower()))]
+                       for fn in os.listdir(Dir) if fn.lower().endswith('.' + (Ext.lower()))]
         dated_files.sort()
         return dated_files
 
-    def FindDirectory(self, Dir, Searchpattern = '*'):
+    def FindDirectory(self, Dir, Searchpattern='*'):
         """Find subdirectories in the given directory
 
         Args:
@@ -189,9 +189,10 @@ class SimpleFileOps(object):
             Searchpattern: Searching condition
         """
         if Searchpattern == '*':
-             dirs = [fn for fn in os.listdir(Dir) if os.path.isdir(fn)]
+            dirs = [fn for fn in os.listdir(Dir) if os.path.isdir(fn)]
         else:
-            dirs = [fn for fn in os.listdir(Dir) if os.path.isdir(fn) and not fn.lower().find(Searchpattern.lower())==-1]
+            dirs = [fn for fn in os.listdir(Dir) if os.path.isdir(fn)
+                    and not fn.lower().find(Searchpattern.lower()) == -1]
         dirs.sort()
         return dirs
 
@@ -249,111 +250,104 @@ class SimpleFileOps(object):
         dirname = os.path.dirname(file)
         filename = ('.').join(file.split('.')[:-1])
         fileext = ('.').join(file.split('.')[-1:])
-        
-        return os.path.join( dirname, filename + '_' + self.Tool.MyNowFileSafe() + '.' + fileext)
- 
+
+        return os.path.join(dirname, filename + '_' + self.Tool.MyNowFileSafe() + '.' + fileext)
+
 class LockSubprocess(object):
-        """Class that provides directory locking control and processing"""
-    
-        def __init__(self, Tool, Dir, processName):
-            """Class initialization procedure
+    """Class that provides directory locking control and processing"""
+    def __init__(self, Tool, Dir, processName):
+        """Class initialization procedure
+        Args:
+            self: The reserved object 'self'
+            Tool: Reference to the GISTools10 object
+            Dir: Working directory
+            processName: Name of the process
+        """
+        self.StartTime = datetime.now()
+        self.Tool = Tool
+        self.Dir = Dir
+        self.processName = processName
+        self.results = LockResults(processName)
+        self.lockFileName = os.path.join(self.Dir, 'gispython.{0}.lock'.format(self.processName))
 
-            Args:
-                self: The reserved object 'self'
-                Tool: Reference to the GISTools10 object
-                Dir: Working directory
-                processName: Name of the process
-            """
-            self.StartTime = datetime.now()
-            self.Tool = Tool
-            self.Dir = Dir
-            self.processName = processName
-            self.results = LockResults(processName)
-            self.lockFileName = os.path.join(self.Dir, 'gispython.{0}.lock'.format(self.processName))
- 
-        def __enter__(self):
-            """With statement opening procedure
-
-            Args:
-                self: The reserved object 'self'
-
-            Returns:
-                LockResults with status:
-                    Locked - The file is locked by another process;
-                    DoneBefore -  Process is already done;
-                    NoDir - Directory not found;
-                    Running - Process is running;
-            """
-            # Check if directory exists
-            if os.path.exists(self.Dir):
-                if os.path.exists(self.lockFileName) and os.path.isfile(self.lockFileName):
-                    try:
-                        self.f = codecs.open(self.lockFileName,'r+', 'utf-8')
-                        self.readJson()
-                    except:
-                        self.results.status = "Locked"
-                        return self.results
-                    if self.J['status'] == 'Running':
-                        self.results.status = "Locked"
-                        return self.results
-                    if self.J['status'] == 'Done':
-                        self.results.status = "DoneBefore"
-                        return self.results
-                    else:
-                        self.results.status = "Running"
-                        self.writeJson()
+    def __enter__(self):
+        """With statement opening procedure
+        Args:
+            self: The reserved object 'self'
+        Returns:
+            LockResults with status:
+                Locked - The file is locked by another process;
+                DoneBefore -  Process is already done;
+                NoDir - Directory not found;
+                Running - Process is running;
+        """
+        # Check if directory exists
+        if os.path.exists(self.Dir):
+            if os.path.exists(self.lockFileName) and os.path.isfile(self.lockFileName):
+                try:
+                    self.f = codecs.open(self.lockFileName, 'r+', 'utf-8')
+                    self.readJson()
+                except:
+                    self.results.status = "Locked"
+                    return self.results
+                if self.J['status'] == 'Running':
+                    self.results.status = "Locked"
+                    return self.results
+                if self.J['status'] == 'Done':
+                    self.results.status = "DoneBefore"
+                    return self.results
                 else:
-                    self.f = codecs.open(self.lockFileName,'w', 'utf-8')
                     self.results.status = "Running"
                     self.writeJson()
             else:
-                self.results.status = "NoDir"
-            return self.results
- 
-        def __exit__(self, type, value, traceback):
-            """With statement closing procedure
+                self.f = codecs.open(self.lockFileName, 'w', 'utf-8')
+                self.results.status = "Running"
+                self.writeJson()
+        else:
+            self.results.status = "NoDir"
+        return self.results
 
-            Args:
-                self: The reserved object 'self'
-            """
-            if self.results.status == "Running":
-                self.results.status = "Done"
-                if hasattr(self, 'f'):
-                    self.f = codecs.open(self.lockFileName,'w', 'utf-8')
-                    self.writeJson()
+    def __exit__(self, type, value, traceback):
+        """With statement closing procedure
+        Args:
+            self: The reserved object 'self'
+        """
+        if self.results.status == "Running":
+            self.results.status = "Done"
             if hasattr(self, 'f'):
-                self.f.close();
- 
-        def readJson(self):
-            """Get the data from the lock file
+                self.f = codecs.open(self.lockFileName, 'w', 'utf-8')
+                self.writeJson()
+        if hasattr(self, 'f'):
+            self.f.close()
 
-            Args:
-                self: The reserved object 'self'
-            """
-            
-            JsonString = self.f.read();
-            try:
-                self.J = json.loads(JsonString)
-            except:
-                self.J = {'status':'Ok'}
- 
-        def writeJson(self):
-            """Save parameters in the file
+    def readJson(self):
+        """Get the data from the lock file
+        Args:
+            self: The reserved object 'self'
+        """
 
-            Args:
-                self: The reserved object 'self'
-            """
-            rezult = {'status': self.results.status, 
-                      'processName':self.results.processName, 
-                      'processdate': str(self.results.processdate)}
-            JsonString = json.dumps(rezult, sort_keys=True, indent=4 * ' ')
-            self.f.truncate()
-            self.f.write(JsonString)
-            self.f.flush()
-            
+        JsonString = self.f.read()
+        try:
+            self.J = json.loads(JsonString)
+        except:
+            self.J = {'status':'Ok'}
+
+    def writeJson(self):
+        """Save parameters in the file
+        Args:
+            self: The reserved object 'self'
+        """
+        rezult = {'status': self.results.status,
+                  'processName':self.results.processName,
+                  'processdate': str(self.results.processdate)}
+        JsonString = json.dumps(rezult, sort_keys=True, indent=4 * ' ')
+        self.f.truncate()
+        self.f.write(JsonString)
+        self.f.flush()
+
 class LockResults(object):
     """Class for saving the data processing results (for LockSubprocess)"""
- 
+
     def __init__(self, processName):
         """Class initialization procedure
 
@@ -364,7 +358,7 @@ class LockResults(object):
         self.status = "Running"
         self.processdate = datetime.now()
         self.processName = processName
- 
+
     def GetStatusTxt(self):
         """Get status description
 

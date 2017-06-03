@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
+"""
+    Test procedure module
+"""
 
 import unittest
+import GISPythonModule
 
 class Pr(object):
+    """Defines test parameters"""
     OutDir = 'C:\\GIS\\Log\\Outlog\\' # Output file directory
-    OutDirArh = 'C:\\GIS\Log\\Outlog\\Archive\\' # Output file archive directory
+    OutDirArh = 'C:\\GIS\\Log\\Outlog\\Archive\\' # Output file archive directory
     ErrorLogDir = 'C:\\GIS\\Log\\ErrorLog\\' # Error output file directory
     ErrorLogDirArh = 'C:\\GIS\\Log\\ErrorLog\\Archive\\' # Error output file archive directory
 
@@ -14,7 +19,6 @@ class GISTools_unittest(unittest.TestCase):
     def setUp(self):
         """The Test setting up procedure"""
         print u"Preparing for tests..."
-        import GISPythonModule
         self.Module = GISPythonModule.GISPythonModule('Unittest', Pr)
         self.Module.initModule()
         #don't catch errors in the file

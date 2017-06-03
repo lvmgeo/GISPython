@@ -4,7 +4,6 @@
 """
 import os
 import shutil
-import unicodedata
 from datetime import date, datetime, timedelta
 import stat
 import fnmatch
@@ -12,16 +11,16 @@ import SimpleFileOps
 
 class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
     """Class for easing the most typical file and filesystem operations"""
-    def __init__(self, _Tool): 
+    def __init__(self, _Tool):
         """Class initialization procedure
 
         Args:
-            self: The reserved object 'self' 
+            self: The reserved object 'self'
             Tool: The 'GISTools10' object for data processing
         """
-        super(SimpleFileOpsSafe,self).__init__(_Tool)
+        super(SimpleFileOpsSafe, self).__init__(_Tool)
 
-    def ClearDir(self, DirName, searchPatern = '*'): # Overriding 
+    def ClearDir(self, DirName, searchPatern = '*'): # Overriding
         """Directory cleaning automation procedure
 
         Args:
@@ -32,7 +31,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         self._clear_dir(DirName, searchPatern)
         self.Tool.AddMessage(u"    ... directory [" +  DirName + u"] cleaned ")
 
-    def DelClearDir(self, DirName): # Overriding 
+    def DelClearDir(self, DirName): # Overriding
         """Delete non-empty directory
 
         Args:
@@ -44,7 +43,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         os.rmdir(DirName)
         self.Tool.AddMessage(u"    ... directory [" +  DirName + u"] deleted ")
 
-    def BackupFiles(self, InDirName, OutDirName, D = 0, Ext='*'): # Overriding 
+    def BackupFiles(self, InDirName, OutDirName, D=0, Ext='*'): # Overriding
         """File archiving automation procedure
 
         Args:
@@ -59,12 +58,12 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         d = datetime(year=d.year, month=d.month, day=d.day)
         for file in self.FindFileByDate(InDirName, Ext, d, 'Old'):
             self.BackupOneFile(file, os.path.join(OutDirName, os.path.basename(file)))
-    
-    def BackupOneFile(self, InFileName, OutDirName): # Overriding 
+
+    def BackupOneFile(self, InFileName, OutDirName): # Overriding
         """Specific file archiving automation procedure
 
         Args:
-            self: The reserved object 'self' 
+            self: The reserved object 'self'
             InFileName: Input file
             OutDirName: Output directory
         """
@@ -120,7 +119,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         return stat.S_ISDIR(mode)
 
 
-    def _clear_dir(self, path_, pattern = '*'):
+    def _clear_dir(self, path_, pattern='*'):
         """Clear directory contents
 
         Args:

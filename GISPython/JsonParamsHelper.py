@@ -3,9 +3,9 @@
      Module for Json parameter file procedures
 """
 
-import simplejson as json
+import os
 import codecs
-import os, sys
+import simplejson as json
 
 class JsonParams(object):
     """Json parameter reading support class"""
@@ -30,14 +30,13 @@ class JsonParams(object):
         Args:
             self: The reserved object 'self'
         """
-        
-        f = codecs.open(self.ConfigPath,'r', 'utf-8')
-        JsonString = f.read();
-        f.close();
+        f = codecs.open(self.ConfigPath, 'r', 'utf-8')
+        JsonString = f.read()
+        f.close()
         J = json.loads(JsonString)
         self.Params = J
         return self.Params
- 
+
     def WriteParams(self):
         """Save parameters in the parameter file
 
@@ -45,6 +44,6 @@ class JsonParams(object):
             self: The reserved object 'self'
         """
         JsonString = json.dumps(self.Params, sort_keys=True, indent=4 * ' ')
-        f = codecs.open(self.ConfigPath,'w', 'utf-8')
+        f = codecs.open(self.ConfigPath, 'w', 'utf-8')
         f.write(JsonString)
         f.close()

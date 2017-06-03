@@ -4,23 +4,23 @@
 """
 
 class GDPSyncroniserHelper(object):
-     """ESRI table synchronization class"""
+    """ESRI table synchronization class"""
 
-     def __init__(self, gp, Tool=None):
-            """Class initialization operation
+    def __init__(self, gp, Tool=None):
+        """Class initialization operation
 
-            Args:
-                self: The reserved object 'self'
-                gp: ArcPy GP object
-            """
-            self.gp = gp
-            if not Tool == None:
-                self.isTool = True
-            else:
-                self.isTool = False
-            self.Tool = Tool
+        Args:
+            self: The reserved object 'self'
+            gp: ArcPy GP object
+        """
+        self.gp = gp
+        if Tool != None:
+            self.isTool = True
+        else:
+            self.isTool = False
+        self.Tool = Tool
 
-     def AddWarning(self, str):
+    def AddWarning(self, str):
         """Wrapper for the 'AddWarning' procedure
 
         Args:
@@ -32,7 +32,7 @@ class GDPSyncroniserHelper(object):
         else:
             self.gp.AddWarning(str)
 
-     def AddMessage(self, str):
+    def AddMessage(self, str):
         """Wrapper for the 'AddMessage' procedure
 
         Args:
@@ -44,7 +44,7 @@ class GDPSyncroniserHelper(object):
         else:
             self.gp.AddMessage(str)
 
-     def DoSync(self, definition, workspace = None, startEditing = False, startOperation = False, with_undo = False, multiuser = False):
+    def DoSync(self, definition, workspace=None, startEditing=False, startOperation=False, with_undo=False, multiuser=False):
         """Data synchronization procedure
 
         Args:
@@ -57,14 +57,14 @@ class GDPSyncroniserHelper(object):
             multiuser: Sets whether a DB contains a nonversioned, or versioned dataset. (Default = False)
 
         Returns:
-            output: Returns the report about the process execution
-            outputErrors: Returns the error description
+            * output - Returns the report about the process execution
+            * outputErrors - Returns the error description
         """
         outputErrors = u""
         output = u""
 
         if definition.inTableQuery != None:
-             hasInQuery = True
+            hasInQuery = True
         else:
             hasInQuery = False
 
@@ -79,14 +79,14 @@ class GDPSyncroniserHelper(object):
         if hasInQuery:
             self.AddMessage(u'>>>>>>>>Input query: [{0}]'.format(definition.inTableQuery))
         self.AddMessage(u'>>>>>>>>Output fields: [{0}]'.format(", ".join(definition.outTableFields)))
-        
+
         if startEditing or startOperation:
             edit = self.gp.da.Editor(workspace)
         if startEditing:
             edit.startEditing(with_undo, multiuser)
         if startOperation:
             edit.startOperation()
-        
+
         with self.gp.da.SearchCursor(definition.inTable, inFields, definition.inTableQuery) as cur:
             i = 0
             j = 0
@@ -119,38 +119,36 @@ class GDPSyncroniserHelper(object):
             edit.stopEditing(True)
 
         if self.isTool:
-           self.AddMessage(u'>>>> ...Processed [{0}], stored [{1}], faulty [{2}]'.format(j, i, err))
-           output = u'Processed [{0}], stored [{1}], faulty [{2}]'.format(j, i, err)
+            self.AddMessage(u'>>>> ...Processed [{0}], stored [{1}], faulty [{2}]'.format(j, i, err))
+            output = u'Processed [{0}], stored [{1}], faulty [{2}]'.format(j, i, err)
 
         return output, outputErrors
 
-     def __DoSyncRow(self, inRow, outTable, outTableFields, outTableJoinField, messageString, idvalueseparator, createNew):
-         """Procedure performs row synchronization
+    def __DoSyncRow(self, inRow, outTable, outTableFields, outTableJoinField, messageString, idvalueseparator, createNew):
+        """Procedure performs row synchronization
 
-         Args:
-             self: The reserved object 'self'
-             inRow: Row to synchronize
-             outTable: Output table
-             outTableFields: Output table fields
-             outTableJoinField: Output table join field
-             messageString: Output message formatting
-             createNew: Create new record if needed
+        Args:
+            self: The reserved object 'self'
+            inRow: Row to synchronize
+            outTable: Output table
+            outTableFields: Output table fields
+            outTableJoinField: Output table join field
+            messageString: Output message formatting
+            createNew: Create new record if needed
 
-         Returns:
-             output: 
-                 0, If no changes were necessary
-                 1, If there were any changes
-                 Error description (in case there were errors)
-         """
-         if inRow[0] == None:
-             return u"Error: join field is empty " + messageString.format(*inRow)
+        Returns:
+            * output - 0, If no changes were necessary; 1, If there were any changes
+            * Error description (in case there were errors)
+        """
+        if inRow[0] == None:
+            return u"Error: join field is empty " + messageString.format(*inRow)
 
-         with self.gp.da.UpdateCursor(outTable, outTableFields, '{0} = {2}{1}{2}'.format(outTableJoinField, inRow[0], idvalueseparator)) as cur:
+        with self.gp.da.UpdateCursor(outTable, outTableFields, '{0} = {2}{1}{2}'.format(outTableJoinField, inRow[0], idvalueseparator)) as cur:
             output = 0
             i = 0
             foundRow = False
             for row in cur:
-                if i==0:
+                if i == 0:
                     foundRow = True
                     output, row = self.__DoSyncFields(inRow, row)
                     if output == 1:
@@ -158,7 +156,7 @@ class GDPSyncroniserHelper(object):
                     i = i+1
                 else:
                     return u"Error: row in the results table is not unique" + messageString.format(*inRow)
-         
+
             if not foundRow:
                 if createNew:
                     with self.gp.da.InsertCursor(outTable, outTableFields) as insCur:
@@ -170,27 +168,24 @@ class GDPSyncroniserHelper(object):
 
             return output
 
-     def __DoSyncFields(self, inRow, outRow):
-         """Procedure performs the field synchronization
+    def __DoSyncFields(self, inRow, outRow):
+        """Procedure performs the field synchronization
 
-         Args:
-             self: The reserved object 'self'
-             inRow: Row to synchronize
-             outRow: Row to which synchronize
+        Args:
+            self: The reserved object 'self'
+            inRow: Row to synchronize
+            outRow: Row to which synchronize
 
-         Returns:
-             output: 
-                 0, If no changes were necessary
-                 1, If there were any changes
-             outRow: Altered row
-         """
-         output = 0
-         for x in range(0, len(inRow)):
-             if inRow[x] != outRow[x]:
-                 outRow[x] = inRow[x]
-                 output = 1
-         return output, outRow
-
+        Returns:
+            * output - 0, If no changes were necessary; 1, If there were any changes
+            * outRow - Altered row
+        """
+        output = 0
+        for x in range(0, len(inRow)):
+            if inRow[x] != outRow[x]:
+                outRow[x] = inRow[x]
+                output = 1
+        return output, outRow
 
 class SyncDefinition(object):
     """Synchronization definition description class"""

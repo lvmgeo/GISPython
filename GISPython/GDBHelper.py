@@ -8,7 +8,7 @@ import uuid
 class GDBHelper:
     """Class for easing the ESRI geodatabase operations"""
 
-    def __init__(self, gp, Tool = None):
+    def __init__(self, gp, Tool=None):
         """Class initialization procedure
 
         Args:
@@ -33,7 +33,7 @@ class GDBHelper:
             self.Tool.OutputMessages(str)
 
 
-    def GetDSConnectedElements(self, ConnDBSchema, DBName, IncludeMe = False):
+    def GetDSConnectedElements(self, ConnDBSchema, DBName, IncludeMe=False):
         """Function defines all the tables which are linked with the FeatureDataset
 
         Args:
@@ -43,16 +43,16 @@ class GDBHelper:
             IncludeMe: Optional. Default = False. Indicates if DB classes will be returned in the returned list
 
         Returns:
-            Result list with the found object classes
+            * Result list with the found object classes
         """
         self.gp.env.workspace = ConnDBSchema + '\\' + DBName
         fcs = self.gp.ListFeatureClasses()
         DSfcs = fcs
-        ResultList=list()
-        if DSfcs!=None:
+        ResultList = list()
+        if DSfcs != None:
             for fc in fcs:
                 self.gp.AddMessage(u'            ... searching relations ' + fc)
-                dfc=self.gp.Describe(fc)
+                dfc = self.gp.Describe(fc)
                 ResultList = list(set(self.GetRelations(ConnDBSchema, dfc, ResultList) + ResultList))
             for x in DSfcs:
                 if x in ResultList:
@@ -62,7 +62,7 @@ class GDBHelper:
                 for x in DSfcs:
                     DSfcs2.append(DBName + '\\' + x)
                 ResultList = list(set(ResultList + DSfcs2))
-        return ResultList 
+        return ResultList
 
     def GetRelations(self, ConnDBSchema, dfc, existingObjects):
         """Auxiliary function for 'GetDSConnectedElements' function
@@ -80,17 +80,17 @@ class GDBHelper:
         rcs = dfc.relationshipClassNames
         ResultList = list()
         for rc in rcs:
-            drc=self.gp.Describe(ConnDBSchema + '\\' + rc)
+            drc = self.gp.Describe(ConnDBSchema + '\\' + rc)
             if drc.dataType == "RelationshipClass":
-                origins=drc.originClassNames
+                origins = drc.originClassNames
                 destinations = drc.destinationClassNames
                 ResultList = list(set(ResultList + origins))
                 ResultList = list(set(ResultList + destinations))
             else:
                 self.gp.AddWarning(u'        ...Descriptive object for relational class [' + ConnDBSchema + '\\' + rc + u'] not found')
         for x in existingObjects:
-                if x in ResultList:
-                    ResultList.remove(x)
+            if x in ResultList:
+                ResultList.remove(x)
         for x in ResultList:
             dfc2 = self.gp.Describe(ConnDBSchema + '\\' + x)
             existingObjects = list(set(existingObjects + self.GetRelations(ConnDBSchema, dfc2, existingObjects)))
@@ -99,7 +99,7 @@ class GDBHelper:
     def CalculateXY(self, Layer, Field, type, Query):
         """Function for calculating the fields X and Y
 
-        Args: 
+        Args:
             self: The reserved object 'self'
             Layer:  Input layer
             Field: The field to be calculated
@@ -111,23 +111,23 @@ class GDBHelper:
         codeBlock = "def getcord(typ, Cent=''):\\n    Cent = Cent.replace('\\\"', '')\\n    if typ == 'X':\\n        if not Cent == '':\\n            return float(Cent.split()[0])\\n        else:\\n            return 0\\n    else:\\n        if not Cent == '':\\n            return float(Cent.split()[1])\\n        else:\\n            return 0\\n"
 
         CalcLayer = (self.gp.MakeTableView_management(Layer, "#" + Field, Query, "#")).getOutput(0)
-        if type=='X':
-            self.gp.CalculateField_management(CalcLayer, Field,  xExpression, "PYTHON", codeBlock)
+        if type == 'X':
+            self.gp.CalculateField_management(CalcLayer, Field, xExpression, "PYTHON", codeBlock)
         else:
-            self.gp.CalculateField_management(CalcLayer, Field,  yExpression, "PYTHON", codeBlock)
+            self.gp.CalculateField_management(CalcLayer, Field, yExpression, "PYTHON", codeBlock)
 
     def HasField(self, ConnDBSchema, Table, Field):
         """Function determines if field already exists in the table
 
-        Args: 
+        Args:
             self: The reserved object 'self'
             ConnDBSchema: Connection to the DB schema
             Table: Table
             Field: The field to be calculated
         """
         self.gp.env.workspace = ConnDBSchema
-        dt=self.gp.Describe(Table)
-        fs=dt.fields
+        dt = self.gp.Describe(Table)
+        fs = dt.fields
         for f in fs:
             if f.name.upper() == Field.upper():
                 return True
@@ -136,7 +136,7 @@ class GDBHelper:
     def DelleteField(self, ConnDBSchema, TABLENAME, FIELDNAME):
         """Function eases work with the ESRI field deletion function DeleteField_management
 
-        Args: 
+        Args:
             self: The reserved object 'self'
             ConnDBSchema: Connection to the DB schema
             Table: Table
@@ -154,7 +154,7 @@ class GDBHelper:
     def CreateIndex(self, ConnDBSchema, TABLENAME, FIELDNAME):
         """Function eases work with the ESRI indexing function 'AddIndex_management'
 
-        Args: 
+        Args:
             self: The reserved object 'self'
             ConnDBSchema: Connection to the DB schema
             Table: The table
@@ -169,12 +169,12 @@ class GDBHelper:
             self.OutputMessages()
         else:
             self.AddWarning(u'      ...Cannot create the index [{2}] for the field [{0}.{1}] because the field does not exist'.format(TABLENAME, FIELDNAME, idxName))
-       
 
-    def DelleteObject(self, ConnDBSchema, ObjectName, ObjectType = '#'):
+
+    def DelleteObject(self, ConnDBSchema, ObjectName, ObjectType='#'):
         """Function eases work with the ESRI object deletion function 'Delete_management'
 
-        Args: 
+        Args:
             self: The reserved object 'self'
             ConnDBSchema: Connection to the DB schema
             ObjectName: Object to be deleted
@@ -189,7 +189,7 @@ class GDBHelper:
     def DelleteDomain(self, ConnDBSchema, ObjectName):
         """Function eases work with the ESRI domain deletion function 'DeleteDomain_management'
 
-        Args: 
+        Args:
             self: The reserved object 'self'
             ConnDBSchema: Connection to the DB schema
             ObjectName: The domain to be deleted
@@ -200,10 +200,10 @@ class GDBHelper:
             self.AddWarning(u'Failed to delete the domain [' +  ObjectName + ']')
         self.OutputMessages()
 
-    def ClearData(self, ConnDBSchema, ObjectName, ObjectType = "TABLE"):
+    def ClearData(self, ConnDBSchema, ObjectName, ObjectType="TABLE"):
         """Function eases feature deletion from layers and tables
 
-        Args: 
+        Args:
             self: The reserved object 'self'
             ConnDBSchema: Connection to the DB schema
             ObjectName: The table or layer containing features to be deleted
@@ -228,11 +228,11 @@ class GDBHelper:
         """
         Options = DecodeDict
         if val in Options:
-          return Options[val]
+            return Options[val]
         else:
-          return val
+            return val
 
-    def DecodeField(self, Layer, Field, DecodeField, DecodeDict, Query = None, workspace = None, startEditing = False, startOperation = False, with_undo = False, multiuser = False):
+    def DecodeField(self, Layer, Field, DecodeField, DecodeDict, Query=None, workspace=None, startEditing=False, startOperation=False, with_undo=False, multiuser=False):
         """Function does field value recalculation decoding values from one to another. Used, for example, in clasificator value recalculation.
 
         Args:
@@ -246,31 +246,30 @@ class GDBHelper:
             startEditing: Start the edit session in the DB specified in the 'workspace' parameter
             startEditing: Start the edit operation in the DB specified in the 'workspace' parameter
             with_undo: Sets whether the undo and redo stacks are enabled or disabled for an edit session.
-            multiuser: When False, you have full control of editing a nonversioned, or versioned dataset.                
+            multiuser: When False, you have full control of editing a nonversioned, or versioned dataset.
         """
         if self.isTool:
             self.Tool.AddMessage(u'>>>>Executing the layer ' + uni(Layer) + u' field ' + uni(Field) + u' decoding ' + uni(DecodeDict) + u' after field ' + uni(DecodeField) + u' records after query ' + uni(Query) + ' - ' + self.Tool.MyNow())
-                
-        
+
         if startEditing or startOperation:
             edit = self.gp.da.Editor(workspace)
         if startEditing:
             edit.startEditing(with_undo, multiuser)
         if startOperation:
             edit.startOperation()
-        
+
         if Field != DecodeField:
             with self.gp.da.UpdateCursor(Layer, [Field, DecodeField], Query) as cur:
-                i=0
+                i = 0
                 for row in cur:
-                    row[0]=self.Decode(row[1],DecodeDict)
+                    row[0] = self.Decode(row[1], DecodeDict)
                     cur.updateRow(row)
                     i += 1
         else:
-             with self.gp.da.UpdateCursor(Layer, [Field], Query) as cur:
-                i=0
+            with self.gp.da.UpdateCursor(Layer, [Field], Query) as cur:
+                i = 0
                 for row in cur:
-                    row[0]=self.Decode(row[0],DecodeDict)
+                    row[0] = self.Decode(row[0], DecodeDict)
                     cur.updateRow(row)
                     i += 1
 
@@ -280,13 +279,13 @@ class GDBHelper:
             edit.stopEditing(True)
 
         if self.isTool:
-           self.Tool.AddMessage(u'>>>> ...Processed  ' + str(i) + u' rows')
+            self.Tool.AddMessage(u'>>>> ...Processed  ' + str(i) + u' rows')
 
 
 class RowHelper:
     """Row processing class"""
-    
-    def __init__(self, gp, Tool = None):
+
+    def __init__(self, gp, Tool=None):
         """Class initialization procedure
 
         Args:
@@ -300,7 +299,7 @@ class RowHelper:
             self.isTool = False
         self.Tool = Tool
 
-    def GetUniqueValues(self, festureClass, getField, where_clause = None):
+    def GetUniqueValues(self, festureClass, getField, where_clause=None):
         """Get unique values from the field in the table (Only in DB)
 
         Args:
@@ -310,7 +309,7 @@ class RowHelper:
             where_clause: SQL WHERE clause to obtain the data
         """
         rezultList = list()
-        with self.gp.da.SearchCursor(festureClass, field_names = (getField), where_clause = where_clause, sql_clause = ('Distinct', None)) as cursor:
+        with self.gp.da.SearchCursor(festureClass, field_names=(getField), where_clause=where_clause, sql_clause=('Distinct', None)) as cursor:
             for row in cursor:
                 rezultList.append(row[0])
         return rezultList
@@ -328,7 +327,7 @@ class RowHelper:
                                 For example - a field with the index 0 in the list of fields with 'outStringformat' parameter value: u"faulty feature OID: {0}" will return the string: u"faulty feature OID: 123", where 123 is the 'objectid' field value for found record.
         """
         rezultList = []
-        with self.gp.da.SearchCursor(festureClass, field_names = fields, where_clause = where_clause) as cursor:
+        with self.gp.da.SearchCursor(festureClass, field_names=fields, where_clause=where_clause) as cursor:
             for row in cursor:
                 rezultList.append(outStringformat.format(*row))
         return rezultList
@@ -348,7 +347,7 @@ class RowHelper:
                                 For example - a field with the index 0 in the list of fields with 'outStringformat' parameter value: u"faulty feature OID: {0}" will return the string: u"faulty feature OID: 123", where 123 is the 'objectid' field value for found record.
         """
         rezultList = []
-        with self.gp.da.SearchCursor(festureClass, field_names = fields, where_clause = where_clause) as cursor:
+        with self.gp.da.SearchCursor(festureClass, field_names=fields, where_clause=where_clause) as cursor:
             for row in cursor:
                 if not row[fields.index(getField)] in valuelist:
                     rezultList.append(outStringformat.format(*row))

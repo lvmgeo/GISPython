@@ -2,19 +2,20 @@
 """
      Zip file operations module
 """
-import zipfile, os
+import os
+import zipfile
 
 class ZipHelper:
     """Class for easing the Zip file operations"""
 
     def __init__(self):
-         """Class initialization procedure
+        """Class initialization procedure
 
-         Args:
-             self: The reserved object 'self'
-         """
-    
-    def CompressFile(filePath, zipFileName):
+        Args:
+            self: The reserved object 'self'
+        """
+
+    def CompressFile(self, filePath, zipFileName):
         """Compress file
 
         Args:
@@ -23,10 +24,10 @@ class ZipHelper:
             zipFileName: New Zip file path + name
         """
         zfile = zipfile.ZipFile(zipFileName, "w", zipfile.ZIP_DEFLATED)
-        zfile.write(filePath, arcname = zfile.write(filePath, arcname = os.path.basename(filePath)))
+        zfile.write(filePath, arcname=zfile.write(filePath, arcname=os.path.basename(filePath)))
         zfile.close()
 
-    def CompressFileList(filePathList, zipFileName):
+    def CompressFileList(self, filePathList, zipFileName):
         """Zip all files in the list
 
         Args:
@@ -36,7 +37,7 @@ class ZipHelper:
         """
         zfile = zipfile.ZipFile(zipFileName, "w", zipfile.ZIP_DEFLATED)
         for filePath in filePathList:
-            zfile.write(filePath, arcname = os.path.basename(filePath))
+            zfile.write(filePath, arcname=os.path.basename(filePath))
         zfile.close()
 
     def CompressDir(self, dirPath, zipFileName, excludeExt=[]):
@@ -56,9 +57,9 @@ class ZipHelper:
                     if filePath.endswith(ext):
                         doCompress = False
                 if doCompress:
-                    zfile.write(os.path.join(root, filePath), arcname = os.path.basename(filePath))
+                    zfile.write(os.path.join(root, filePath), arcname=os.path.basename(filePath))
         zfile.close()
-    
+
     def ExtractZipFile(self, zipFileName, destPath):
         """Extracts the compressed file
 

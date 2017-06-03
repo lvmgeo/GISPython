@@ -36,12 +36,12 @@ class MailHelper:
         from email.mime.base import MIMEBase
         from email import encoders
         part = MIMEBase('application', "octet-stream")
-        part.set_payload( open(FilePath, "rb").read() )
+        part.set_payload(open(FilePath, "rb").read())
         encoders.encode_base64(part)
         part.add_header('Content-Disposition', 'attachment; filename="{0}"'.format(os.path.basename(FilePath)))
         self.msg.attach(part)
-        
-    def SendMessage(self, Mailserver, port = None, user = None, password = None, useTLS = False, useSSL = False):
+
+    def SendMessage(self, Mailserver, port=None, user=None, password=None, useTLS=False, useSSL=False):
         """Procedure for sending an e-mail
 
         Args:

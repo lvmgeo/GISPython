@@ -3,8 +3,10 @@
      Module for the GISPython module frame and code unification
 """
 
+import sys
+import os
+import traceback
 import SysGISTools
-import sys, os
 import MailHelper
 import MyError
 
@@ -12,7 +14,7 @@ class GISPythonModule(object):
     """Interface class for all the GISPython modules. Interface class allows
     the code unification, and ensures the code execution from both the
     ArcGIS Desktop Python console and the Command Prompt.
-    
+
     Standalone tool execution:
         SetName('Tool Name')
         DoJob()
@@ -22,7 +24,7 @@ class GISPythonModule(object):
         Get the tool name with the command 'PrintText()'
         mainModule()
     """
-    def __init__(self, ToolName, SysGISParams, ExecutePatch = __file__, statusMailRecipients=[], errorMailRecipients=[]):
+    def __init__(self, ToolName, SysGISParams, ExecutePatch=__file__, statusMailRecipients=[], errorMailRecipients=[]):
         """Initialize the tool and the tool parameters
 
         Args:
@@ -49,11 +51,11 @@ class GISPythonModule(object):
             self.errorMailRecipients = errorMailRecipients
             if  hasattr(self.Pr, 'MailErrorRecipientsAlways'):
                 self.errorMailRecipients = self.errorMailRecipients + self.Pr.MailErrorRecipientsAlways
-            if not self.statusMailRecipients==[]:
+            if self.statusMailRecipients != []:
                 self.DoMailOutput = True
-            if not self.errorMailRecipients==[]:
+            if self.errorMailRecipients != []:
                 self.DoMailErrOutput = True
-        
+
     def runInsideJob(self, Tool):
         """Procedure executes the tool, if it's to be executed within an another Python tool
 
@@ -65,18 +67,17 @@ class GISPythonModule(object):
         self.PrintText()
         self.mainModule()
 
-    def mainModule(self): 
+    def mainModule(self):
         """Rewritable procedure which contains the logic of the module
         """
         raise NotImplementedError
 
-    def initModule(self): 
+    def initModule(self):
         """Procedure which initializes the GISPython environment, if the tool runs as a standalone tool
         """
         self.Tool = SysGISTools.GISTools10(self.ToolName, self.Pr)
         sys.stderr = self.Tool.fLog
         self.Tool.ExecutePatch = self.ExecutePatch
-        
 
     def SetTool(self, Tool):
         """Sets up the GISPython environment object, if the tool runs within an another tool
@@ -115,36 +116,35 @@ class GISPythonModule(object):
             self.MyDispose()
         except Exception, e:
             # If an error occurred, print line number and error message
-            import traceback, sys
             tb = sys.exc_info()
             orgLine = "Line %i" % tb[2].tb_lineno
             orgTraceback = unicode(traceback.format_exc(), errors='ignore')
-            if hasattr(self, 'Tool'): 
+            if hasattr(self, 'Tool'):
                 try:
-                  if not (self.Tool.State == "Disposed" or self.Tool.gp == None):
-                    self.Tool.AddWarning(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
-                    try:
-                        self.Tool.AddWarning(u'Raw tool error {0} - {1}'.format(self.ToolName, self.Tool.MyNow()))
-                    except:
-                        None
-                    self.Tool.AddWarning(orgLine)
-                    self.Tool.AddError(orgTraceback)
-                    self.Tool.AddWarning(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
-                    self.Tool.AddWarning(u'GP tool output')
-                    self.Tool.AddWarning(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
-                    self.Tool.OutputErrors()
-                    if self.DoMailErrOutput:
-                        if not self.Tool.OutputErrStr == u'':
-                            MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'Error {0} - {1}', self.ToolName, self.Tool.MyNow()), self.Tool.OutputErrStr)
-                  else:
-                    print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
-                    print(u'Raw tool error {0}'.format(self.ToolName))
-                    print(orgLine)
-                    print(orgTraceback)
-                    print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
-                    if self.DoMailErrOutput:
-                        MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'Critical error {0}', self.ToolName), orgLine + '\n' + orgTraceback)
-                    raise
+                    if not (self.Tool.State == "Disposed" or self.Tool.gp == None):
+                        self.Tool.AddWarning(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+                        try:
+                            self.Tool.AddWarning(u'Raw tool error {0} - {1}'.format(self.ToolName, self.Tool.MyNow()))
+                        except:
+                            None
+                        self.Tool.AddWarning(orgLine)
+                        self.Tool.AddError(orgTraceback)
+                        self.Tool.AddWarning(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+                        self.Tool.AddWarning(u'GP tool output')
+                        self.Tool.AddWarning(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+                        self.Tool.OutputErrors()
+                        if self.DoMailErrOutput:
+                            if self.Tool.OutputErrStr != u'':
+                                MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'Error {0} - {1}', self.ToolName, self.Tool.MyNow()), self.Tool.OutputErrStr)
+                    else:
+                        print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+                        print(u'Raw tool error {0}'.format(self.ToolName))
+                        print(orgLine)
+                        print(orgTraceback)
+                        print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+                        if self.DoMailErrOutput:
+                            MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'Critical error   {0}', self.ToolName), orgLine + '\n' + orgTraceback)
+                        raise
                 except Exception, ex:
                     print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
                     print(u'Raw tool error {0}'.format(self.ToolName))
@@ -176,7 +176,7 @@ class GISPythonModuleArgsHelper(object):
         self.mainModuleValue = None
         self.SetInitValue(InitValue)
 
-    def processArgument(self, argumentNumber = 1):
+    def processArgument(self, argumentNumber=1):
         """Procedure processes a parameter acquisition from the argument
 
         Args:
@@ -198,7 +198,7 @@ class GISPythonModuleArgsHelper(object):
         """
         self.initValue = value
         if self.initValue == '#':
-                self.initValue = None
+            self.initValue = None
 
     def SetMainModuleValue(self, value):
         """Procedure processes a parameter setup from the base module of the tool
@@ -209,9 +209,9 @@ class GISPythonModuleArgsHelper(object):
         """
         self.mainModuleValue = value
         if self.mainModuleValue == '#':
-                self.mainModuleValue = None
+            self.mainModuleValue = None
 
-    def GetResultValue(self, asBool = False, Default = None):
+    def GetResultValue(self, asBool=False, Default=None):
         """Procedure makes a choice from the given attributes
 
         Args:
@@ -219,7 +219,7 @@ class GISPythonModuleArgsHelper(object):
             value: Setup value
         """
         candidate = Default
-        
+
         if self.argumentValue != None:
             candidate = self.argumentValue
         else:

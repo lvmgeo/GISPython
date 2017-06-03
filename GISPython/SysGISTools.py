@@ -6,7 +6,7 @@
 import datetime
 import codecs
 import arcpy
-import SysGISToolsSysParams # neizmantojas
+import SysGISToolsSysParams
 import os, shutil
 import subprocess
 import shlex
@@ -39,7 +39,7 @@ class GISTools10:
         OutDirArh = self.Pr.OutDirArh
         self.StartTime = datetime.datetime.now()
         self.gp = arcpy
-        self.GDBHelper = GDBHelper.GDBHelper(self.gp) # neizmantojas
+        self.GDBHelper = GDBHelper.GDBHelper(self.gp)
         self.ToolName = ToolName
         self.SR = MySR()
         self.OutputStr = u''
@@ -75,7 +75,7 @@ class GISTools10:
         gpOutput = self.callGPSilent(functionName, *args)
         self.OutputMessages()
         return gpOutput
-    
+
     def callGPSilent(self, functionName, *args):
         """Function to call the arcPy GP functions without output
 
@@ -115,7 +115,7 @@ class GISTools10:
         self.fLog.close()
         self.State = "Disposed"
 
-    def OutputMessages(self, ErrorSeverity = 2):
+    def OutputMessages(self, ErrorSeverity=2):
         """Procedure to output messages stored in the GP object
 
         Args:
@@ -164,7 +164,7 @@ class GISTools10:
             self.fLog.flush()
         self.AddMessage('--------------------------------------------')
 
-    def _runProcess(self, exe, noErr=False, Detached = False):  
+    def _runProcess(self, exe, noErr=False, Detached=False):
         """Shell command execution support function (see the runShell function)
 
         Args:
@@ -177,29 +177,29 @@ class GISTools10:
         lines = list()
         if Detached == True:
             DETACHED_PROCESS = 0x00000010
-            p = subprocess.Popen( exe, creationflags=DETACHED_PROCESS, stdout=None, stderr=None, shell=True, universal_newlines=True, close_fds=True) #, env={'LANG':'C'})
+            p = subprocess.Popen(exe, creationflags=DETACHED_PROCESS, stdout=None, stderr=None, shell=True, universal_newlines=True, close_fds=True) #, env={'LANG':'C'})
         else:
-            p = subprocess.Popen( exe, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, universal_newlines=True) #, env={'LANG':'C'})
-            while(True):
+            p = subprocess.Popen(exe, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, universal_newlines=True) #, env={'LANG':'C'})
+            while True:
                 retcode = p.poll() #returns None while subprocess is running
                 str = p.stdout.readline()
-                if str!='':
+                if str != '':
                     self.AddMessage(u'>>>>' + self._tryCovertStringEncoding(str), True)
                 lines.append(str)
-                if(retcode is not None):
+                if retcode is not None:
                     break
-            errlines = p.stderr.readlines() 
+            errlines = p.stderr.readlines()
             if not errlines == None:
                 for str in errlines:
-                        line = self._tryCovertStringEncoding(str)
-                        if line!='':
-                            if noErr==False:
-                                self.AddError('>>>>' + line, True)
-                            else:
-                                self.AddMessage('>>>>' + line, True)
+                    line = self._tryCovertStringEncoding(str)
+                    if line != '':
+                        if noErr == False:
+                            self.AddError('>>>>' + line, True)
+                        else:
+                            self.AddMessage('>>>>' + line, True)
         return lines
 
-    def runShell(self, exe, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Detached = False, Silent=False): 
+    def runShell(self, exe, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Detached=False, Silent=False):
         """Shell command execution procedure. It can detect errors in execution and can output results to screen.
 
         Args:
@@ -220,7 +220,7 @@ class GISTools10:
         if not Silent:
             self.AddMessage(u'>Done executing the Shell command. Execution time '  + str(_TD))
 
-    def outputLogfile(self, file, encoding = 'utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):
+    def outputLogfile(self, file, encoding='utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):
         """Procedure prints text file to screent - processing error keywords
 
         Args:
@@ -233,7 +233,7 @@ class GISTools10:
         with codecs.open(file, 'r', encoding) as fin:
             self._outputLines(fin.readlines(), True, noErr, ErrorStrings, Silent)
 
-    def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):    
+    def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):
         """Procedure for outputing set of lines to screen with error key word recognition. (for example for log file output processing)
 
         Args:
@@ -246,18 +246,18 @@ class GISTools10:
         isError = False
         for line in lines:
             line = self._tryCovertStringEncoding(line)
-            if line!='':
+            if line != '':
                 if doMessges == True:
                     self.AddMessage(line)
-                if noErr==False:
+                if noErr == False:
                     for ErStr in ErrorStrings:
-                        if line.upper().find(ErStr.upper())>-1:
-                            isError=True
+                        if line.upper().find(ErStr.upper()) > -1:
+                            isError = True
         for line in lines:
-                line = self._tryCovertStringEncoding(line)
-                if line!='':
-                    if isError==True:
-                        self.AddWarning('>>>>' + line)
+            line = self._tryCovertStringEncoding(line)
+            if line != '':
+                if isError == True:
+                    self.AddWarning('>>>>' + line)
 
     def _tryCovertStringEncoding(self, txt):
         """Function for working with strings in diferent encodings. Converts string from input to string in correct encoding.
@@ -269,7 +269,7 @@ class GISTools10:
         Returns:
             converted string
         """
-        if isinstance (txt,str):
+        if isinstance(txt, str):
             try:
                 txt = txt.decode(self.Pr.encodingPrimary)
             except Exception:
@@ -297,7 +297,7 @@ class GISTools10:
     def GetSQL(self, Name):
         """Function gets the SQL file location from the installation directory
 
-        Args: 
+        Args:
             self: The reserved object 'self'
             Name: Filename without an extension
 
@@ -307,12 +307,12 @@ class GISTools10:
         import inspect
         return self.ExecutePatch + '\\SQL\\' + Name + '.sql'
 
-    def RunSQL(self, Name, user = "#", pwd = "#", SpoolFile = '#', ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], params = [], DBType = 'Oracle'):
+    def RunSQL(self, Name, user="#", pwd="#", SpoolFile='#', ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], params=[], DBType='Oracle'):
         """Procedure for SQL file execution (only Oracle sqlplus supported)
         Typically used for execution, passing only SQL filename parameter
 
-        Args: 
-            self: The reserved object 'self' 
+        Args:
+            self: The reserved object 'self'
             Name: Filename without an extension
             u: Username
             p: Password
@@ -324,14 +324,14 @@ class GISTools10:
                 pwd = self.Pr.p
             if user == "#":
                 user = self.Pr.u
-            if SpoolFile=='#':
-                SpoolFile=self.Pr.OutDir + '\\' + Name + self.MyNowFile() + 'SQL.outlog'
+            if SpoolFile == '#':
+                SpoolFile = self.Pr.OutDir + '\\' + Name + self.MyNowFile() + 'SQL.outlog'
             self.AchiveFiles(self.Pr.OutDir, self.Pr.OutDirArh, Name, False)
             self.runShell('sqlplus -L ' + user + '/' + pwd + '@' + self.Pr.TNSName + ' @"' + self.GetSQL(Name) + '" "' + SpoolFile + '" ' + ' '.join(params), False, ErrorStrings)
         else:
             raise AttributeError('Provided DB Type is not supported!')
 
-    def GetPS(self, Name, Path = '#'):
+    def GetPS(self, Name, Path='#'):
         """Function gets the PowerShell file location from the installation directory
 
         Args:
@@ -342,10 +342,10 @@ class GISTools10:
             self.ExecutePatch
         return Path + '\\PShell\\' + Name + '.ps1'
 
-    def RunPS(self, Name, Args, Path = '#'):
+    def RunPS(self, Name, Args, Path='#'):
         """Procedure for the PowerShell file execution
 
-        Args: 
+        Args:
             self: The reserved object 'self'
             Name: Filename without an extension
             Args: Arguments
@@ -367,8 +367,8 @@ class GISTools10:
         if not isinstance(strMessage, unicode):
             if not isinstance(strMessage, str):
                 strMessage = str(strMessage)
-        if strMessage[-1:]=='\n':
-               strMessage=strMessage[0:-1]
+        if strMessage[-1:] == '\n':
+            strMessage = strMessage[0:-1]
         try:
             self.fOut.write(strMessage)
             self.OutputStr += strMessage
@@ -380,7 +380,7 @@ class GISTools10:
             self.gp.AddMessage(strMessage)
         except:
             print strMessage
-        if newline==True:
+        if newline == True:
             self.fOut.write('\n')
             self.OutputStr += '\n'
         self.fOut.flush()
@@ -397,8 +397,8 @@ class GISTools10:
         if not isinstance(strMessage, unicode):
             if not isinstance(strMessage, str):
                 strMessage = str(strMessage)
-        if strMessage[-1:]=='\n':
-               strMessage=strMessage[0:-1]
+        if strMessage[-1:] == '\n':
+            strMessage = strMessage[0:-1]
         try:
             self.gp.AddError(strMessage)
         except:
@@ -409,7 +409,7 @@ class GISTools10:
         except:
             self.fLog.write(self._tryCovertStringEncoding(strMessage))
             self.OutputErrStr += self._tryCovertStringEncoding(strMessage)
-        if newline==True:
+        if newline == True:
             self.fLog.write('\n')
             self.OutputErrStr += '\n'
         self.fLog.flush()
@@ -419,7 +419,7 @@ class GISTools10:
         except:
             self.fOut.write(self._tryCovertStringEncoding(strMessage))
             self.OutputStr += self._tryCovertStringEncoding(strMessage)
-        if newline==True:
+        if newline == True:
             self.fOut.write('\n')
             self.OutputStr += '\n'
         self.fOut.flush()
@@ -436,8 +436,8 @@ class GISTools10:
         if not isinstance(strMessage, unicode):
             if not isinstance(strMessage, str):
                 strMessage = str(strMessage)
-        if strMessage[-1:]=='\n':
-               strMessage=strMessage[0:-1]
+        if strMessage[-1:] == '\n':
+            strMessage = strMessage[0:-1]
         try:
             self.gp.AddWarning(strMessage)
         except:
@@ -516,7 +516,7 @@ class GISTools10:
         """
         return datetime.datetime.strftime(datetime.datetime.utcnow(), "%Y-%m-%d %H:%M:%S")
 
-    def MyNowForParam(self, minusdays = 0):
+    def MyNowForParam(self, minusdays=0):
         """Function returns formatted date (date now) for the GEO parameter processing
 
         Args:
@@ -549,7 +549,7 @@ class GISTools10:
         """
         return datetime.datetime.strptime(paramStr, "%Y-%m-%d")
 
-    def AchiveFiles(self, Dir, AchiveDir, FileName, PrintOut = True):
+    def AchiveFiles(self, Dir, AchiveDir, FileName, PrintOut=True):
         """Function moves log files to the archive
 
         Args:
@@ -562,7 +562,7 @@ class GISTools10:
         if os.path.exists(AchiveDir):
             names = os.listdir(Dir)
             for name in names:
-                if name.lower().find(FileName.lower())==0:
+                if name.lower().find(FileName.lower()) == 0:
                     if PrintOut:
                         print("        move: "  + Dir + "\\" + name + " -> " + AchiveDir + "\\" + name + "\n")
                     try:
@@ -571,8 +571,8 @@ class GISTools10:
                         print("        archiving failed : "  + Dir + "\\" + name + " -> " + AchiveDir + "\\" + name + "\n")
 
     def CorrectStr(self, Str):
-        """Function doubles symbol \ in path for some external execution compatibility
-        Args: 
+        """Function doubles symbol '\' in path for some external execution compatibility
+        Args:
             self: The reserved object 'self'
             Str: Input string
 
@@ -593,7 +593,7 @@ class GISTools10:
         Returns:
             True if the function ended successfully. False if it was terminated.
         """
-        p = Process(target=func, args=args, kwargs = kwargs)
+        p = Process(target=func, args=args, kwargs=kwargs)
         p.start()
         p.join(time)
         if p.is_alive():
@@ -610,7 +610,7 @@ class MySR():
         Args:
             self: The reserved object 'self'
         """
-        self.LKS92_0="PROJCS['LKS_1992_Latvia_TM_0',GEOGCS['GCS_LKS_1992',DATUM['D_Latvia_1992',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Transverse_Mercator'],PARAMETER['False_Easting',500000.0],PARAMETER['False_Northing',0.0],PARAMETER['Central_Meridian',24.0],PARAMETER['Scale_Factor',0.9996],PARAMETER['Latitude_Of_Origin',0.0],UNIT['Meter',1.0]]"
-        self.LKS92="PROJCS['LKS_1992_Latvia_TM',GEOGCS['GCS_LKS_1992',DATUM['D_Latvia_1992',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Transverse_Mercator'],PARAMETER['False_Easting',500000.0],PARAMETER['False_Northing',-6000000.0],PARAMETER['Central_Meridian',24.0],PARAMETER['Scale_Factor',0.9996],PARAMETER['Latitude_Of_Origin',0.0],UNIT['Meter',1.0]]"
+        self.LKS92_0 = "PROJCS['LKS_1992_Latvia_TM_0',GEOGCS['GCS_LKS_1992',DATUM['D_Latvia_1992',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Transverse_Mercator'],PARAMETER['False_Easting',500000.0],PARAMETER['False_Northing',0.0],PARAMETER['Central_Meridian',24.0],PARAMETER['Scale_Factor',0.9996],PARAMETER['Latitude_Of_Origin',0.0],UNIT['Meter',1.0]]"
+        self.LKS92 = "PROJCS['LKS_1992_Latvia_TM',GEOGCS['GCS_LKS_1992',DATUM['D_Latvia_1992',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Transverse_Mercator'],PARAMETER['False_Easting',500000.0],PARAMETER['False_Northing',-6000000.0],PARAMETER['Central_Meridian',24.0],PARAMETER['Scale_Factor',0.9996],PARAMETER['Latitude_Of_Origin',0.0],UNIT['Meter',1.0]]"
         self.WebMercator = "PROJCS['WGS_1984_Web_Mercator_Auxiliary_Sphere',GEOGCS['GCS_WGS_1984',DATUM['D_WGS_1984',SPHEROID['WGS_1984',6378137.0,298.257223563]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Mercator_Auxiliary_Sphere'],PARAMETER['False_Easting',0.0],PARAMETER['False_Northing',0.0],PARAMETER['Central_Meridian',0.0],PARAMETER['Standard_Parallel_1',0.0],PARAMETER['Auxiliary_Sphere_Type',0.0],UNIT['Meter',1.0]]"
         self.WGS84 = "GEOGCS['GCS_WGS_1984',DATUM['D_WGS_1984',SPHEROID['WGS_1984',6378137.0,298.257223563]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]]"
