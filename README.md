@@ -42,7 +42,7 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
 ## Dependencies
 
 * ArcGIS 10.x /recommended with newest patches and service packs/ (**_GISPython_** is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
-* Python 2.7 (usually included in ArcGIS installation) (arcpy module included)
+* Python 2.7 (included in ArcGIS installation) (arcpy and numpy modules included)
 * Additional python modules:
     * [PyCrypto](http://www.voidspace.org.uk/python/modules.shtml#pycrypto)
     * Paramiko: `pip install paramiko` (included in package setup process)
