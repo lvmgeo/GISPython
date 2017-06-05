@@ -313,4 +313,4 @@ We encourage developers to use LVM GEO Python Core code and also contribute to t
 
 ## Copyright
 
-![LVMGEO](https://github.com/lvmgeo/GISPython/blob/master/img/LVM_GEO-logo-PMS30.PNG "Copyright (c) 2017 LVM GEO")
+[![LVMGEO](https://github.com/lvmgeo/GISPython/blob/master/img/LVM_GEO-logo-PMS30.PNG)](http://www.lvmgeo.lv/en)
