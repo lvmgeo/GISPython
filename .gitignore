@@ -7,4 +7,4 @@ GISPython.pyproj
 GISPython.pyproj.vspscc
 copyFromSrc.py
 local_pypi.bat
-pypitest_GISPython.bat
+pypitest.bat

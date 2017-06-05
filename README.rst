@@ -1,1 +1,1 @@
-For readme see `GitHub <https://bitbucket.org/arturspd/geopythontest>`_.
+For readme see `GitHub <https://github.com/lvmgeo/GISPython>`_.
