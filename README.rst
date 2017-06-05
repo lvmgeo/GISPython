@@ -1,1 +1,0 @@
-For readme see `GitHub <https://github.com/lvmgeo/GISPython>`_.
