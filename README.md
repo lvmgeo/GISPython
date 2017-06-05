@@ -1,4 +1,4 @@
-# LVM GEO Python Core (_GISPython_)
+# ![img](http://www.lvmgeo.lv/images/lvmgeo/backgrouds/icons/python_small.svg) LVM GEO Python Core (_GISPython_)
 
 LVM GEO Python Core (_GISPython_) is an open source automation and scripting core developed by the LVM GEO team. Based on this core any developer can build simple and structured Python programming scripts with a rich functionality. The programming core allows management of all system's maintenance processes within a unified environment.
 
