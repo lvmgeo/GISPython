@@ -166,6 +166,7 @@ class GISPythonModule(object):
 
 class GISPythonModuleArgsHelper(object):
     """Class for handling the argument passing for the module in three different places:
+
     1. In the class initialization process.
     2. In the arguments.
     3. In the "main" operation call.

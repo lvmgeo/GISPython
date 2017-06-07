@@ -583,6 +583,7 @@ class GISTools10:
 
     def run_with_limited_time(self, func, args, kwargs, time):
         """Runs a function with time limit
+
         Args:
             self: The reserved object 'self'
             func: The function to run
