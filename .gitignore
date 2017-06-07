@@ -2,6 +2,7 @@
 *.egg-info
 dist/
 docs/
+docs_test/
 GEOToolBoxSetup.isproj
 GISPython.pyproj
 GISPython.pyproj.vspscc
