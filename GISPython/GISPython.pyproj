@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{a628db0b-6417-4cad-b8cd-e5fe2e0838e9}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>AGServerHelpaer.py</StartupFile>
+    <StartupFile>__init__.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -22,7 +22,7 @@
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AGServerHelpaer.py" />
+    <Compile Include="AGServerHelper.py" />
     <Compile Include="CachingHelper.py" />
     <Compile Include="FTPHleper.py" />
     <Compile Include="GDBHelper.py" />
