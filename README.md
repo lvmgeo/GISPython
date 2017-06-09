@@ -19,26 +19,27 @@ The Core also includes tools that simplify usage of ArcPy and Python functions, 
 The LVM GEO Python Core is already being used by several companies in Latvia, including JSC Latvia's State Forests for more than 200 automated processes every day. LVM GEO offers courses about LVM GEO Python to support development of an automation platform for companies and organizations.
 
 ### _GISPython_ package contains following modules:
-* [**Main modules**](https://github.com/lvmgeo/GISPython/blob/master/README.md#main-modules):
-    * [GISPythonModule](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythonmodule)
-    * [GISPythonTool](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythontool)
-    * [SysGISTools](https://github.com/lvmgeo/GISPython/blob/master/README.md#sysgistools)
+* [**Main modules**](http://gispython.readthedocs.io/en/latest/main_modules.html):
+    * [GISPythonModule](http://gispython.readthedocs.io/en/latest/main_modules.html#gispythonmodule)
+    * [GISPythonTool](http://gispython.readthedocs.io/en/latest/main_modules.html#gispythontool)
+    * [SysGISTools](http://gispython.readthedocs.io/en/latest/main_modules.html#sysgistools)
     * [SysTools_unittest]()
-* [**Helper modules**](https://github.com/lvmgeo/GISPython#helper-modules):
-    * [AGServerHelper]()
-    * [AGServerHelperNTLM]()
-    * [CachingHelper]()
-    * [FTPHelper]()
-    * [GDBHelper]()
-    * [GDPSynchroniserHelper]()
-    * [JsonParamsHelper]()
+* [**Helper modules**](http://gispython.readthedocs.io/en/latest/helper_modules.html):
+    * [AGServerHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#agserverhelper)
+    * [AGServerHelperNTLM](http://gispython.readthedocs.io/en/latest/helper_modules.html#agserverhelperntlm)
+    * [CachingHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#cachinghelper)
+    * [FTPHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#ftphleper)
+    * [GDBHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#gdbhelper)
+    * [GDPSynchroniserHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#module-GISPython.GDPSyncroniserHelper)
+    * [JsonParamsHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#jsonparamshelper)
     * [MailHelper](https://github.com/lvmgeo/GISPython#mailhelper)
-    * [RarHelper]()
-    * [SFTPHelper]()
-    * [SimpleFileOps](https://github.com/lvmgeo/GISPython#simplefileops)
-    * [SimpleFileOpsSafe](https://github.com/lvmgeo/GISPython#simplefileopssafe)
-    * [TimerHelper](https://github.com/lvmgeo/GISPython#timerhelper)
-    * [ZipHelper](https://github.com/lvmgeo/GISPython#ziphelper)
+    * [MyError](http://gispython.readthedocs.io/en/latest/helper_modules.html#myerror)
+    * [RarHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#rarhelper)
+    * [SFTPHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#sftphelper)
+    * [SimpleFileOps](http://gispython.readthedocs.io/en/latest/helper_modules.html#simplefileops)
+    * [SimpleFileOpsSafe](http://gispython.readthedocs.io/en/latest/helper_modules.html#simplefileopssafe)
+    * [TimerHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#timerhelper)
+    * [ZipHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#ziphelper)
 
 ## Dependencies
 
@@ -134,7 +135,7 @@ self.Tool.AddError(u'This is an error')
 
 ## Documentation
 
-Documentation includes information about all GISPython modules & examples of use. Documentation can be found on: .
+Documentation includes information about all GISPython modules & examples of use. Documentation can be found on: http://gispython.readthedocs.io.
 
 ## Examples
 
