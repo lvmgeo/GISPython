@@ -1,8 +1,8 @@
 include LICENSE
 include  GISPython/PShell/*
 
-exclude docs/*
 exclude img/*
+exclude docs/*
 exclude  GISPython/*.pyc
 exclude  GISPython/GEOToolBoxSetup.isproj
 exclude  GISPython/GISPython.pyproj

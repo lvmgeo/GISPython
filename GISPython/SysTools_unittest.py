@@ -26,7 +26,7 @@ class GISTools_unittest(unittest.TestCase):
 
     def tearDown(self):
         """"The Test tear down - cleaning up objects after test"""
-        print u"Ceaning up after tests..."
+        print u"Cleaning up after tests..."
         self.Module.MyDispose()
         return super(GISTools_unittest, self).tearDown()
 

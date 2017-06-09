@@ -2,14 +2,14 @@
 """
      Module for operations with ArcGIS Server services
 """
-import MyError
 
 # For Http calls
 import httplib, urllib, json, urllib2
+import MyError
 
 class AGSServerHelper(object):
 
-    def __init__(self, username, password, serverName, serverPort=6080, Tool=None, https = False):
+    def __init__(self, username, password, serverName, serverPort=6080, Tool=None, https=False):
         """Class initialization procedure
 
         Args:
@@ -359,6 +359,6 @@ class AGSServerHelper(object):
                 if statusDataObj['realTimeState'] == "STOPPED":
                     return False #print "Service " + service + " was detected to be stopped"
                 else:
-                    return True #print "Service " + service + " is running
+                    return True #print "Service " + service + " is running"
 
             httpConn.close()

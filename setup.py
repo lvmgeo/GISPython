@@ -48,7 +48,7 @@ setup(
     keywords = ['ArcGIS', 'ArcPy', 'ArcGIS Server', 'automation'], # keywords (string or list of strings)
     packages = ["GISPython"], # packages to install
     include_package_data = True,
-    install_requires = ['paramiko>=2.1.2', 'simplejson>=3.10.0'], # list of packages required in project (these will be installed by pip)
+    install_requires = ['paramiko>=2.1.2', 'simplejson>=3.10.0', 'patool>=1.12', 'python-ntlm>=1.1.0'], # list of packages required in project (these will be installed by pip)
 
     # entry_points = {'console_scripts': [
         # 'GISPython = __init__:main'

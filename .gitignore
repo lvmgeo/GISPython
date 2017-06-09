@@ -1,12 +1,5 @@
 *.pyc
 *.egg-info
-dist/
-docs/
-docs_test/
-GEOToolBoxSetup.isproj
-GISPython.pyproj
-GISPython.pyproj.vspscc
-copyFromSrc.py
-local_pypi.bat
-pypitest.bat
-README.rst
+docs/_build
+docs/_static
+docs/_templates

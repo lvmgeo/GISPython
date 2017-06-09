@@ -23,17 +23,18 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
     * [GISPythonModule](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythonmodule)
     * [GISPythonTool](https://github.com/lvmgeo/GISPython/blob/master/README.md#gispythontool)
     * [SysGISTools](https://github.com/lvmgeo/GISPython/blob/master/README.md#sysgistools)
-    * SysTools_unittest (Coming soon)
+    * [SysTools_unittest]()
 * [**Helper modules**](https://github.com/lvmgeo/GISPython#helper-modules):
-    * AGServerHelper (Coming soon)
-    * CachingHelper (Coming soon)
-    * FTPHelper (Coming soon)
-    * GDBHelper (Coming soon)
-    * GDPSynchroniserHelper (Coming soon)
-    * JsonParamsHelper (Coming soon)
+    * [AGServerHelper]()
+    * [AGServerHelperNTLM]()
+    * [CachingHelper]()
+    * [FTPHelper]()
+    * [GDBHelper]()
+    * [GDPSynchroniserHelper]()
+    * [JsonParamsHelper]()
     * [MailHelper](https://github.com/lvmgeo/GISPython#mailhelper)
-    * RarHelper (Coming soon)
-    * SFTPHelper (Coming soon)
+    * [RarHelper]()
+    * [SFTPHelper]()
     * [SimpleFileOps](https://github.com/lvmgeo/GISPython#simplefileops)
     * [SimpleFileOpsSafe](https://github.com/lvmgeo/GISPython#simplefileopssafe)
     * [TimerHelper](https://github.com/lvmgeo/GISPython#timerhelper)
@@ -44,8 +45,10 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
 * ArcGIS 10.x /recommended with newest patches and service packs/ (**_GISPython_** is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
 * Python 2.7 (included in ArcGIS installation) (arcpy and numpy modules included)
 * Additional python modules:
-    * [PyCrypto](http://www.voidspace.org.uk/python/modules.shtml#pycrypto)
-    * Paramiko: `pip install paramiko` (included in package setup process)
+    * [PyCrypto](http://www.voidspace.org.uk/python/modules.shtml#pycrypto) (manual installation)
+    * NTLM: `pip install python-ntlm` (included in package setup process)
+    * paramiko: `pip install paramiko` (included in package setup process)
+    * patool: `pip install patool` (included in package setup process)
     * simpleJson: `pip install simplejson` (included in package setup process)
     
 >If pip isn’t installed, you can get it [**here**](https://packaging.python.org/installing/#install-pip-setuptools-and-wheel)!
@@ -129,14 +132,18 @@ self.Tool.AddWarning(u'This is a warning')
 self.Tool.AddError(u'This is an error')
 ```
 
-## Modules & examples of use
+## Documentation
+
+Documentation includes information about all GISPython modules & examples of use. Documentation can be found on: .
+
+## Examples
 
 ### Main modules
 
 #### _GISPythonModule_
 Main module, which contains frame for all  GISPython package modules. Module allows the code unification, and ensures the code execution from both the ArcGIS Desktop Python console and the Command Prompt.
 
-_Examples:_
+_Example:_
 ###### Executes the tool if it's to be executed within an another Python tool
 ```Python
 from  GISPython import TimerHelper
@@ -150,7 +157,7 @@ with TimerHelper.TimedSubprocess(Tool, u'Compress DB'): # Adds a message to the 
 #### _GISPythonTool_
 Module defines abstract classes for the ESRI Toolbox tool definition and contains functions which helps to create an ArcGIS Toolbox, validates the tool's parameter values and controls a behavior of the tool's dialog.
 
-_Examples:_
+_Example:_
 ###### Define parameters in ESRI Python toolbox
 ```Python
 from  GISPython import GISPythonTool
@@ -200,7 +207,7 @@ with TimerHelper.TimedSubprocess(self.Tool, u'datu atlasi no nogabaliem'): # Add
     Tool.RunSQL('LoadSomeDataFromTable') # Runs SQL file within RunSQL function, which implements GetSQL function (gets the SQL file location)
 ```
 
-###### Double path seperator symbol '\' for external execution compatibility
+###### Duplicates path seperator symbol '\' for external execution compatibility
 ```Python
 from  GISPython import SimpleFileOps
 from  GISPython import TimerHelper
@@ -265,9 +272,6 @@ backupDir = pj(Pr.TmpFolder, 'BackupDirectory') # Set the working directory
 newFile = FO.FindNewestFile(workDir, '*') # Find newest file with any extension
 FO.BackupOneFile(newFile, backupDir)
 ```
-
-#### _SimpleFileOpsSafe_
-File and filesystem operations module. Module contains SimpleFileOpsSafe class, which contains functions for typical file and filesystem operations. Class inherits SimpleFileOps functionality, but does not relay on Windows Powershell scripts to address locked files. 
 
 #### _TimerHelper_
 Timing module. Module contains functions for countdown procedures in a code block.
