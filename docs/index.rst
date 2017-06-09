@@ -7,7 +7,7 @@ rich functionality. The programming core allows management of all system's maint
 within a unified environment.
 *GISPython* project can be found at `GitHub <https://github.com/lvmgeo/GISPython>`_.
 
-.. Attention:: There is undergoing code arrangement according to `PEP 8 <https://www.python.org/dev/peps/pep-0008/>`_, so module and some code object names can be changed. All changes will be documented in `GitHub Issues <https://github.com/lvmgeo/GISPython/issues>`_ page.
+.. Attention:: There is undergoing code arrangement according to `PEP 8 <https://www.python.org/dev/peps/pep-0008/>`_, so module and some code object names can be changed. All changes will be documented in `changelog <http://gispython.readthedocs.io/en/latest/changelog.html>`_ page.
 
 Table of contents
 -----------------
