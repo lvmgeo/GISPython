@@ -1,1 +1,5 @@
 sphinxcontrib-napoleon>=0.6.1
+paramiko>=2.1.2
+python-ntlm>=1.1.0
+simplejson>=3.10.0
+patool>=1.12
