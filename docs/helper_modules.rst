@@ -53,7 +53,9 @@ Check if ArcGIS Server service is running::
 AGServerHelperNTLM
 ------------------
 
-*Module contains procedures for typical operations with ArcGIS server. All procedures use NTLM authorization. For token authorization use AGServerHelpaer module.*
+*Module contains procedures for typical operations with ArcGIS server. All procedures use NTLM authorization (for example in cases where ArcGIS Server services are served through WebAdaptor and autorization is set from active directory). For token authorization use AGServerHelpaer module.*
+
+Functionality coresponds to AGServerHelper.
 
 .. automodule:: GISPython.AGServerHelperNTLM
 	:members:
@@ -116,7 +118,7 @@ Deletes old and uploads new files to FTP server::
 GDBHelper
 ---------
 
-*Module for typical GDB (File Geodatabase) operations.*
+*Module for typical GDB (ESRI Geodatabase) operations.*
 
 .. automodule:: GISPython.GDBHelper
 	:members:
@@ -299,6 +301,7 @@ Raise error in the tool output::
 
 RarHelper
 ---------
+Module is based on patoolib library witch needs external packeg (e.g. 7Zip) to be present for rar unpacking to work.
 
 .. automodule:: GISPython.RarHelper
 	:members:
