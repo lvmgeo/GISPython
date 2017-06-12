@@ -79,9 +79,9 @@ Daily server caching procedure::
 
 	from GISPython import CachingHelper
 
-	GCache = CachingHelper.CachingHelper(self.Tool, Pr.ConnAGSCache, self.Tool.gp.Extent(307950, 167920, 767480, 443890), Pr.ConnAuto + "\\SDEOWNER.CashLVBuffer")
-	GCache.GenerateCache('Nog_Dalplans_cache',8,'30000;20000;15000;10000;5000;2000','CacheDinamic')
-	GCache.GenerateCache('Nog_MezaudzuPlans_cache',8,'30000;20000;15000;10000;5000;2000','CacheDinamic')
+	GCache = CachingHelper.CachingHelper(self.Tool, Pr.ConnAGSCache, self.Tool.gp.Extent(307950, 167920, 767480, 443890), Pr.ConnAuto + "\\SDEOWNER.CacheLayer")
+	GCache.GenerateCache('Layer1_cache',8,'30000;20000;15000;10000;5000;2000','CacheDinamic')
+	GCache.GenerateCache('Layer2_cache',8,'30000;20000;15000;10000;5000;2000','CacheDinamic')
 	
 FTPHleper
 ---------
