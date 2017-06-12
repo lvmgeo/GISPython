@@ -53,9 +53,9 @@ Check if ArcGIS Server service is running::
 AGServerHelperNTLM
 ------------------
 
-*Module contains procedures for typical operations with ArcGIS server. All procedures use NTLM authorization (for example in cases where ArcGIS Server services are served through WebAdaptor and autorization is set from active directory). For token authorization use AGServerHelpaer module.*
+*Module contains procedures for typical operations with ArcGIS server. All procedures use NTLM authorization (for example in cases where ArcGIS Server services are served through WebAdaptor and authorization is set from active directory). For token authorization use AGServerHelper module.*
 
-Functionality coresponds to AGServerHelper.
+Functionality corresponds to AGServerHelper.
 
 .. automodule:: GISPython.AGServerHelperNTLM
 	:members:
@@ -301,7 +301,7 @@ Raise error in the tool output::
 
 RarHelper
 ---------
-Module is based on patoolib library witch needs external packeg (e.g. 7Zip) to be present for rar unpacking to work.
+Module is based on patoolib library which needs external package (e.g. 7Zip) to be present for rar unpacking to work.
 
 .. automodule:: GISPython.RarHelper
 	:members:
