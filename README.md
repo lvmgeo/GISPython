@@ -56,7 +56,9 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
 
 ## Installation
 
-**_GISPython_** is available on the [Python Package Index](https://pypi.python.org/pypi/GISPython), so you can get it via pip: `pip install GISPython`
+**_GISPython_** is available on the [Python Package Index](https://pypi.python.org/pypi/GISPython), so you can get it via pip: `pip install GISPython`.
+Before installing it is recomended to upgrade pip to latest version using `pip install --upgrade pip`.
+To upgrade **_GISPython_** use `pip install gispython --upgrade`.
 
 ## Configuration & basic usage
 
