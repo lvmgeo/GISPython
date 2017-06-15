@@ -15,7 +15,6 @@ Table of contents
 .. toctree::
    :maxdepth: 3
    
-   self
    general
    modules
    changelog
