@@ -212,17 +212,29 @@ class SimpleFileOps(object):
         dated_files.sort()
         return dated_files
 
-    def CopyAllFilesInDir(self, SourceDir, DestDir):
+    def CopyAllFilesInDir(self, SourceDir, DestDir, Searchpattern='*', Ignorepattern=None):
         """Copy entire directory tree from one directory to another
 
         Args:
             self: The reserved object 'self'
             SourceDir: Source directory
             DestDir: Destination directory
+            Searchpattern: Searching condition
         """
         if not os.path.exists(DestDir):
             os.makedirs(DestDir)
-        for item in os.listdir(SourceDir):
+
+        if Searchpattern == '*' and Ignorepattern==None:
+            foundfiles = [fn for fn in os.listdir(SourceDir)]
+        elif Searchpattern != '*' and Ignorepattern==None:
+            foundfiles = [fn for fn in os.listdir(SourceDir) if not fn.lower().find(Searchpattern.lower()) == -1]
+        elif Searchpattern == '*' and Ignorepattern!=None:
+            foundfiles = [fn for fn in os.listdir(SourceDir) if fn.lower().find(Ignorepattern.lower()) == -1]
+        elif Searchpattern != '*' and Ignorepattern!=None:
+            foundfiles = [fn for fn in os.listdir(SourceDir) if not fn.lower().find(Searchpattern.lower()) == -1 and fn.lower().find(Ignorepattern.lower()) == -1]
+        foundfiles.sort()
+
+        for item in foundfiles:
             s = os.path.join(SourceDir, item)
             d = os.path.join(DestDir, item)
             if os.path.isdir(s):

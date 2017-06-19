@@ -269,15 +269,15 @@ class GISTools10:
         Returns:
             converted string
         """
-        if isinstance(txt, str):
+        if isinstance(txt, str) or isinstance(txt, unicode):
             try:
-                txt = txt.decode(self.Pr.encodingPrimary)
+                txt = txt.decode(self.Pr.encodingPrimary, errors='strict')
             except Exception:
                 try:
-                    txt = txt.decode(self.Pr.encodingSecondary)
+                    txt = txt.decode(self.Pr.encodingSecondary, errors='strict')
                 except Exception:
                     try:
-                        txt = txt.decode('utf-8')
+                        txt = txt.decode('utf-8', errors='strict')
                     except Exception:
                         txt = txt.decode(self.Pr.encodingPrimary, 'replace')
         return txt

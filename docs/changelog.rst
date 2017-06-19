@@ -2,6 +2,12 @@
 Changelog
 =========
 
+v1.34.2 (2017.06.19)
+--------------------
+
+* Bug fixes in unicode output management
+* Added functionality in SimpleFileOps and SimpleFileOpsSafe
+
 v1.34.1 (2017.06.09)
 --------------------
 
