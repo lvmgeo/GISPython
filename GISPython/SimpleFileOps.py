@@ -238,7 +238,7 @@ class SimpleFileOps(object):
             s = os.path.join(SourceDir, item)
             d = os.path.join(DestDir, item)
             if os.path.isdir(s):
-                self.CopyAllFilesInDir(s, d, False, None)
+                self.CopyAllFilesInDir(s, d, Searchpattern, None)
             else:
                 shutil.copy2(s, d)
 

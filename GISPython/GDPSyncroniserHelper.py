@@ -59,9 +59,13 @@ class GDPSyncroniserHelper(object):
         Returns:
             * output - Returns the report about the process execution
             * outputErrors - Returns the error description
+            * errIDs - list of IDs that had an error
+            * SyncIDs - list of IDs that was syncronized
         """
         outputErrors = u""
         output = u""
+        errIDs = []
+        SyncIDs = []
 
         if definition.inTableQuery != None:
             hasInQuery = True
@@ -96,11 +100,13 @@ class GDPSyncroniserHelper(object):
                 output = self.__DoSyncRow(row, definition.outTable, outFields, definition.outTableJoinField, definition.messageDefinition, definition.idvalueseparator, definition.createNew)
                 if type(output) is int:
                     i = i + output
+                    SyncIDs.append(row[0])
                 else:
                     if self.isTool:
                         self.AddMessage(u'        ...{0}'.format(output))
                         outputErrors = outputErrors + u'{0}\n'.format(output)
                         err = err + 1
+                        errIDs.append(row[0])
                 j = j + 1
                 k = k + 1
 
@@ -122,7 +128,7 @@ class GDPSyncroniserHelper(object):
             self.AddMessage(u'>>>> ...Processed [{0}], stored [{1}], faulty [{2}]'.format(j, i, err))
             output = u'Processed [{0}], stored [{1}], faulty [{2}]'.format(j, i, err)
 
-        return output, outputErrors
+        return output, outputErrors, errIDs, SyncIDs
 
     def __DoSyncRow(self, inRow, outTable, outTableFields, outTableJoinField, messageString, idvalueseparator, createNew):
         """Procedure performs row synchronization
@@ -143,7 +149,7 @@ class GDPSyncroniserHelper(object):
         if inRow[0] == None:
             return u"Error: join field is empty " + messageString.format(*inRow)
 
-        with self.gp.da.UpdateCursor(outTable, outTableFields, '{0} = {2}{1}{2}'.format(outTableJoinField, inRow[0], idvalueseparator)) as cur:
+        with self.gp.da.UpdateCursor(outTable, outTableFields, u'{0} = {2}{1}{2}'.format(outTableJoinField, inRow[0], idvalueseparator)) as cur:
             output = 0
             i = 0
             foundRow = False

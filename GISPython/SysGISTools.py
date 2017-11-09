@@ -2,10 +2,8 @@
 """
     GIS function support module
 """
-
 import datetime
 import codecs
-import arcpy
 import SysGISToolsSysParams
 import os, shutil
 import subprocess
@@ -21,17 +19,38 @@ from multiprocessing import Process, Queue
 
 class GISTools10:
     """Class for storing the auxiliary batch processing and GIS geoprocesing functions"""
-    def __init__(self, ToolName, Params):
+    def __init__(self, ToolName, Params, licenceLevel = "arceditor"):
         """Class initialization procedure
 
         Args:
             self: The reserved object 'self'
             ToolName: Name of the tool (used for output)
-            LogDir: Error output directory
-            LogDirArh: Archive directory of the error output files
-            OutDir: Output directory
-            OutDirArh: Archive directory of the output files
+            Params: parameter object
+            licenceLevel: arcinfo, arceditor, arcview, arcserver, arcenginegeodb, or arcengine
         """
+        if licenceLevel == "arcinfo":
+            print(u'...Using licence level : ' + licenceLevel)
+            import arcinfo
+        elif licenceLevel == "arceditor":
+            print(u'...Using licence level : ' + licenceLevel)
+            import arceditor
+        elif licenceLevel == "arcview":
+            print(u'...Using licence level : ' + licenceLevel)
+            import arcview
+        elif licenceLevel == "arcserver":
+            print(u'...Using licence level : ' + licenceLevel)
+            import arcserver
+        elif licenceLevel == "arcenginegeodb":
+            print(u'...Using licence level : ' + licenceLevel)
+            import arcenginegeodb
+        elif licenceLevel == "arcengine":
+            print(u'...Using licence level : ' + licenceLevel)
+            import arcengine
+        else:
+            print(u'...Incorect licence suplied - using : arceditor')
+            import arceditor
+            
+        import arcpy
         self.Pr = Params
         LogDir = self.Pr.ErrorLogDir
         LogDirArh = self.Pr.ErrorLogDirArh
@@ -220,7 +239,7 @@ class GISTools10:
         if not Silent:
             self.AddMessage(u'>Done executing the Shell command. Execution time '  + str(_TD))
 
-    def outputLogfile(self, file, encoding='utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):
+    def outputLogfile(self, file, encoding='utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], Silent=False):
         """Procedure prints text file to screent - processing error keywords
 
         Args:
@@ -233,7 +252,7 @@ class GISTools10:
         with codecs.open(file, 'r', encoding) as fin:
             self._outputLines(fin.readlines(), True, noErr, ErrorStrings, Silent)
 
-    def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False):
+    def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], Silent=False):
         """Procedure for outputing set of lines to screen with error key word recognition. (for example for log file output processing)
 
         Args:
@@ -269,7 +288,7 @@ class GISTools10:
         Returns:
             converted string
         """
-        if isinstance(txt, str) or isinstance(txt, unicode):
+        if isinstance(txt, str):
             try:
                 txt = txt.decode(self.Pr.encodingPrimary, errors='strict')
             except Exception:
@@ -279,7 +298,7 @@ class GISTools10:
                     try:
                         txt = txt.decode('utf-8', errors='strict')
                     except Exception:
-                        txt = txt.decode(self.Pr.encodingPrimary, 'replace')
+                        txt = txt.decode(self.Pr.encodingPrimary, errors='replace')
         return txt
 
     def AutorizeNTWLocation(self, Adress, user, pwd):

@@ -53,9 +53,7 @@ Check if ArcGIS Server service is running::
 AGServerHelperNTLM
 ------------------
 
-*Module contains procedures for typical operations with ArcGIS server. All procedures use NTLM authorization (for example in cases where ArcGIS Server services are served through WebAdaptor and authorization is set from active directory). For token authorization use AGServerHelper module.*
-
-Functionality corresponds to AGServerHelper.
+*Module contains procedures for typical operations with ArcGIS server. All procedures use NTLM authorization. For token authorization use AGServerHelpaer module.*
 
 .. automodule:: GISPython.AGServerHelperNTLM
 	:members:
@@ -79,9 +77,9 @@ Daily server caching procedure::
 
 	from GISPython import CachingHelper
 
-	GCache = CachingHelper.CachingHelper(self.Tool, Pr.ConnAGSCache, self.Tool.gp.Extent(307950, 167920, 767480, 443890), Pr.ConnAuto + "\\SDEOWNER.CacheLayer")
-	GCache.GenerateCache('Layer1_cache',8,'30000;20000;15000;10000;5000;2000','CacheDinamic')
-	GCache.GenerateCache('Layer2_cache',8,'30000;20000;15000;10000;5000;2000','CacheDinamic')
+	GCache = CachingHelper.CachingHelper(self.Tool, Pr.ConnAGSCache, self.Tool.gp.Extent(307950, 167920, 767480, 443890), Pr.ConnAuto + "\\SDEOWNER.CashLVBuffer")
+	GCache.GenerateCache('Nog_Dalplans_cache',8,'30000;20000;15000;10000;5000;2000','CacheDinamic')
+	GCache.GenerateCache('Nog_MezaudzuPlans_cache',8,'30000;20000;15000;10000;5000;2000','CacheDinamic')
 	
 FTPHleper
 ---------
@@ -118,7 +116,7 @@ Deletes old and uploads new files to FTP server::
 GDBHelper
 ---------
 
-*Module for typical GDB (ESRI Geodatabase) operations.*
+*Module for typical GDB (File Geodatabase) operations.*
 
 .. automodule:: GISPython.GDBHelper
 	:members:
@@ -199,6 +197,14 @@ Synchronize data between two tables with internal parameter definition::
 	# Error message in case there are any error
 	if not outputErrors == u"":
 		ErrOutput += u'Found errors in synchronization process:\n' + outputErrors + '\n\n';
+
+GDPSyncroniserHelper2
+--------------------
+
+.. automodule:: GISPython.GDPSyncroniserHelper2
+	:members:
+	:undoc-members:
+	:show-inheritance:
 
 	
 JsonParamsHelper
@@ -301,7 +307,6 @@ Raise error in the tool output::
 
 RarHelper
 ---------
-Module is based on patoolib library which needs external package (e.g. 7Zip) to be present for rar unpacking to work.
 
 .. automodule:: GISPython.RarHelper
 	:members:

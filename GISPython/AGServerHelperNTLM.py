@@ -31,6 +31,8 @@ class AGServerHelperNTLM(object):
             self.ags_admin_url = self.ags_admin_url[:-1]
         self.Tool = tool
 
+        self.ags_admin_url = self.ags_admin_url + '/arcgis/admin'
+
         passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
         passman.add_password(None, self.ags_admin_url, self.username, self.password)
         # create the NTLM authentication handler
@@ -39,8 +41,6 @@ class AGServerHelperNTLM(object):
         # create and install the opener
         opener = urllib2.build_opener(auth_NTLM)
         urllib2.install_opener(opener)
-
-        self.ags_admin_url = self.ags_admin_url + '/arcgis/admin'
 
 
     def _requestFromServer(self, adress, params, content_type='application/json', method="POST"):
@@ -57,9 +57,10 @@ class AGServerHelperNTLM(object):
             Response string
         """
         data = urllib.urlencode(params)
-        req = urllib2.Request(self.ags_admin_url + '/' + adress, data=data)
-        req.add_header("Content-Type", content_type)
-        req.get_method = lambda: method
+        clen = len(data)
+        req = urllib2.Request(url = self.ags_admin_url + '/' + adress, data=data)
+        req.add_header('Content-Type', content_type)
+        # req.get_method = lambda: method
         response = urllib2.urlopen(req)
         respString = response.read()
         if not response.code == 200:
@@ -187,9 +188,9 @@ class AGServerHelperNTLM(object):
         Returns:
             json data object
         """
-        serviceURL = "services/" + server_service + '?f=pjson'
+        serviceURL = "services/" + server_service + "?f=pjson"
         params = {}
-        data = self._requestFromServer(serviceURL, params)
+        data = self._requestFromServer(serviceURL, params, method = 'GET' )
 
         # Check that data returned is not an error object
         if not self._assertJsonSuccess(data):
@@ -201,7 +202,7 @@ class AGServerHelperNTLM(object):
         dataObj = json.loads(data)
         return dataObj
 
-    def publishServerJson(self, service, dataObj, token, serverPort):
+    def publishServerJson(self, service, dataObj):
         """Publish service parameters to server
 
         Args:
@@ -214,9 +215,9 @@ class AGServerHelperNTLM(object):
         updatedSvcJson = json.dumps(dataObj)
 
         # Call the edit operation on the service. Pass in modified JSON.
-        editSvcURL = "services/" + service + "/edit?f=pjson"
-        params = {'service': updatedSvcJson}
-        editData = self._requestFromServer(editSvcURL, params)
+        editSvcURL = "services/" + service + "/edit"
+        params = {'f': 'json', 'service': updatedSvcJson}
+        editData = self._requestFromServer(editSvcURL, params, 'application/x-www-form-urlencoded', method = 'POST')
 
         if not self._assertJsonSuccess(editData):
             if self.Tool != None:

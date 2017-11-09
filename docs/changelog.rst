@@ -2,10 +2,22 @@
 Changelog
 =========
 
+v1.35.1 (2017.11.09)
+--------------------
+
+* Added GDPSyncroniserHelper2 module
+* Changes and bug fixes in:
+	- AGServerHelperNTLM
+	- SimpleFileOps
+	- SysGISTools
+	- GISPythonModule
+	- GDPSyncroniserHelper
+* Added functionality in GDBHelper
+
 v1.34.3 (2017.07.10)
 --------------------
 
-* Aditional functionality helping of reprinting MyError objects 
+* Aditional functionality helping of reprinting MyError objects
 
 v1.34.2 (2017.06.19)
 --------------------

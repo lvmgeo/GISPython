@@ -4,10 +4,11 @@ import re
 
 def get_version():
     """Get version number from SysGISToolsSysParams file"""
-    versFile = 'GISPython//SysGISToolsSysParams.py'
+    #versFile = 'GISPython\\SysGISToolsSysParams.py'
+    versFile = os.path.join('GISPython', 'SysGISToolsSysParams.py') # os.path.join for Unix compatibility
     versFDir = os.path.dirname(os.path.abspath(__file__))
     versionpath = os.path.join(versFDir, versFile)
-    fileRead = open(versionpath, 'r').readlines()
+    fileRead = open(versionpath, 'rt').readlines()
     vsre = r"^Version = ['\"]([^'\"]*)['\"]"
     for line in fileRead:
         mo = re.search(vsre, line, re.M)

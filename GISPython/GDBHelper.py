@@ -329,7 +329,7 @@ class RowHelper:
         rezultList = []
         with self.gp.da.SearchCursor(festureClass, field_names=fields, where_clause=where_clause) as cursor:
             for row in cursor:
-                rezultList.append(outStringformat.format(*row))
+                rezultList.append(unicode(outStringformat).format(*row))
         return rezultList
 
     def ValidateRowsForFieldValueList(self, festureClass, getField, fields, valuelist, where_clause, outStringformat):
@@ -350,7 +350,7 @@ class RowHelper:
         with self.gp.da.SearchCursor(festureClass, field_names=fields, where_clause=where_clause) as cursor:
             for row in cursor:
                 if not row[fields.index(getField)] in valuelist:
-                    rezultList.append(outStringformat.format(*row))
+                    rezultList.append(unicode(outStringformat).format(*row))
         return rezultList
 
 class SimpleAppend:

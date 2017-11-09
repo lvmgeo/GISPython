@@ -24,7 +24,7 @@ class GISPythonModule(object):
         Get the tool name with the command 'PrintText()'
         mainModule()
     """
-    def __init__(self, ToolName, SysGISParams, ExecutePatch=__file__, statusMailRecipients=[], errorMailRecipients=[]):
+    def __init__(self, ToolName, SysGISParams, ExecutePatch=__file__, statusMailRecipients=[], errorMailRecipients=[], licenceLevel = "arceditor"):
         """Initialize the tool and the tool parameters
 
         Args:
@@ -34,8 +34,10 @@ class GISPythonModule(object):
             ExecutePatch: Module execution path
             statusMailRecipients: List with status e-mail message recipients
             errorMailRecipients: List with error e-mail message recipients
+            licenceLevel: arcinfo, arceditor, arcview, arcserver, arcenginegeodb, or arcengine
         """
         self.ToolName = ToolName
+        self.licenceLevel = licenceLevel
         self.Pr = SysGISParams
         self.ExecutePatch = os.path.dirname(os.path.realpath(ExecutePatch))
         if  hasattr(self.Pr, 'EnableStatusMail'):
@@ -75,7 +77,7 @@ class GISPythonModule(object):
     def initModule(self):
         """Procedure which initializes the GISPython environment, if the tool runs as a standalone tool
         """
-        self.Tool = SysGISTools.GISTools10(self.ToolName, self.Pr)
+        self.Tool = SysGISTools.GISTools10(self.ToolName, self.Pr, self.licenceLevel)
         sys.stderr = self.Tool.fLog
         self.Tool.ExecutePatch = self.ExecutePatch
 
