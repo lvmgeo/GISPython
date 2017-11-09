@@ -31,6 +31,7 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
     * [FTPHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#ftphleper)
     * [GDBHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#gdbhelper)
     * [GDPSynchroniserHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#module-GISPython.GDPSyncroniserHelper)
+    * [GDPSynchroniserHelper2](http://gispython.readthedocs.io/en/latest/helper_modules.html#module-GISPython.GDPSyncroniserHelper2)
     * [JsonParamsHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#jsonparamshelper)
     * [MailHelper](https://github.com/lvmgeo/GISPython#mailhelper)
     * [MyError](http://gispython.readthedocs.io/en/latest/helper_modules.html#myerror)
