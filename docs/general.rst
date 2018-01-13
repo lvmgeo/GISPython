@@ -70,6 +70,7 @@ parameters to be present to function successfully:
 * TmpFolder - Temp folder ``TmpFolder = r'C:\GIS\tmp'``
 * encodingPrimary - encoding of Windows shell ``encodingPrimary = 'cp775'``
 * encodingSecondary - encoding of Windows unicode language used ``encodingSecondary = 'cp1257'``
+* SetLogHistory - enable or disable Geoprocessing history logging ``SetLogHistory = False``
 
 .. Note:: It is recommended to define additional script parameters in SysGISParams.py file, to keep the main code clean. Our approach is to define all the parameters that define current system environment be kept in this one file. In case of moving environment (e.g. test system and production system) this one file has the specific connections and can be easily modified without changing the scripts.
 

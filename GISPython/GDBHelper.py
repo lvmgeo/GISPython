@@ -282,7 +282,7 @@ class GDBHelper:
             self.Tool.AddMessage(u'>>>> ...Processed  ' + str(i) + u' rows')
 
 
-class RowHelper:
+class RowHelper2:
     """Row processing class"""
 
     def __init__(self, gp, Tool=None):
@@ -314,6 +314,65 @@ class RowHelper:
                 rezultList.append(row[0])
         return rezultList
 
+    def ValidateRowsForSQLClause(self, festureClass, fields, where_clause, outStringformat, idStringformat='{0}'):
+        """Validate the rows with the SQL clause
+
+        Args:
+            self: The reserved object 'self'
+            festureClass: The feature class containing the rows to be searched
+            fields: A list of the field names (order is important, because the parameter 'outStringformat' is configured by this parameter)
+            where_clause: SQL WHERE clause to obtain the data
+            outStringformat: Error output text on the found error.
+                                You can use the 'unicode.format' function notation {#} to transfer the row values.
+                                For example - a field with the index 0 in the list of fields with 'outStringformat' parameter value: u"faulty feature OID: {0}" will return the string: u"faulty feature OID: 123", where 123 is the 'objectid' field value for found record.
+            idStringformat: Row id output text on the found error. 
+                            You can use the 'unicode.format' function notation {#} to transfer the row values.
+        Returns:
+            List containig list of two values - row id string and row error description string
+        """
+        rezultList = []
+        with self.gp.da.SearchCursor(festureClass, field_names=fields, where_clause=where_clause) as cursor:
+            for row in cursor:
+                rezultList.append([unicode(idStringformat).format(*row), unicode(outStringformat).format(*row)])
+        return rezultList
+    
+    def ValidateRowsForFieldValueList(self, festureClass, getField, fields, valuelist, where_clause, outStringformat, idStringformat='{0}'):
+        """Check rows if the field matches the unique value list
+
+        Args:
+            self: The reserved object 'self'
+            festureClass: The feature class containing the rows to be searched
+            getField: Field to check
+            fields: A list of field names (order is important, because parameter 'outStringformat' is configured by this parameter !!! 'getField' value should be in this list!!!
+            valuelist: A list of values
+            where_clause: SQL WHERE clause to obtain the data
+            outStringformat: Error output text on the found error.
+                                You can use the 'unicode.format' function notation {#} to transfer the row values.
+                                For example - a field with the index 0 in the list of fields with 'outStringformat' parameter value: u"faulty feature OID: {0}" will return the string: u"faulty feature OID: 123", where 123 is the 'objectid' field value for found record.
+            idStringformat: Row id output text on the found error. 
+                            You can use the 'unicode.format' function notation {#} to transfer the row values.
+        Returns:
+            List containig list of two values - row id string and row error description string
+        """
+        rezultList = []
+        with self.gp.da.SearchCursor(festureClass, field_names=fields, where_clause=where_clause) as cursor:
+            for row in cursor:
+                if not row[fields.index(getField)] in valuelist:
+                    rezultList.append([unicode(idStringformat).format(*row), unicode(outStringformat).format(*row)])
+        return rezultList
+
+class RowHelper(RowHelper2):
+    """Row processing class"""
+
+    def __init__(self, gp, Tool=None):
+        """Class initialization procedure
+
+        Args:
+            self: The reserved object 'self'
+            gp: ArcPy GP object
+        """
+        RowHelper2.__init__(self, gp, Tool)
+
     def ValidateRowsForSQLClause(self, festureClass, fields, where_clause, outStringformat):
         """Validate the rows with the SQL clause
 
@@ -326,11 +385,8 @@ class RowHelper:
                                 You can use the 'unicode.format' function notation {#} to transfer the row values.
                                 For example - a field with the index 0 in the list of fields with 'outStringformat' parameter value: u"faulty feature OID: {0}" will return the string: u"faulty feature OID: 123", where 123 is the 'objectid' field value for found record.
         """
-        rezultList = []
-        with self.gp.da.SearchCursor(festureClass, field_names=fields, where_clause=where_clause) as cursor:
-            for row in cursor:
-                rezultList.append(unicode(outStringformat).format(*row))
-        return rezultList
+        rezultList = RowHelper2.ValidateRowsForSQLClause(self, festureClass, fields, where_clause, outStringformat)
+        return [row[1] for row in rezultList]
 
     def ValidateRowsForFieldValueList(self, festureClass, getField, fields, valuelist, where_clause, outStringformat):
         """Check rows if the field matches the unique value list
@@ -346,12 +402,8 @@ class RowHelper:
                                 You can use the 'unicode.format' function notation {#} to transfer the row values.
                                 For example - a field with the index 0 in the list of fields with 'outStringformat' parameter value: u"faulty feature OID: {0}" will return the string: u"faulty feature OID: 123", where 123 is the 'objectid' field value for found record.
         """
-        rezultList = []
-        with self.gp.da.SearchCursor(festureClass, field_names=fields, where_clause=where_clause) as cursor:
-            for row in cursor:
-                if not row[fields.index(getField)] in valuelist:
-                    rezultList.append(unicode(outStringformat).format(*row))
-        return rezultList
+        rezultList = RowHelper2.ValidateRowsForFieldValueList(self, festureClass, getField, fields, valuelist, where_clause, outStringformat)
+        return [row[1] for row in rezultList]
 
 class SimpleAppend:
     """Class for easing the operations with the 'Append' function"""

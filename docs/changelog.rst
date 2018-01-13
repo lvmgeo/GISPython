@@ -2,6 +2,13 @@
 Changelog
 =========
 
+v1.35.2 (2018.01.13)
+--------------------
+
+* Additional functionality added to SysGISTools module:
+	- As there is many performance problems with *arcpy* geoprocessing script history logging, GISPython sets by default for *arcpy* not to log GP history. You can change this behavior by setting ``SetLogHistory = True`` in parameters file
+	- GISPython Shell command launcher and SQL command launcher has added capabilities to hide passwords that they do not apear in output (logfiles and on screen)
+
 v1.35.1 (2017.11.09)
 --------------------
 

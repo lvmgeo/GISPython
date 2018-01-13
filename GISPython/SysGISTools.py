@@ -58,6 +58,10 @@ class GISTools10:
         OutDirArh = self.Pr.OutDirArh
         self.StartTime = datetime.datetime.now()
         self.gp = arcpy
+        if hasattr(Params, 'SetLogHistory'):
+            arcpy.SetLogHistory(Params.SetLogHistory)
+        else:
+            arcpy.SetLogHistory(False)
         self.GDBHelper = GDBHelper.GDBHelper(self.gp)
         self.ToolName = ToolName
         self.SR = MySR()
@@ -139,6 +143,7 @@ class GISTools10:
 
         Args:
             self: The reserved object 'self'
+            ErrorSeverity: Maximum Severity to report as error
         """
         self.AddMessage('\n--------------------------------------------')
         maxSeverity = self.gp.GetMaxSeverity()
@@ -218,7 +223,7 @@ class GISTools10:
                             self.AddMessage('>>>>' + line, True)
         return lines
 
-    def runShell(self, exe, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Detached=False, Silent=False):
+    def runShell(self, exe, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Detached=False, Silent=False, hidenStrings = []):
         """Shell command execution procedure. It can detect errors in execution and can output results to screen.
 
         Args:
@@ -227,19 +232,23 @@ class GISTools10:
             noErr: 'True' indicates that the errors doesn't have to be logged
             ErrorStrings: List of error strings to look for in the output. Found error will be considered as an error in the execution process
             Detached: Whether to execute seperately from the main process (Default: False)
+            hidenStrings: List of strings tha has to be hiden in the output (used for hiding passwords)
         """
         args = shlex.split(exe)
         _StartTime = datetime.datetime.now()
         if not Silent:
-            self.AddMessage(u'>Executing the Shell command> ' + exe)
+            command = exe
+            for hideString in hidenStrings:
+                command = command.replace(hideString, '*' * len(hideString))
+            self.AddMessage(u'>Executing the Shell command> ' + command)
         ShellOutput = self._runProcess(args, noErr, Detached)
         lines = ShellOutput
-        self._outputLines(lines, False, noErr, ErrorStrings, Silent)
+        self._outputLines(lines, False, noErr, ErrorStrings, Silent, hidenStrings = hidenStrings)
         _TD = datetime.datetime.now()- _StartTime
         if not Silent:
             self.AddMessage(u'>Done executing the Shell command. Execution time '  + str(_TD))
 
-    def outputLogfile(self, file, encoding='utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], Silent=False):
+    def outputLogfile(self, file, encoding='utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], Silent=False, hidenStrings = []):
         """Procedure prints text file to screent - processing error keywords
 
         Args:
@@ -248,11 +257,12 @@ class GISTools10:
             noErr: True ir no error logging is necesery
             ErrorStrings: List or keywords with will be recognized as errors
             Silent: if True no Errors will be rised
+            hidenStrings: List of strings tha has to be hiden in the output (used for hiding passwords)
         """
         with codecs.open(file, 'r', encoding) as fin:
-            self._outputLines(fin.readlines(), True, noErr, ErrorStrings, Silent)
+            self._outputLines(fin.readlines(), True, noErr, ErrorStrings, Silent, hidenStrings = hidenStrings)
 
-    def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], Silent=False):
+    def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], Silent=False, hidenStrings = []):
         """Procedure for outputing set of lines to screen with error key word recognition. (for example for log file output processing)
 
         Args:
@@ -261,6 +271,7 @@ class GISTools10:
             noErr: True ir no error logging is necesery
             ErrorStrings: List or keywords with will be recognized as errors
             Silent: if True no Errors will be rised
+            hidenStrings: List of strings tha has to be hiden in the output (used for hiding passwords)
         """
         isError = False
         for line in lines:
@@ -273,6 +284,8 @@ class GISTools10:
                         if line.upper().find(ErStr.upper()) > -1:
                             isError = True
         for line in lines:
+            for hideString in hidenStrings:
+                line = line.replace(hideString, '*' * len(hideString))
             line = self._tryCovertStringEncoding(line)
             if line != '':
                 if isError == True:
@@ -326,7 +339,7 @@ class GISTools10:
         import inspect
         return self.ExecutePatch + '\\SQL\\' + Name + '.sql'
 
-    def RunSQL(self, Name, user="#", pwd="#", SpoolFile='#', ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], params=[], DBType='Oracle'):
+    def RunSQL(self, Name, user="#", pwd="#", SpoolFile='#', ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], params=[], DBType='Oracle', hidenStrings = []):
         """Procedure for SQL file execution (only Oracle sqlplus supported)
         Typically used for execution, passing only SQL filename parameter
 
@@ -337,7 +350,9 @@ class GISTools10:
             p: Password
             SpoolFile: SQL output
             ErrorStrings: A list of keyword error strings that defines an error in the execution
+            hidenStrings: List of strings tha has to be hiden in the output (used for hiding passwords)
         """
+        hidenStrings.append(pwd)
         if DBType.upper() == 'ORACLE':
             if pwd == "#":
                 pwd = self.Pr.p
@@ -346,7 +361,7 @@ class GISTools10:
             if SpoolFile == '#':
                 SpoolFile = self.Pr.OutDir + '\\' + Name + self.MyNowFile() + 'SQL.outlog'
             self.AchiveFiles(self.Pr.OutDir, self.Pr.OutDirArh, Name, False)
-            self.runShell('sqlplus -L ' + user + '/' + pwd + '@' + self.Pr.TNSName + ' @"' + self.GetSQL(Name) + '" "' + SpoolFile + '" ' + ' '.join(params), False, ErrorStrings)
+            self.runShell('sqlplus -L ' + user + '/' + pwd + '@' + self.Pr.TNSName + ' @"' + self.GetSQL(Name) + '" "' + SpoolFile + '" ' + ' '.join(params), False, ErrorStrings, hidenStrings = hidenStrings)
         else:
             raise AttributeError('Provided DB Type is not supported!')
 
