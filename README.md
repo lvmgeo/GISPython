@@ -166,26 +166,30 @@ _Example:_
 ###### Define parameters in ESRI Python toolbox
 ```Python
 from  GISPython import GISPythonTool
-class ToolManageArcGISServer(GISPythonTool.GISPythonTool): # Custom Python tool
-    def __init__(self): # Class initialization procedure
-        """Define the tool (tool name is the class name)"""
-        self.label = u"Tool for administering the ArcGIS server"
-        self.description = u"Tool for administering the ArcGIS server"
-        self.category = 'Administrator tools'
-        
-    def updateParameters(self, parameters): # Call this method from GISPythonTool in case the parameters are changed, and set up the parameters
-        if parameters[3].value == True:
-            parameters[2].enabled = True
-        else:
-            parameters[2].enabled = False
-        return parameters
-        
-    def updateMessages(self, parameters): # Call this method from GISPythonTool after an inner validation. Method carries out an additional validations
-        if parameters[2].value is None and parameters[3].value == True:
-            parameters[2].setErrorMessage("To change the MXD file connection, you need to indicate connection path, ")
-        else:
-            parameters[2].clearMessage()
-        return parameters
+
+	class ToolAtributeValidator(GISPythonTool.GISPythonTool):
+    def __init__(self):
+        """Define tool (tool name is the class name)"""
+        self.label = u"Tool for attribute data validation (test mode)"
+        self.description = u"Tool for attribute data validation (test mode)"
+        self.category = 'GEO Maintenance'
+
+    def getParameterInfo(self):
+        """Define the parameters"""
+        param_0 = arcpy.Parameter(
+            displayName=r'Key:',
+            name=u"key",
+            datatype=u"String",
+            parameterType=u"Required",
+            direction=u"Input")
+
+        ret_val = [param_0]
+        return ret_val
+
+    def execute(self, parameters, messages):
+        """Tool execution"""
+        AtributeValidator.MainModule(parameters[0].valueAsText).DoJob()
+        return
 ```
 
 #### _SysGISTools_
