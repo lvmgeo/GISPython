@@ -30,6 +30,17 @@ class SimpleFileOps(object):
         self.Tool.AddMessage(u"\n----------- Cleaning directory [" +  DirName + u"] searching: {" + searchPatern + "} -------" + self.Tool.MyNow())
         self.Tool.RunPS("ClearDir", '"' + self.Tool.CorrectStr(DirName) + '" ' + searchPatern, os.path.dirname(__file__))
 
+    def delFileIfExists(self, fileName): # Overriding
+        """"Deletes file if file exists
+            
+            Args:
+                self: The reserved object 'self'
+                DirName: The directory to be cleaned
+
+        """
+        if os.path.exists(fileName):
+            os.remove(fileName)
+
     def DelClearDir(self, DirName): # Overriding
         """Delete non-empty directory
 
@@ -312,7 +323,6 @@ class LockSubprocess(object):
                     self.results.status = "Running"
                     self.writeJson()
             else:
-                self.f = codecs.open(self.lockFileName, 'w', 'utf-8')
                 self.results.status = "Running"
                 self.writeJson()
         else:
@@ -324,11 +334,9 @@ class LockSubprocess(object):
         Args:
             self: The reserved object 'self'
         """
-        if self.results.status == "Running":
+        if self.results.status != "Locked":
             self.results.status = "Done"
-            if hasattr(self, 'f'):
-                self.f = codecs.open(self.lockFileName, 'w', 'utf-8')
-                self.writeJson()
+            self.writeJson()
         if hasattr(self, 'f'):
             self.f.close()
 
@@ -353,6 +361,9 @@ class LockSubprocess(object):
                   'processName':self.results.processName,
                   'processdate': str(self.results.processdate)}
         JsonString = json.dumps(rezult, sort_keys=True, indent=4 * ' ')
+        if hasattr(self, 'f'):
+            self.f.close()
+        self.f = codecs.open(self.lockFileName, 'w', 'utf-8')
         self.f.truncate()
         self.f.write(JsonString)
         self.f.flush()
