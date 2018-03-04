@@ -2,6 +2,11 @@
 Changelog
 =========
 
+v1.36.2 (2018.03.04)
+--------------------
+
+* Added additional capabilities for GDBHelper
+
 v1.36.1 (2018.02.25)
 --------------------
 

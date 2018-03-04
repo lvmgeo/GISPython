@@ -232,6 +232,26 @@ class GDBHelper:
         else:
             return val
 
+    def CopyDomain(self, inWorkspace, inDomain, outWorkspace, outDomain):
+        """Procedure doeas copy one domain to another.
+
+        Args:
+            self: The reserved object 'self'
+            inWorkspace: in workspace
+            inDomain: in domain name
+            outWorkspace: out workspace
+            outDomain: out workspace name
+        """
+        pj = os.path.join
+        if self.isTool:
+            self.Tool.AddMessage(u'>>>>Copy domains from {0} to {1} - {2}'.format(inDomain, outDomain, self.Tool.MyNow()))
+
+        tableName = 'in_memory/' + inDomain
+        self.gp.DomainToTable_management(inWorkspace, inDomain, tableName, 'code', 'value')
+        self.OutputMessages()
+        self.gp.TableToDomain_management(tableName, 'code', 'value', outWorkspace, outDomain, '#', 'REPLACE')
+        self.OutputMessages()
+
     def DecodeField(self, Layer, Field, DecodeField, DecodeDict, Query=None, workspace=None, startEditing=False, startOperation=False, with_undo=False, multiuser=False):
         """Function does field value recalculation decoding values from one to another. Used, for example, in clasificator value recalculation.
 
