@@ -2,6 +2,18 @@
 Changelog
 =========
 
+v1.36.2 (2018.03.04)
+--------------------
+
+* Added additional capabilities for GDBHelper
+
+v1.36.1 (2018.02.25)
+--------------------
+
+* Added additional capabilities in shell command running
+* Bug fixes in SimpleFileOps file locking functionality
+* Added possibility to store time in date time parametrs in Json parameter file
+
 v1.35.2 (2018.01.13)
 --------------------
 
