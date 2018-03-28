@@ -43,6 +43,18 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         os.rmdir(DirName)
         self.Tool.AddMessage(u"    ... directory [" +  DirName + u"] deleted ")
 
+
+    def delFileIfExists(self, fileName): # Overriding
+        """"Deletes file if file exists
+            
+            Args:
+                self: The reserved object 'self'
+                DirName: The directory to be cleaned
+
+        """
+        if os.path.exists(fileName):
+            self._force_remove_file_or_symlink(fileName)
+
     def BackupFiles(self, InDirName, OutDirName, D=0, Ext='*'): # Overriding
         """File archiving automation procedure
 

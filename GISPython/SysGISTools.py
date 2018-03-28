@@ -188,7 +188,7 @@ class GISTools10:
             self.fLog.flush()
         self.AddMessage('--------------------------------------------')
 
-    def _runProcess(self, exe, noErr=False, Detached=False):
+    def _runProcess(self, exe, noErr=False, Detached=False, Silent=False, hidenStrings = []):
         """Shell command execution support function (see the runShell function)
 
         Args:
@@ -207,7 +207,9 @@ class GISTools10:
             while True:
                 retcode = p.poll() #returns None while subprocess is running
                 str = p.stdout.readline()
-                if str != '':
+                for hideString in hidenStrings:
+                    str = str.replace(hideString, '*' * len(hideString))
+                if str != '' and Silent != True:
                     self.AddMessage(u'>>>>' + self._tryCovertStringEncoding(str), True)
                 lines.append(str)
                 if retcode is not None:
@@ -216,6 +218,8 @@ class GISTools10:
             if not errlines == None:
                 for str in errlines:
                     line = self._tryCovertStringEncoding(str)
+                    for hideString in hidenStrings:
+                        line = line.replace(hideString, '*' * len(hideString))
                     if line != '':
                         if noErr == False:
                             self.AddError('>>>>' + line, True)
@@ -241,7 +245,7 @@ class GISTools10:
             for hideString in hidenStrings:
                 command = command.replace(hideString, '*' * len(hideString))
             self.AddMessage(u'>Executing the Shell command> ' + command)
-        ShellOutput = self._runProcess(args, noErr, Detached)
+        ShellOutput = self._runProcess(args, noErr, Detached, Silent, hidenStrings)
         lines = ShellOutput
         self._outputLines(lines, False, noErr, ErrorStrings, Silent, hidenStrings = hidenStrings)
         _TD = datetime.datetime.now()- _StartTime
@@ -275,9 +279,11 @@ class GISTools10:
         """
         isError = False
         for line in lines:
+            for hideString in hidenStrings:
+                line = line.replace(hideString, '*' * len(hideString))
             line = self._tryCovertStringEncoding(line)
             if line != '':
-                if doMessges == True:
+                if doMessges == True and Silent==False:
                     self.AddMessage(line)
                 if noErr == False:
                     for ErStr in ErrorStrings:
@@ -550,38 +556,51 @@ class GISTools10:
         """
         return datetime.datetime.strftime(datetime.datetime.utcnow(), "%Y-%m-%d %H:%M:%S")
 
-    def MyNowForParam(self, minusdays=0):
+    def MyNowForParam(self, minusdays=0, includeTime = False):
         """Function returns formatted date (date now) for the GEO parameter processing
 
         Args:
             self: The reserved object 'self'
             minusdays: Number of days to subtract from today
+            includeTime: Include time in param (True/False)
 
         Returns:
             Date, formatted as text
         """
-        DD = datetime.timedelta(days=minusdays)
-        return datetime.datetime.strftime((datetime.datetime.now() - DD), "%Y-%m-%d")
+        if includeTime:
+            DD = datetime.timedelta(days=minusdays)
+            return datetime.datetime.strftime((datetime.datetime.now() - DD), "%Y-%m-%d %H:%M:%S")
+        else:
+            DD = datetime.timedelta(days=minusdays)
+            return datetime.datetime.strftime((datetime.datetime.now() - DD), "%Y-%m-%d")
 
-    def MyDateFromParam(self, dateString):
+    def MyDateFromParam(self, dateString, includeTime = False):
         """Function converts date written in the parameter file to a date object
 
         Args:
             self: The reserved object 'self'
+            includeTime: Include time in param (True/False)
         """
-        return datetime.datetime.strptime(dateString, "%Y-%m-%d")
+        if includeTime:
+            return datetime.datetime.strptime(dateString, "%Y-%m-%d %H:%M:%S")
+        else:
+            return datetime.datetime.strptime(dateString, "%Y-%m-%d")
 
-    def MyDateForParam(self, paramStr):
+    def MyDateForParam(self, paramStr, includeTime = False):
         """Function returns date from GEO parameter processing saved string
 
         Args:
             self: The reserved object 'self'
             paramStr: Parameter value as text
+            includeTime: Include time in param (True/False)
 
         Returns:
             datetime
         """
-        return datetime.datetime.strptime(paramStr, "%Y-%m-%d")
+        if includeTime:
+            return datetime.datetime.strptime(paramStr, "%Y-%m-%d %H:%M:%S")
+        else:
+            return datetime.datetime.strptime(paramStr, "%Y-%m-%d")
 
     def AchiveFiles(self, Dir, AchiveDir, FileName, PrintOut=True):
         """Function moves log files to the archive
