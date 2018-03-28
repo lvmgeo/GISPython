@@ -8,7 +8,7 @@ GISPythonModule
 
 *Main module, which contains frame for all  GISPython package modules. Module allows the code unification, and ensures the code execution from both the ArcGIS Desktop Python console and the Command Prompt.*
 
-.. automodule:: GISPythonModule
+.. automodule:: GISPython.GISPythonModule
     :members:
     :undoc-members:
     :show-inheritance:
