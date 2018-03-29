@@ -8,7 +8,7 @@ GISPythonModule
 
 *Main module, which contains frame for all  GISPython package modules. Module allows the code unification, and ensures the code execution from both the ArcGIS Desktop Python console and the Command Prompt.*
 
-.. automodule:: GISPython.GISPythonModule
+.. automodule:: GISPythonModule
     :members:
     :undoc-members:
     :show-inheritance:
@@ -30,7 +30,7 @@ GISPythonTool
 
 *Module defines abstract classes for the ESRI Toolbox tool definition and contains functions which helps to create an ArcGIS Toolbox, validates the tool's parameter values and controls a behavior of the tool's dialog.*
 
-.. automodule:: GISPython.GISPythonTool
+.. automodule:: GISPythonTool
     :members:
     :undoc-members:
     :show-inheritance:
@@ -70,7 +70,7 @@ SysGISTools
 
 *Base module which contains GISPython scripting framework, logging, error processing and automation mechanisms for different operations, and module and interface base classes.*
 
-.. automodule:: GISPython.SysGISTools
+.. automodule:: SysGISTools
     :members:
     :undoc-members:
     :show-inheritance:
@@ -114,7 +114,7 @@ Duplicates path seperator symbol '\' for external execution compatibility::
 SysGISToolsSysParams
 --------------------
 
-.. automodule:: GISPython.SysGISToolsSysParams
+.. automodule:: SysGISToolsSysParams
     :members:
     :undoc-members:
     :show-inheritance:
@@ -122,7 +122,7 @@ SysGISToolsSysParams
 SysTools_unittest
 -----------------
 
-.. automodule:: GISPython.SysTools_unittest
+.. automodule:: SysTools_unittest
     :members:
     :undoc-members:
     :show-inheritance:

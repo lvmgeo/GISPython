@@ -8,7 +8,7 @@ AGServerHelper
 
 *Module contains procedures for typical operations with ArcGIS server. All procedures use token authorization. For procedures with NTLM authorization use AGServerHelperNTLM module.*
 
-.. automodule:: GISPython.AGServerHelper
+.. automodule:: AGServerHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -55,7 +55,7 @@ AGServerHelperNTLM
 
 *Module contains procedures for typical operations with ArcGIS server. All procedures use NTLM authorization. For token authorization use AGServerHelpaer module.*
 
-.. automodule:: GISPython.AGServerHelperNTLM
+.. automodule:: AGServerHelperNTLM
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -65,7 +65,7 @@ CachingHelper
 
 *Module generates and carries out map scale caching in ArcGIS Server services.*
 
-.. automodule:: GISPython.CachingHelper
+.. automodule:: CachingHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -86,7 +86,7 @@ FTPHleper
 
 *Module contains procedures for typical FTP server file operations.*
 
-.. automodule:: GISPython.FTPHleper
+.. automodule:: FTPHleper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -118,7 +118,7 @@ GDBHelper
 
 *Module for typical GDB (File Geodatabase) operations.*
 
-.. automodule:: GISPython.GDBHelper
+.. automodule:: GDBHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -162,7 +162,7 @@ Validate the rows with the SQL clause::
 GDPSyncroniserHelper
 --------------------
 
-.. automodule:: GISPython.GDPSyncroniserHelper
+.. automodule:: GDPSyncroniserHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -201,7 +201,7 @@ Synchronize data between two tables with internal parameter definition::
 GDPSyncroniserHelper2
 --------------------
 
-.. automodule:: GISPython.GDPSyncroniserHelper2
+.. automodule:: GDPSyncroniserHelper2
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -210,7 +210,7 @@ GDPSyncroniserHelper2
 JsonParamsHelper
 ----------------
 
-.. automodule:: GISPython.JsonParamsHelper
+.. automodule:: JsonParamsHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -254,7 +254,7 @@ MailHelper
 
 *Module for e-mail operations. Module contains functions for typical SMTP operations, and parameter processing from user parameter file.*
 
-.. automodule:: GISPython.MailHelper
+.. automodule:: MailHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -289,7 +289,7 @@ MyError
 
 *Module contains class for storing an error object.*
 
-.. automodule:: GISPython.MyError
+.. automodule:: MyError
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -308,7 +308,7 @@ Raise error in the tool output::
 RarHelper
 ---------
 
-.. automodule:: GISPython.RarHelper
+.. automodule:: RarHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -329,7 +329,7 @@ Extract the Rar file::
 SFTPHelper
 ----------
 
-.. automodule:: GISPython.SFTPHelper
+.. automodule:: SFTPHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -359,7 +359,7 @@ SimpleFileOps
 *File and filesystem operations module. Module contains functions for typical file and filesystem operations, and locking control and processing.
 This module uses windows PowerShell to address file locking situations. For module with the same functionality without PowerShell script usage use *SimpleFileOpsSafe* module.*
 
-.. automodule:: GISPython.SimpleFileOps
+.. automodule:: SimpleFileOps
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -390,7 +390,7 @@ SimpleFileOpsSafe
 
 *File and filesystem operations module. Module contains SimpleFileOpsSafe class, which contains functions for typical file and filesystem operations. Class inherits SimpleFileOps functionality, but does not relay on Windows Powershell scripts to address locked files.*
 
-.. automodule:: GISPython.SimpleFileOpsSafe
+.. automodule:: SimpleFileOpsSafe
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -400,7 +400,7 @@ TimerHelper
 
 *Timing module. Module contains functions for countdown procedures in a code block.*
 
-.. automodule:: GISPython.TimerHelper
+.. automodule:: TimerHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
@@ -431,7 +431,7 @@ ZipHelper
 
 *Zip file operations module. Module contains functions for common Zip file operations.*
 
-.. automodule:: GISPython.ZipHelper
+.. automodule:: ZipHelper
 	:members:
 	:undoc-members:
 	:show-inheritance:
