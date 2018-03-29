@@ -13,7 +13,7 @@ import MyError
 
 class AGServerHelperNTLM(object):
 
-    def __init__(self, username, password, ags_admin_url, tool=None, basic=false ):
+    def __init__(self, username, password, ags_admin_url, tool=None, basic=False ):
         """Class initialization procedure
 
         Args:
