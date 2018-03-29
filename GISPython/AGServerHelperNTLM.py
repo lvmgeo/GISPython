@@ -13,7 +13,7 @@ import MyError
 
 class AGServerHelperNTLM(object):
 
-    def __init__(self, username, password, ags_admin_url, tool=None):
+    def __init__(self, username, password, ags_admin_url, tool=None, basic=false ):
         """Class initialization procedure
 
         Args:
@@ -22,6 +22,7 @@ class AGServerHelperNTLM(object):
             password: ArcGIS Server administrator password
             ags_admin_url: ArcGIS server rest admin url
             Tool: GISPython tool (optional)
+            basic: bool indicating that Basic autentification will be used instead of NTLM
         """
         self.username = username
         self.password = password
@@ -35,11 +36,17 @@ class AGServerHelperNTLM(object):
 
         passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
         passman.add_password(None, self.ags_admin_url, self.username, self.password)
-        # create the NTLM authentication handler
-        auth_NTLM = HTTPNtlmAuthHandler.HTTPNtlmAuthHandler(passman)
+
+        if basic == False:
+            # create the NTLM authentication handler
+            AuthHandler = HTTPNtlmAuthHandler.HTTPNtlmAuthHandler(passman)
+        else:
+            # create the NTLM authentication handler
+            AuthHandler = urllib2.HTTPBasicAuthHandler(passman)
+
 
         # create and install the opener
-        opener = urllib2.build_opener(auth_NTLM)
+        opener = urllib2.build_opener(AuthHandler)
         urllib2.install_opener(opener)
 
 

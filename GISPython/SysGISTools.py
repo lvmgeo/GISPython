@@ -345,7 +345,7 @@ class GISTools10:
         import inspect
         return self.ExecutePatch + '\\SQL\\' + Name + '.sql'
 
-    def RunSQL(self, Name, user="#", pwd="#", SpoolFile='#', ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], params=[], DBType='Oracle', hidenStrings = []):
+    def RunSQL(self, Name, user="#", pwd="#", SpoolFile='#', ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], params=[], DBType='Oracle', hidenStrings = [], DBName='#'):
         """Procedure for SQL file execution (only Oracle sqlplus supported)
         Typically used for execution, passing only SQL filename parameter
 
@@ -356,7 +356,10 @@ class GISTools10:
             p: Password
             SpoolFile: SQL output
             ErrorStrings: A list of keyword error strings that defines an error in the execution
+            params: aditional parameters
+            DBType: only Oracle is supported
             hidenStrings: List of strings tha has to be hiden in the output (used for hiding passwords)
+            DBName: Oracle TNS name
         """
         hidenStrings.append(pwd)
         if DBType.upper() == 'ORACLE':
@@ -364,10 +367,12 @@ class GISTools10:
                 pwd = self.Pr.p
             if user == "#":
                 user = self.Pr.u
+            if DBName == "#":
+                DBName = self.Pr.TNSName
             if SpoolFile == '#':
                 SpoolFile = self.Pr.OutDir + '\\' + Name + self.MyNowFile() + 'SQL.outlog'
             self.AchiveFiles(self.Pr.OutDir, self.Pr.OutDirArh, Name, False)
-            self.runShell('sqlplus -L ' + user + '/' + pwd + '@' + self.Pr.TNSName + ' @"' + self.GetSQL(Name) + '" "' + SpoolFile + '" ' + ' '.join(params), False, ErrorStrings, hidenStrings = hidenStrings)
+            self.runShell('sqlplus -L ' + user + '/' + pwd + '@' + DBName + ' @"' + self.GetSQL(Name) + '" "' + SpoolFile + '" ' + ' '.join(params), False, ErrorStrings, hidenStrings = hidenStrings)
         else:
             raise AttributeError('Provided DB Type is not supported!')
 

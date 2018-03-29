@@ -57,7 +57,7 @@ class ZipHelper:
                     if filePath.endswith(ext):
                         doCompress = False
                 if doCompress:
-                    zfile.write(os.path.join(root, filePath), arcname=os.path.basename(filePath))
+                    zfile.write(os.path.join(root, filePath), arcname=os.path.join(root, filePath).replace(dirPath, ''))
         zfile.close()
 
     def ExtractZipFile(self, zipFileName, destPath):
