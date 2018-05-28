@@ -1,6 +1,15 @@
 =========
 Changelog
 =========
+v1.37.2 (2018.03.29)
+--------------------
+
+* Bug fixes for AGServerHelperNTLM
+
+v1.37.1 (2018.03.29)
+--------------------
+
+* Bug fixes for ZipHelper and GISTools10
 
 v1.36.2 (2018.03.04)
 --------------------

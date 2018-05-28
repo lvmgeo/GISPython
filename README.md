@@ -63,42 +63,9 @@ To upgrade **_GISPython_** use `pip install gispython --upgrade`.
 
 ## Configuration & basic usage
 
-Before using **_GISPython_** modules in custom geoprocessing scripts, you need to set up your scripting environment.
-Here is an example of **_GISPython_** script:
-```python
-# -*- coding: utf-8 -*-
-"""
-    Tool description
-"""
-import SysGISParams as Pr # Import custom parameter file
-import sys, os # Import built in Python modules for basic operations
-from  GISPython import GISPythonModule # Import scripting framework from  GISPython package
-# you can import additional  GISPython modules, based on the tool's needs
+Before using **_GISPython_** modules in custom geoprocessing scripts, you need to set up your scripting environment with [_SetupDefaultEnvironment_](https://github.com/lvmgeo/GISPython/blob/master/GISPython/SetupDefaultEnvironment.py) module which also includes template for user scripts.
 
-#Base class of the module
-class MainModule(GISPythonModule.GISPythonModule): # Inherits GISPythonModule class
-	"""
-		Base module of the tool
-	"""
-	def __init__(self):
-        """
-            Class initialization procedure
-        """
-		GISPythonModule.GISPythonModule.__init__(self, 'ToolName', Pr, __file__)
-		
-	def mainModule(self, args):
-		"""
-			Base procedure of the tool
-		"""
-		# Your code
-		
-# Module execution
-if __name__ == "__main__":
-	"""Module execution"""
-	Module = MainModule()
-	Module.DoJob()
-```
-Parameter file or object (e.g. SysGISParams.py) is important, because **_GISPython_** relies of several parameters to be present to function successfully:
+_SetupDefaultEnvironment_ module also includes basic parameters (variable _paramsFileSource_) for parameter file (e.g. SysGISParams.py) which is important, because **_GISPython_** relies of several parameters to be present to function successfully:
 * OutDir - directory for storing script output log files `OutDir = r'C:\GIS\Log\Outlog\' `
 * OutDirArh - directory for storing script output log file archive (all non active files) `OutDirArh = r'C:\GIS\Log\Outlog\Archive\' `
 * ErrorLogDir - directory for storing script error log files `ErrorLogDir = r'C:\GIS\Log\ErrorLog\' `(*Important! This directory can be monitored for non empty files. If this directory has a file that is non empty - this indicates that a script has failed*)
