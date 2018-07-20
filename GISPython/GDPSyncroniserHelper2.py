@@ -94,7 +94,7 @@ class GDPSyncroniserHelper2(object):
         if self.definition.SourceToDestination():
             self.AddMessage(u'>>>>>>>>Do create new records: [{0}]'.format(self.definition.createNew))
         if self.definition.SourceToDestination():
-            self.AddMessage(u'>>>>>>>>Do allow one to many join records: [{0}]'.format(self.definition.createNew))
+            self.AddMessage(u'>>>>>>>>Do allow one to many join records: [{0}]'.format(self.definition.allowMultiple))
 
         # organize editor start
         if startEditing or startOperation:

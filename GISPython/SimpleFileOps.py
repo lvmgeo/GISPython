@@ -41,7 +41,7 @@ class SimpleFileOps(object):
         if os.path.exists(fileName):
             os.remove(fileName)
 
-    def DelClearDir(self, DirName): # Overriding
+    def DelClearDir(self, DirName, searchPatern='*'): # Overriding
         """Delete non-empty directory
 
         Args:

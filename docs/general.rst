@@ -29,7 +29,7 @@ Package installation
 Configuration & basic usage
 ---------------------------
 	
-Before using *GISPython* modules in custom geoprocessing scripts, you need to set up your scripting environment with `SetupDefaultEnvironment <https://github.com/lvmgeo/GISPython/blob/master/GISPython/SetupDefaultEnvironment.py>`_ module which also includes template for user scripts.
+Before using *GISPython* modules in custom geoprocessing scripts, you need to set up your scripting environment with `*SetupDefaultEnvironment* <https://github.com/lvmgeo/GISPython/blob/master/GISPython/SetupDefaultEnvironment.py>`_ module which also includes template for user scripts.
 		
 *SetupDefaultEnvironment* module also includes basic parameters (variable *paramsFileSource*) for parameter file (e.g. SysGISParams.py) which is important, because *GISPython* relies of several
 parameters to be present to function successfully:

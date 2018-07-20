@@ -72,12 +72,18 @@ class GISTools10:
             self.AchiveFiles(LogDir, LogDirArh, ToolName, False)
         except Exception, err:
             print(u'Error archiving errlog files')
-            print(err.strerror)
+            if hasattr(err, 'strerror'):
+                print(err.strerror)
+            else:
+                print(err.message)
         try:
             self.AchiveFiles(OutDir, OutDirArh, ToolName, False)
         except Exception, err:
             print(u'Error archiving outlog files')
-            print(err.strerror)
+            if hasattr(err, 'strerror'):
+                print(err.strerror)
+            else:
+                print(err.message)
         self.fLog = codecs.open(LogDir + '\\' + self.ToolName + self.MyNowFile() + '.errlog', encoding='utf-8', mode='w')
         self.fOut = codecs.open(OutDir + '\\' + self.ToolName + self.MyNowFile() + '.outlog', encoding='utf-8', mode='w')
         self.fSQL = OutDir + '\\' + self.ToolName + self.MyNowFile() + 'SQL.outlog'
@@ -342,7 +348,6 @@ class GISTools10:
         Returns:
             SQL file full path
         """
-        import inspect
         return self.ExecutePatch + '\\SQL\\' + Name + '.sql'
 
     def RunSQL(self, Name, user="#", pwd="#", SpoolFile='#', ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], params=[], DBType='Oracle', hidenStrings = [], DBName='#'):
