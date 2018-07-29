@@ -1,6 +1,11 @@
 =========
 Changelog
 =========
+v1.39.1 (2018.07.29)
+--------------------
+
+* Added aditional paosibilities for AGServerHelperNTLM
+
 v1.38.1 (2018.07.20)
 --------------------
 

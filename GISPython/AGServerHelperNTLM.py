@@ -87,7 +87,6 @@ class AGServerHelperNTLM(object):
         obj = json.loads(data)
         if 'status' in obj and obj['status'] == "error":
             raise MyError.MyError("Error: JSON object returns an error. " + str(obj))
-            return False
         else:
             return True
 
@@ -283,3 +282,67 @@ class AGServerHelperNTLM(object):
             return False #print "Service " + service + " was detected to be stopped"
         else:
             return True #print "Service " + service + " is running"
+
+    # Check service used datasets
+    def GetDatasetNames(self, folder, service):
+        """Retrieve the service Dataset Names from the server
+
+        Args:
+            self: The reserved object 'self'
+            folder: Service directory
+            service: Name of a service
+
+        Returns: list of strings
+        """
+        # Construct URL to read folder
+        folder = self._processFolderString(folder)
+        manifestURL = "services/" + folder + service + "/iteminfo/manifest/manifest.json?f=pjson"
+        params = {}
+        statusData = self._requestFromServer(manifestURL, params, method='GET')
+        rezult = list()
+
+        # Check that data returned is not an error object
+        if not self._assertJsonSuccess(statusData):
+            raise MyError.MyError("Error while retrieving manifest information for " + service + ".")
+
+        statusDataObj = json.loads(statusData)
+        for database in statusDataObj['databases']:
+            rezult.append(database['onServerName'])
+
+        return rezult
+
+    # Check service used datasets
+    def GetServiceInfo(self, folder):
+        """Retrieve the Folder List from the server
+
+        Args:
+            self: The reserved object 'self'
+            folder: Service directory
+
+        Returns: list of service objects
+        """
+        # Construct URL to read folder
+        folder = self._processFolderString(folder)
+        manifestURL = "services/" + folder + "/?f=pjson"
+        params = {}
+        statusData = self._requestFromServer(manifestURL, params, method='GET')
+        rezult = list()
+
+        # Check that data returned is not an error object
+        if not self._assertJsonSuccess(statusData):
+            raise MyError.MyError("Error while retrieving folder information.")
+
+        statusDataObj = json.loads(statusData)
+        rezult.append(statusDataObj)
+        folderlist = list()
+        for folderDetail in statusDataObj['foldersDetail']:
+            folderlist.append(folderDetail['folderName'])
+
+        for subfolder in folderlist:
+            if not (subfolder.upper() == 'System'.upper() or subfolder.upper() == 'Utilities'.upper()):
+                manifestURL = "services/" + subfolder + "/?f=pjson"
+                statusData = self._requestFromServer(manifestURL, params, method='GET')
+                statusDataObj = json.loads(statusData)
+                rezult.append(statusDataObj)
+
+        return rezult
