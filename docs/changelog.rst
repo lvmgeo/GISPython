@@ -1,10 +1,15 @@
 =========
 Changelog
 =========
+v1.39.2 (2018.08.15)
+--------------------
+
+* Added aditional paosibilities for SimpleFileOps.py
+
 v1.39.1 (2018.07.29)
 --------------------
 
-* Added aditional paosibilities for AGServerHelperNTLM
+* Added aditional paosibilities for AGServerHelperNTLM.py
 
 v1.38.1 (2018.07.20)
 --------------------

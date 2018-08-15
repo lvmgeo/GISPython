@@ -186,10 +186,14 @@ class SimpleFileOps(object):
             Dir: The directory in which to look for the file
             Ext: The extension to search for
         """
-        dated_files = [Dir + "\\" + fn
-                       for fn in os.listdir(Dir) if fn.lower().endswith('.' + (Ext.lower()))]
-        dated_files.sort()
-        return dated_files
+        if Ext == '*':
+            files = [os.path.join(Dir,fn)
+                        for fn in os.listdir(Dir) if os.path.isfile(os.path.join(Dir,fn))]
+        else:
+            files = [os.path.join(Dir,fn)
+                        for fn in os.listdir(Dir) if fn.lower().endswith('.' + (Ext.lower()))]
+        files.sort()
+        return files
 
     def FindDirectory(self, Dir, Searchpattern='*'):
         """Find subdirectories in the given directory
@@ -200,9 +204,9 @@ class SimpleFileOps(object):
             Searchpattern: Searching condition
         """
         if Searchpattern == '*':
-            dirs = [fn for fn in os.listdir(Dir) if os.path.isdir(fn)]
+            dirs = [fn for fn in os.listdir(Dir) if os.path.isdir(os.path.join(Dir,fn))]
         else:
-            dirs = [fn for fn in os.listdir(Dir) if os.path.isdir(fn)
+            dirs = [fn for fn in os.listdir(Dir) if os.path.isdir(os.path.join(Dir,fn))
                     and not fn.lower().find(Searchpattern.lower()) == -1]
         dirs.sort()
         return dirs
@@ -275,6 +279,50 @@ class SimpleFileOps(object):
         fileext = ('.').join(file.split('.')[-1:])
 
         return os.path.join(dirname, filename + '_' + self.Tool.MyNowFileSafe() + '.' + fileext)
+
+    def CopareFileLists(self, SourceFiles, DestFiles):
+        """Compare two file lists to determine changes
+        
+        Args:
+            SourceFiles (List): Sorce file path list
+            DestFiles (List): Destination file path list
+
+        Returns:
+            Dictionary:
+                AbsentSource (List): Files in Source and not in Destination
+                AbsentDestination (List): Files in Destination and not in Source
+        """
+        AbsentSource = list()
+        AbsentDestination = list()
+
+        SourceFileDict = dict()
+        for sFile in SourceFiles:
+            basename = os.path.basename(sFile)
+            ext = os.path.splitext(basename)[1]
+            modifyied = datetime.fromtimestamp(os.path.getmtime(sFile))
+            SourceFileDict[basename] = {"path": sFile, "ext": ext, "modifyied": modifyied}
+            
+        DestFileDict = dict()
+        for dFile in DestFiles:
+            basename = os.path.basename(dFile)
+            ext = os.path.splitext(basename)[1]
+            modifyied = datetime.fromtimestamp(os.path.getmtime(dFile))
+            DestFileDict[basename] = {"path": sFile, "ext": ext, "modifyied": modifyied}
+
+        for sFile in SourceFileDict.keys():
+            if not DestFileDict.has_key(sFile):
+                AbsentDestination.append(SourceFileDict[sFile]["path"])
+            else:
+                # print SourceFileDict[sFile]["modifyied"]
+                # print DestFileDict[sFile]["modifyied"]
+                if SourceFileDict[sFile]["modifyied"].replace(microsecond=0)>DestFileDict[sFile]["modifyied"].replace(microsecond=0):
+                    AbsentDestination.append(SourceFileDict[sFile]["path"])
+
+        for dFile in DestFileDict.keys():
+            if not SourceFileDict.has_key(dFile):
+                AbsentSource.append(DestFileDict[dFile]["path"])
+
+        return {"AbsentSource":AbsentSource, "AbsentDestination":AbsentDestination}
 
 class LockSubprocess(object):
     """Class that provides directory locking control and processing"""
