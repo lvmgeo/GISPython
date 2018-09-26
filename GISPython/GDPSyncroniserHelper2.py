@@ -4,6 +4,7 @@
 
      Second version is ment for advanced scenarious, but opereates data inMemory so it,s not intended for large data sets.
 """
+import TimerHelper
 
 class GDPSyncroniserHelper2(object):
     """ESRI table synchronization class 2
@@ -149,6 +150,7 @@ class GDPSyncroniserHelper2(object):
         errCount = 0
 
         with self.gp.da.SearchCursor(self.definition.inTable, self.definition.inTableFields, self.definition.inTableQuery) as inCur:
+            T = TimerHelper.TimerHelper()
             for inRow in inCur:
                 syncItem = SyncItem2()
                 syncItem.inSyncRow = inRow
@@ -198,6 +200,7 @@ class GDPSyncroniserHelper2(object):
                     errCount = errCount + 1
                     syncItem.error =  u"Error: no related records found in the results table " + self.definition.messageDefinition.format(*syncItem.inSyncRow)
                     self.AddMessage(u'        ...{0}'.format(syncItem.error))
+                    syncItem.id = inRow[0]
                     syncItem.ClerRowInfo()
                     syncItem.syncResult = 'error'
                     rezultList.append(syncItem.GetRowStatussInfo())
@@ -207,7 +210,7 @@ class GDPSyncroniserHelper2(object):
 
                 if processedCountOperation >= 1000:
                     if self.isTool:
-                        self.AddMessage(u'>>>> ...Processed [{0}] from [{1}], stored [{2}], faulty [{3}]'.format(processedCount, recordCount, updatedCount, errCount))
+                        self.AddMessage(u'>>>> ...Processed [{0}] from [{1}], stored [{2}], faulty [{3}] ({4})'.format(processedCount, recordCount, updatedCount, errCount, T.GetTimeReset()))
                     processedCountOperation = 0
                     if self.startOperation:
                         self.edit.stopOperation()
@@ -243,8 +246,9 @@ class GDPSyncroniserHelper2(object):
         processedCount = 0
         processedCountOperation = 0
         errCount = 0
-
+        
         with self.gp.da.UpdateCursor(self.definition.outTable, self.definition.outTableFields, self.definition.outTableQuery) as outCur:
+            T = TimerHelper.TimerHelper()
             for outRow in outCur:
                 syncItem = SyncItem2()
                 syncItem.outSyncRow = outRow
@@ -269,7 +273,7 @@ class GDPSyncroniserHelper2(object):
                             syncItem.outSyncRow = outRow
                             syncItem.id = outRow[0]
                             errCount = errCount + 1
-                            syncItem.error =  u"Error: row in the source table is not unique" + self.definition.messageDefinition.format(*syncItem.outSyncRow)
+                            syncItem.error =  u"Error: row in the source table is not unique " + self.definition.messageDefinition.format(*syncItem.outSyncRow)
                             self.AddMessage(u'        ...{0}'.format(syncItem.error))
                             syncItem.ClerRowInfo()
                             syncItem.syncResult = 'error'
@@ -288,7 +292,7 @@ class GDPSyncroniserHelper2(object):
 
                 if processedCountOperation >= 1000:
                     if self.isTool:
-                        self.AddMessage(u'>>>> ...Processed [{0}] from [{1}], stored [{2}], faulty [{3}]'.format(processedCount, recordCount, updatedCount, errCount))
+                        self.AddMessage(u'>>>> ...Processed [{0}] from [{1}], stored [{2}], faulty [{3}] ({4})'.format(processedCount, recordCount, updatedCount, errCount, T.GetTimeReset()))
                     processedCountOperation = 0
                     if self.startOperation:
                         self.edit.stopOperation()

@@ -251,6 +251,8 @@ class GDBHelper:
         self.OutputMessages()
         self.gp.TableToDomain_management(tableName, 'code', 'value', outWorkspace, outDomain, '#', 'REPLACE')
         self.OutputMessages()
+        self.gp.Delete_management(tableName)
+        self.OutputMessages()
 
     def DecodeField(self, Layer, Field, DecodeField, DecodeDict, Query=None, workspace=None, startEditing=False, startOperation=False, with_undo=False, multiuser=False):
         """Function does field value recalculation decoding values from one to another. Used, for example, in clasificator value recalculation.
@@ -439,7 +441,7 @@ class SimpleAppend:
         self.InWSp = _InWSp
         self.OutWSp = _OutWSp
 
-    def Append(self, inName, OutName):
+    def Append(self, inName, OutName, do_data_delete = True):
         """Function for 'Append' operation automation
 
         Args:
@@ -451,8 +453,9 @@ class SimpleAppend:
         outLayer = os.path.join(self.OutWSp, OutName)
         self.Tool.AddMessage("")
         self.Tool.AddMessage("-----------" + OutName + "------------" + self.Tool.MyNow())
-        self.Tool.gp.DeleteRows_management(outLayer)
-        self.Tool.OutputMessages()
+        if do_data_delete:
+            self.Tool.gp.DeleteRows_management(outLayer)
+            self.Tool.OutputMessages()
         self.Tool.gp.Append_management(inLayer, outLayer, "NO_TEST", "#", "#")
         self.Tool.OutputMessages()
         try:

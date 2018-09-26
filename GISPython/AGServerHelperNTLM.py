@@ -7,13 +7,13 @@
 import sys
 
 # For Http calls
-import httplib, urllib, json, urllib2
+import httplib, urllib, json, urllib2, ssl
 from ntlm import HTTPNtlmAuthHandler
 import MyError
 
 class AGServerHelperNTLM(object):
 
-    def __init__(self, username, password, ags_admin_url, tool=None, basic=False ):
+    def __init__(self, username, password, ags_admin_url, tool=None, basic=False, allowunverifiedssl = False ):
         """Class initialization procedure
 
         Args:
@@ -33,6 +33,16 @@ class AGServerHelperNTLM(object):
         self.Tool = tool
 
         self.ags_admin_url = self.ags_admin_url + '/arcgis/admin'
+        
+        if allowunverifiedssl:
+            try:
+                _create_unverified_https_context = ssl._create_unverified_context
+            except AttributeError:
+                # Legacy Python that doesn't verify HTTPS certificates by default
+                pass
+            else:
+                # Handle target environment that doesn't support HTTPS verification
+                ssl._create_default_https_context = _create_unverified_https_context
 
         passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
         passman.add_password(None, self.ags_admin_url, self.username, self.password)

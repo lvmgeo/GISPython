@@ -1,6 +1,13 @@
 =========
 Changelog
 =========
+v1.40.1 (2018.09.26)
+--------------------
+
+* AGServerHelperNTLM.py added support for self generated SSL sites (Unverified SSL cases)
+* Added capabilities for GDBHelper.py
+* Bug fixes and added capabilities for GDPSyncroniserHelper2.py
+
 v1.39.2 (2018.08.15)
 --------------------
 
