@@ -87,6 +87,11 @@ class GISTools10:
         self.fLog = codecs.open(LogDir + '\\' + self.ToolName + self.MyNowFile() + '.errlog', encoding='utf-8', mode='w')
         self.fOut = codecs.open(OutDir + '\\' + self.ToolName + self.MyNowFile() + '.outlog', encoding='utf-8', mode='w')
         self.fSQL = OutDir + '\\' + self.ToolName + self.MyNowFile() + 'SQL.outlog'
+
+        if hasattr(Params, 'encodingPrimary'):
+            UnicodeWriter = codecs.getwriter(Params.encodingPrimary)
+            sys.stdout = UnicodeWriter(sys.stdout)
+
         self.AddMessage(u'\n==================================================')
         self.AddMessage(r'//////////////////////////////////////////////////')
         self.AddMessage(u'Executing the tool ' + ToolName + u' ' + self.MyNow())
@@ -258,7 +263,7 @@ class GISTools10:
         if not Silent:
             self.AddMessage(u'>Done executing the Shell command. Execution time '  + str(_TD))
 
-    def outputLogfile(self, file, encoding='utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], Silent=False, hidenStrings = []):
+    def outputLogfile(self, file, encoding='utf8', noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False, hidenStrings = []):
         """Procedure prints text file to screent - processing error keywords
 
         Args:
@@ -272,7 +277,7 @@ class GISTools10:
         with codecs.open(file, 'r', encoding) as fin:
             self._outputLines(fin.readlines(), True, noErr, ErrorStrings, Silent, hidenStrings = hidenStrings)
 
-    def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], Silent=False, hidenStrings = []):
+    def _outputLines(self, lines, doMessges, noErr=False, ErrorStrings=['ERROR', 'FAILED', u'K??DA', 'EXCEPTION', 'ORA-'], Silent=False, hidenStrings = []):
         """Procedure for outputing set of lines to screen with error key word recognition. (for example for log file output processing)
 
         Args:

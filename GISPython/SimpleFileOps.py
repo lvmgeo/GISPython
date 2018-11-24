@@ -100,6 +100,16 @@ class SimpleFileOps(object):
         if not os.path.exists(OutDirName):
             os.makedirs(OutDirName)
 
+    def CheckCreateClearDir(self, DirName):
+        """Automation procedure which creates directory, in case it doesn't exist and if it exists then clear this dir
+
+        Args:
+            self: The reserved object 'self'
+            DirName: Output directory
+        """
+        self.CheckCreateDir(DirName)
+        self.ClearDir(DirName)
+
     def GetSafeName(self, text, substituteChar='_', aditionalScaryChars='', aditionalSpaceChars='', noDotsInName=False):
         """Modifies the text for use in the filesystem
 

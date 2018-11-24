@@ -321,6 +321,34 @@ class AGServerHelperNTLM(object):
 
         return rezult
 
+    # Check service permission roles
+    def GetRightsGroupsNames(self, folder, service):
+        """Retrieve the service permission role names from service
+
+        Args:
+            self: The reserved object 'self'
+            folder: Service directory
+            service: Name of a service
+
+        Returns: list of strings
+        """
+        # Construct URL to read folder
+        folder = self._processFolderString(folder)
+        manifestURL = "services/" + folder + service + "/permissions?f=json"
+        params = {}
+        statusData = self._requestFromServer(manifestURL, params, method='GET')
+        rezult = list()
+
+        # Check that data returned is not an error object
+        if not self._assertJsonSuccess(statusData):
+            raise MyError.MyError("Error while retrieving permissions information for " + service + ".")
+
+        permissions = json.loads(statusData)
+        for permission in permissions['permissions']:
+            rezult.append(permission['principal'])
+
+        return rezult
+
     # Check service used datasets
     def GetServiceInfo(self, folder):
         """Retrieve the Folder List from the server

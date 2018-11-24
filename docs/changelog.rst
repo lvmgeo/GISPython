@@ -1,6 +1,13 @@
 =========
 Changelog
 =========
+v1.40.2 (2018.11.24)
+--------------------
+
+* AGServerHelperNTLM.py added function to get rights group names for AGS services
+* Added capabilities for SimpleFileOps and SimpleFileOpsSafe to CheckCreateClearDir - check if dir exist, creates it and clears in one function
+* Added aditional support for outputing unicode text in skry[t output
+
 v1.40.1 (2018.09.26)
 --------------------
 
