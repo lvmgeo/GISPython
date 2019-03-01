@@ -1,6 +1,11 @@
 =========
 Changelog
 =========
+v1.41.0 (2019.01.03)
+--------------------
+
+* GDPSyncroniserHelper2 - added functionality for synchronising geodtabase tables with Python list objects
+
 v1.40.2 (2018.11.24)
 --------------------
 

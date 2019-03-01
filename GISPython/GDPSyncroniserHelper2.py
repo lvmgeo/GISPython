@@ -78,17 +78,27 @@ class GDPSyncroniserHelper2(object):
         self.with_undo = with_undo
         self.multiuser = multiuser
 
+        inputAsTableObject = False
+
+        if self.definition.SourceToDestination():
+            if not self.definition.inTableObject == list():
+                inputAsTableObject = True
+
         # set up fields parameters
-        self.definition.inTableFields = (self.definition.inTableJoinField,) + self.definition.inTableFields
+        if not inputAsTableObject:
+            self.definition.inTableFields = (self.definition.inTableJoinField,) + self.definition.inTableFields
         self.definition.outTableFields = (self.definition.outTableJoinField,) + self.definition.outTableFields
 
         # Ouput Sync process description
         self.AddMessage(u'>>>>Start the synchronization of the tables {0} and {1}'.format(self.definition.inTable, self.definition.outTable))
         self.AddMessage(u'>>>>Synchronization mode is "{0}"'.format(self.definition.mode))
-        self.AddMessage(u'>>>>>>>>Join {0}.{1}={2}.{3}'.format(self.definition.inTable, self.definition.inTableJoinField, self.definition.outTable, self.definition.outTableJoinField))
-        self.AddMessage(u'>>>>>>>>Input fields: [{0}]'.format(", ".join(self.definition.inTableFields)))
-        if self.definition.HasInTableQuery():
-            self.AddMessage(u'>>>>>>>>Input query: [{0}]'.format(self.definition.inTableQuery))
+        if inputAsTableObject:
+            self.AddMessage(u'>>>>For input Will be used Python data list')
+        else:
+            self.AddMessage(u'>>>>>>>>Join {0}.{1}={2}.{3}'.format(self.definition.inTable, self.definition.inTableJoinField, self.definition.outTable, self.definition.outTableJoinField))
+            self.AddMessage(u'>>>>>>>>Input fields: [{0}]'.format(", ".join(self.definition.inTableFields)))
+            if self.definition.HasInTableQuery():
+                self.AddMessage(u'>>>>>>>>Input query: [{0}]'.format(self.definition.inTableQuery))
         self.AddMessage(u'>>>>>>>>Output fields: [{0}]'.format(", ".join(self.definition.outTableFields)))
         if self.definition.HasOutTableQuery():
             self.AddMessage(u'>>>>>>>>Output query: [{0}]'.format(self.definition.outTableQuery))
@@ -109,7 +119,10 @@ class GDPSyncroniserHelper2(object):
 
         # Sync process
         if self.definition.SourceToDestination():
-            output = self.__SyncSourceToDestination()
+            if not inputAsTableObject:
+                output = self.__SyncSourceToDestination()
+            else:
+                output = self.__SyncSourceToDestination_TableObject()
         else:
             output = self.__SyncDestinationToSource()
 
@@ -121,6 +134,102 @@ class GDPSyncroniserHelper2(object):
 
         # end
         return output
+
+    def __SyncSourceToDestination_TableObject(self):
+        """Procedure performs syncronization of type Source To Destination
+
+        Args:
+            self: The reserved object 'self'
+       
+        Returns:
+            * output - list of dictionary items containig:
+                - id: record id, 
+                - syncResult: notInitialized,  synchronized, inserted, error
+                - error: error mesage or '',
+                - updated: true if inserted or updated
+        """
+        # get summary record count
+        recordCount = 0
+        recordCount = len(self.definition.inTableObject)
+        self.AddMessage(u'>>>> ...Records to process {0}'.format(recordCount))
+
+        rezultList =[]
+
+        updatedCount = 0
+        processedCount = 0
+        processedCountOperation = 0
+        errCount = 0
+
+        T = TimerHelper.TimerHelper()
+        for inRow in self.definition.inTableObject:
+            syncItem = SyncItem2()
+            syncItem.inSyncRow = inRow
+            syncItem.id = inRow[0]
+
+            with self.gp.da.UpdateCursor(self.definition.outTable, self.definition.outTableFields, u'{0} = {2}{1}{2}'.format(self.definition.outTableJoinField, syncItem.id, self.definition.idvalueseparator)) as outCur:
+                recordsFoundCount = 0
+                for outRow in outCur:
+                    #print "rec {0} - {1}".format(u'{0} = {2}{1}{2}'.format(self.definition.outTableJoinField, syncItem.id, self.definition.idvalueseparator), (recordsFoundCount == 0 or self.definition.allowMultiple)) 
+                    if recordsFoundCount == 0 or self.definition.allowMultiple:
+                        recordsFoundCount = recordsFoundCount + 1
+                        if recordsFoundCount>1:
+                            syncItem = SyncItem2()
+                            syncItem.inSyncRow = inRow
+                            syncItem.id = inRow[0]
+                        syncItem.outSyncRow = outRow
+                        syncItem.DoSyncFields()
+                        if syncItem.updated:
+                            # self.AddMessage('...Updated')
+                            outCur.updateRow(syncItem.outSyncRow)
+                            updatedCount = updatedCount + 1
+                            syncItem.ClerRowInfo()
+                            syncItem.syncResult = 'synchronized'
+                            rezultList.append(syncItem.GetRowStatussInfo())
+                    else:
+                        syncItem = SyncItem2()
+                        syncItem.inSyncRow = inRow
+                        syncItem.id = inRow[0]
+                        errCount = errCount + 1
+                        syncItem.error =  u"Error: row in the results table is not unique " + self.definition.messageDefinition.format(*syncItem.inSyncRow)
+                        self.AddMessage(u'        ...{0}'.format(syncItem.error))
+                        syncItem.ClerRowInfo()
+                        syncItem.syncResult = 'error'
+                        rezultList.append(syncItem.GetRowStatussInfo())
+
+            if recordsFoundCount == 0 and self.definition.createNew:
+                    with self.gp.da.InsertCursor(self.definition.outTable, self.definition.outTableFields) as insCur:
+                        newRow = [None for _ in range(len(syncItem.inSyncRow))]
+                        syncItem.outSyncRow = newRow
+                        syncItem.DoSyncFields()
+                        if syncItem.updated:
+                            insCur.insertRow(syncItem.outSyncRow)
+                            updatedCount = updatedCount + 1
+                            syncItem.ClerRowInfo()
+                            syncItem.syncResult = 'inserted'
+                            rezultList.append(syncItem.GetRowStatussInfo())
+            if recordsFoundCount == 0 and not self.definition.createNew:
+                errCount = errCount + 1
+                syncItem.error =  u"Error: no related records found in the results table " + self.definition.messageDefinition.format(*syncItem.inSyncRow)
+                self.AddMessage(u'        ...{0}'.format(syncItem.error))
+                syncItem.id = inRow[0]
+                syncItem.ClerRowInfo()
+                syncItem.syncResult = 'error'
+                rezultList.append(syncItem.GetRowStatussInfo())
+
+            processedCount = processedCount + 1
+            processedCountOperation = processedCountOperation + 1
+
+            if processedCountOperation >= 1000:
+                if self.isTool:
+                    self.AddMessage(u'>>>> ...Processed [{0}] from [{1}], stored [{2}], faulty [{3}] ({4})'.format(processedCount, recordCount, updatedCount, errCount, T.GetTimeReset()))
+                processedCountOperation = 0
+                if self.startOperation:
+                    self.edit.stopOperation()
+                if self.startOperation:
+                    self.edit.startOperation()
+
+        self.AddMessage(u'>>>> ...Processed [{0}], stored [{1}], faulty [{2}]'.format(processedCount, updatedCount, errCount))
+        return rezultList
 
     def __SyncSourceToDestination(self):
         """Procedure performs syncronization of type Source To Destination
@@ -363,10 +472,11 @@ class SyncDefinition2(object):
         Args:
             self: The reserved object 'self'
         """
-        self.inTable = "" # input Tale
-        self.inTableFields = () # tuple of input table fields
-        self.inTableQuery = None # query for input table
-        self.inTableJoinField = "" # Field for input table to be used in relation
+        self.inTable = "" # input Tale - if used inTableObject will not be processed
+        self.inTableFields = () # tuple of input table fields - will be ignored if input has inTableObject 
+        self.inTableJoinField = "" # Field for input table to be used in relation - will be ignored if input has inTableObject 
+        self.inTableQuery = None # query for input table - will be ignored if input has inTableObject 
+        self.inTableObject = list() # List of tuple objects reprezenting input table rows - to use do not specify inTable and inTableFields
         self.outTable = "" # destination table
         self.outTableFields = () # tuple of output table fields
         self.outTableQuery = None # query for output table (used only in Destination To Source Sync mode)

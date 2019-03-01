@@ -28,6 +28,8 @@ class GISTools10:
             Params: parameter object
             licenceLevel: arcinfo, arceditor, arcview, arcserver, arcenginegeodb, or arcengine
         """
+        self.ExecutePatch = os.path.dirname(os.path.realpath(__file__))
+
         if licenceLevel == "arcinfo":
             print(u'...Using licence level : ' + licenceLevel)
             import arcinfo
@@ -73,7 +75,10 @@ class GISTools10:
         except Exception, err:
             print(u'Error archiving errlog files')
             if hasattr(err, 'strerror'):
-                print(err.strerror)
+                if hasattr(err, 'strerror'):
+                    print(err.strerror)
+                else:
+                    print('{}'.format(err))
             else:
                 print(err.message)
         try:
@@ -81,7 +86,10 @@ class GISTools10:
         except Exception, err:
             print(u'Error archiving outlog files')
             if hasattr(err, 'strerror'):
-                print(err.strerror)
+                if hasattr(err, 'strerror'):
+                    print(err.strerror)
+                else:
+                    print('{}'.format(err))
             else:
                 print(err.message)
         self.fLog = codecs.open(LogDir + '\\' + self.ToolName + self.MyNowFile() + '.errlog', encoding='utf-8', mode='w')
@@ -371,7 +379,6 @@ class GISTools10:
             hidenStrings: List of strings tha has to be hiden in the output (used for hiding passwords)
             DBName: Oracle TNS name
         """
-        hidenStrings.append(pwd)
         if DBType.upper() == 'ORACLE':
             if pwd == "#":
                 pwd = self.Pr.p
@@ -381,6 +388,7 @@ class GISTools10:
                 DBName = self.Pr.TNSName
             if SpoolFile == '#':
                 SpoolFile = self.Pr.OutDir + '\\' + Name + self.MyNowFile() + 'SQL.outlog'
+            hidenStrings.append(pwd)
             self.AchiveFiles(self.Pr.OutDir, self.Pr.OutDirArh, Name, False)
             self.runShell('sqlplus -L ' + user + '/' + pwd + '@' + DBName + ' @"' + self.GetSQL(Name) + '" "' + SpoolFile + '" ' + ' '.join(params), False, ErrorStrings, hidenStrings = hidenStrings)
         else:
