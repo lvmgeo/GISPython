@@ -12,6 +12,8 @@ class Pr(object):
     OutDirArh = 'C:\\GIS\\Log\\Outlog\\Archive\\' # Output file archive directory
     ErrorLogDir = 'C:\\GIS\\Log\\ErrorLog\\' # Error output file directory
     ErrorLogDirArh = 'C:\\GIS\\Log\\ErrorLog\\Archive\\' # Error output file archive directory
+    encodingPrimary = 'cp1257' # Windows charset
+    encodingSecondary = 'cp775' # Shell charset
 
 class GISTools_unittest(unittest.TestCase):
     """GEOPython unit test class"""

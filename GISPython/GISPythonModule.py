@@ -6,6 +6,7 @@
 import sys
 import os
 import traceback
+import GISPythonToolBase
 import SysGISTools
 import MailHelper
 import MyError
@@ -24,7 +25,7 @@ class GISPythonModule(object):
         Get the tool name with the command 'PrintText()'
         mainModule()
     """
-    def __init__(self, ToolName, SysGISParams, ExecutePatch=__file__, statusMailRecipients=[], errorMailRecipients=[], licenceLevel = "arceditor"):
+    def __init__(self, ToolName, SysGISParams, ExecutePatch=__file__, statusMailRecipients=[], errorMailRecipients=[], licenceLevel = "arceditor", toollevel = "full"):
         """Initialize the tool and the tool parameters
 
         Args:
@@ -38,6 +39,10 @@ class GISPythonModule(object):
         """
         self.ToolName = ToolName
         self.licenceLevel = licenceLevel
+        if toollevel.upper() in ("FULL", "LITE"):
+            self.toollevel = toollevel.upper()
+        else:
+            raise AttributeError('Provided Tool Type {} is not supported!'.format(toollevel)) 
         self.Pr = SysGISParams
         self.ExecutePatch = os.path.dirname(os.path.realpath(ExecutePatch))
         if  hasattr(self.Pr, 'EnableStatusMail'):
@@ -81,8 +86,11 @@ class GISPythonModule(object):
     def initModule(self):
         """Procedure which initializes the GISPython environment, if the tool runs as a standalone tool
         """
-        self.Tool = SysGISTools.GISTools10(self.ToolName, self.Pr, self.licenceLevel)
-        sys.stderr = self.Tool.fLog
+        if self.toollevel == "FULL":
+            self.Tool = SysGISTools.GISTools10(self.ToolName, self.Pr, self.licenceLevel)
+            sys.stderr = self.Tool.fLog
+        elif self.toollevel == "LITE":
+            self.Tool = GISPythonToolBase.GISPythonToolBase(self.ToolName, self.Pr)
         self.Tool.ExecutePatch = self.ExecutePatch
 
     def SetTool(self, Tool):
@@ -159,7 +167,7 @@ class GISPythonModule(object):
                     print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
                     if self.DoMailErrOutput:
                         MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'{}Critical error {}', self.EnvironmentName, self.ToolName), orgLine + '\n' + orgTraceback)
-                    raise e
+                    raise tb[1], None, tb[2]
             else:
                 print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
                 print(u'Raw tool error {0}'.format(self.ToolName))

@@ -65,16 +65,16 @@ Define parameters in ESRI Python toolbox::
         AtributeValidator.MainModule(parameters[0].valueAsText).DoJob()
         return
 
-SysGISTools
------------
+GISPythonToolBase
+-----------------
 
-*Base module which contains GISPython scripting framework, logging, error processing and automation mechanisms for different operations, and module and interface base classes.*
+*Module contains geoprocessing tool operations and automation mechanisms for different operations.*
 
-.. automodule:: SysGISTools
+.. automodule:: GISPythonToolBase
     :members:
     :undoc-members:
     :show-inheritance:
-	
+
 Examples
 ********
 Run a script from Shell with parameters::
@@ -110,6 +110,16 @@ Duplicates path seperator symbol '\' for external execution compatibility::
 		Tool.AddMessage(u'\n        ...delete previous tmp data') # Add tool output message
 		DirHelper.CheckCreateDir(Tool.CorrectStr(tmpFolder)) # Check/create tmp directory (with modified path seperators)
 		DirHelper.ClearDir(Tool.CorrectStr(tmpFolder)) # Clear tmp directory (with modified path seperators)
+
+SysGISTools
+-----------
+
+*Base module which contains GISPython scripting framework, geoprocessing message delivery, logging and error processing. Inherits GISPythonToolBase.*
+
+.. automodule:: SysGISTools
+    :members:
+    :undoc-members:
+    :show-inheritance:
 	
 SysGISToolsSysParams
 --------------------

@@ -22,8 +22,9 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
 * [**Main modules**](http://gispython.readthedocs.io/en/latest/main_modules.html):
     * [GISPythonModule](http://gispython.readthedocs.io/en/latest/main_modules.html#gispythonmodule)
     * [GISPythonTool](http://gispython.readthedocs.io/en/latest/main_modules.html#gispythontool)
+    * [GISPythonToolBase](http://gispython.readthedocs.io/en/latest/main_modules.html#gispythontoolbase)
     * [SysGISTools](http://gispython.readthedocs.io/en/latest/main_modules.html#sysgistools)
-    * [SysTools_unittest]()
+    * [SysTools_unittest](http://gispython.readthedocs.io/en/latest/main_modules.html#systools_unittest)
 * [**Helper modules**](http://gispython.readthedocs.io/en/latest/helper_modules.html):
     * [AGServerHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#agserverhelper)
     * [AGServerHelperNTLM](http://gispython.readthedocs.io/en/latest/helper_modules.html#agserverhelperntlm)
@@ -35,11 +36,13 @@ The LVM GEO Python Core is already being used by several companies in Latvia, in
     * [JsonParamsHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#jsonparamshelper)
     * [MailHelper](https://github.com/lvmgeo/GISPython#mailhelper)
     * [MyError](http://gispython.readthedocs.io/en/latest/helper_modules.html#myerror)
+    * [PublisherHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#publisherhelper)
     * [RarHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#rarhelper)
     * [SFTPHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#sftphelper)
     * [SimpleFileOps](http://gispython.readthedocs.io/en/latest/helper_modules.html#simplefileops)
     * [SimpleFileOpsSafe](http://gispython.readthedocs.io/en/latest/helper_modules.html#simplefileopssafe)
     * [TimerHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#timerhelper)
+    * [xmlParamsHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#xmlparamshelper)
     * [ZipHelper](http://gispython.readthedocs.io/en/latest/helper_modules.html#ziphelper)
 
 ## Dependencies
@@ -134,7 +137,7 @@ _Example:_
 ```Python
 from  GISPython import GISPythonTool
 
-	class ToolAtributeValidator(GISPythonTool.GISPythonTool):
+class ToolAtributeValidator(GISPythonTool.GISPythonTool):
     def __init__(self):
         """Define tool (tool name is the class name)"""
         self.label = u"Tool for attribute data validation (test mode)"
@@ -162,7 +165,7 @@ from  GISPython import GISPythonTool
 #### _SysGISTools_
 Base module which contains GISPython scripting framework, logging, error processing and automation mechanisms for different operations, and module and interface base classes.
 
-_Examples:_ 
+_Examples:_
 ###### Run a script from Shell with parameters
 ```Python
 Tool = self.Tool
