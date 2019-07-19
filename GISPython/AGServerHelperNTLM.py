@@ -321,6 +321,36 @@ class AGServerHelperNTLM(object):
 
         return rezult
 
+    # Check service used datasets
+    def GetDatasetNamesWithObjects(self, folder, service):
+        """Retrieve the service Dataset Names from the server
+
+        Args:
+            self: The reserved object 'self'
+            folder: Service directory
+            service: Name of a service
+
+        Returns: list of strings
+        """
+        # Construct URL to read folder
+        folder = self._processFolderString(folder)
+        manifestURL = "services/" + folder + service + "/iteminfo/manifest/manifest.json?f=pjson"
+        params = {}
+        statusData = self._requestFromServer(manifestURL, params, method='GET')
+        rezult = list()
+
+        # Check that data returned is not an error object
+        if not self._assertJsonSuccess(statusData):
+            raise MyError.MyError("Error while retrieving manifest information for " + service + ".")
+
+        statusDataObj = json.loads(statusData)
+        for database in statusDataObj['databases']:
+            dataset_names = [d['onServerName'] for d in database['datasets']]
+            item = {"database": database['onServerName'], "datasets":dataset_names}
+            rezult.append(item)
+
+        return rezult
+
     # Check service permission roles
     def GetRightsGroupsNames(self, folder, service):
         """Retrieve the service permission role names from service

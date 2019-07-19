@@ -74,7 +74,7 @@ class TimedSubprocess:
             self: The reserved object 'self'
         """
         self.Tool.AddMessage(u'\n\n{0}------------------------\n{0}>>>> Begin {1} - {2}\n{0}------------------------\n'.format(self.prefix, self.txt, self.Tool.MyNow()))
-        return self.Tool.callGP
+        return self
     def __exit__(self, type, value, traceback):
         """With statement closing procedure
         Args:

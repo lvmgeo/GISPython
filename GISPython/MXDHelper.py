@@ -48,7 +48,7 @@ class MXDHelper:
             if maxSeverity > 1:
                 self.gp.AddMessage('')
                 self.gp.AddMessage('--------------------------------------------')
-                for i in xrange(0, self.gp.GetMessageCount()):
+                for i in range(0, self.gp.GetMessageCount()):
                     self.gp.AddReturnMessage(i)
                 self.gp.AddMessage('--------------------------------------------')
 

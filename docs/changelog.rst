@@ -1,7 +1,19 @@
 =========
 Changelog
 =========
-v1.41.0 (2019.01.03)
+v1.42.1 (2019.05.24)
+--------------------
+
+* Added GISPythonToolBase module for geoprocessing tool operations and automation mechanisms for different operations
+* Added PublisherHealper module for deployment operations and xmlParamsHealper for XML parameter file procedures
+* AGServerHelperNTLM - added method for ArcGIS dataset name retrieval
+* GISPythonModule - additional functionality for tool licence level check
+* JsonParamsHelper - additional functionality for value update
+* SysGISTools - restructured, multiple methods migrated to new GISPythonToolBase module
+* SysTools_unittest - added encoding parameters
+* Bug fix for TimerHelper
+
+v1.41.1 (2019.01.03)
 --------------------
 
 * GDPSyncroniserHelper2 - added functionality for synchronising geodtabase tables with Python list objects
@@ -11,7 +23,7 @@ v1.40.2 (2018.11.24)
 
 * AGServerHelperNTLM.py added function to get rights group names for AGS services
 * Added capabilities for SimpleFileOps and SimpleFileOpsSafe to CheckCreateClearDir - check if dir exist, creates it and clears in one function
-* Added aditional support for outputing unicode text in skry[t output
+* Added aditional support for outputting unicode text in script output
 
 v1.40.1 (2018.09.26)
 --------------------
@@ -23,12 +35,12 @@ v1.40.1 (2018.09.26)
 v1.39.2 (2018.08.15)
 --------------------
 
-* Added aditional paosibilities for SimpleFileOps.py
+* Added aditional possibilities for SimpleFileOps.py
 
 v1.39.1 (2018.07.29)
 --------------------
 
-* Added aditional paosibilities for AGServerHelperNTLM.py
+* Added aditional possibilities for AGServerHelperNTLM.py
 
 v1.38.1 (2018.07.20)
 --------------------

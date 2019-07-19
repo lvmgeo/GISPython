@@ -7,7 +7,7 @@ Installation
 Dependencies
 ************
 
-- ArcGIS 10.x /recommended with newest patches and service packs/ (*GISPython* is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.4)
+- ArcGIS 10.x /recommended with newest patches and service packs/ (*GISPython* is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.6.1)
 - Python 2.7 (included in ArcGIS installation) (arcpy and numpy modules included)
 - Additional python modules:
 

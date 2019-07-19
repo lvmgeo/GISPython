@@ -4,7 +4,7 @@
 """
 
 # For Http calls
-import httplib, urllib, json, urllib2
+import httplib, urllib, json, urllib2, sys
 import MyError
 
 class AGSServerHelper(object):
@@ -105,7 +105,7 @@ class AGSServerHelper(object):
 
         if "token" not in token:
             raise MyError.MyError(token['messages'])
-            exit()
+            sys.exit()
         else:
             return token['token']
 

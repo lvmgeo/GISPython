@@ -305,6 +305,16 @@ Raise error in the tool output::
 	if linecount != l-2:
 		raise MyError.MyError(u'Error in line count') # Add the error in the tool output
 
+PublisherHelper
+---------------
+
+*Module for deployment operations.*
+
+.. automodule:: PublisherHealper
+	:members:
+	:undoc-members:
+	:show-inheritance:
+
 RarHelper
 ---------
 
@@ -425,7 +435,17 @@ Output::
 	------------------------
 	>>>> End some process - h:mm:ss.ssssss
 	------------------------
-	
+
+xmlParamsHelper
+----------------
+
+*Module for XML parameter file procedures*.
+
+.. automodule:: xmlParamsHealper
+	:members:
+	:undoc-members:
+	:show-inheritance:
+
 ZipHelper
 ---------
 

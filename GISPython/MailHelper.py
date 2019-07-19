@@ -36,7 +36,8 @@ class MailHelper:
         from email.mime.base import MIMEBase
         from email import encoders
         part = MIMEBase('application', "octet-stream")
-        part.set_payload(open(FilePath, "rb").read())
+        with open(FilePath, "rb") as _file:
+            part.set_payload(_file.read())
         encoders.encode_base64(part)
         part.add_header('Content-Disposition', 'attachment; filename="{0}"'.format(os.path.basename(FilePath)))
         self.msg.attach(part)
