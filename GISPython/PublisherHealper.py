@@ -258,7 +258,7 @@ class PublisherHealper:
             PH.GetParams()
             for change in configFile['changes']:
                 if change.has_key("atribute"): 
-                    PH.UpdateValueByPath(change['xpath'], change['atribute'], change['value'])
+                    PH.UpdateAtributeByPath(change['xpath'], change['atribute'], change['value'])
                 else:
                     PH.UpdateValueByPath(change['xpath'], change['value'])
             PH.WriteParams()

@@ -1,6 +1,17 @@
 =========
 Changelog
 =========
+v1.43.2 (2019.07.26)
+--------------------
+
+* PublisherHealper module bug fixes
+
+v1.43.1 (2019.07.19)
+--------------------
+
+* Some code cleanup and bug fixes
+* PublisherHealper module has added functionality for updating Json parameter files
+
 v1.42.1 (2019.05.24)
 --------------------
 
