@@ -188,7 +188,7 @@ class MXDHelper:
             if not silent == True: 
                 self.AddMessage(step + lyr.name)
             Relations = list()
-            self.GDBTools.GetRelations(lyr.workspacePath, self.gp.Describe(lyr.dataSource), Relations)
+            Relations = self.GDBTools.GetRelations(lyr.workspacePath, self.gp.Describe(lyr.dataSource), Relations)
             for rel in Relations:
                 DRel = self.gp.Describe(os.path.join(lyr.workspacePath, rel))
                 if DRel.dataElementType == u'DETable':
