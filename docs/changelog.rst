@@ -1,6 +1,11 @@
 =========
 Changelog
 =========
+v1.44.1 (2019.09.11)
+--------------------
+
+* Mor functionality for PublisherHealper module and coresponding functionality for JsonParamsHelper and xmlParamsHealper modules to support automated soulution publishing. New functionality further develops capabilities of automatic configuration file changing in CI/CD solutions.
+
 v1.43.3 (2019.08.16)
 --------------------
 

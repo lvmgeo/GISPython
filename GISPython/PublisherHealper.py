@@ -257,10 +257,27 @@ class PublisherHealper:
             PH = xmlParamsHealper.XMLParams(None, None, os.path.join(config.destinationDir, configFile['file']))
             PH.GetParams()
             for change in configFile['changes']:
-                if change.has_key("atribute"): 
-                    PH.UpdateAtributeByPath(change['xpath'], change['atribute'], change['value'])
+                isString = False
+                doAppend = False
+                if change.has_key('string'):
+                    if change['string'] == True:
+                        isString = True
+                if change.has_key('append'):
+                    if change['append'] == True:
+                        doAppend = True
+                if doAppend:
+                    attribute = None
+                    key = None
+                    if change.has_key("atribute"): 
+                        attribute = change['atribute']
+                    if change.has_key("appendKey"): 
+                        key = change['appendKey']
+                    PH.AppendValueByPath(change['xpath'], key, change['value'], attribute, isString=isString)
                 else:
-                    PH.UpdateValueByPath(change['xpath'], change['value'])
+                    if change.has_key("atribute"): 
+                        PH.UpdateAtributeByPath(change['xpath'], change['atribute'], change['value'])
+                    else:
+                        PH.UpdateValueByPath(change['xpath'], change['value'])
             PH.WriteParams()
             print u'... config file {} updated'.format(configFile['file'])
 
@@ -275,8 +292,19 @@ class PublisherHealper:
             PH = JsonParamsHelper.JsonParams(None, None, os.path.join(config.destinationDir, configFile['file']))
             PH.GetParams()
             for change in configFile['changes']:
-                PH.UpdateValueByPath(change['xpath'], change['value'])
-            PH.WriteParams()
+                isJson = False
+                doAppend = False
+                if change.has_key('json'):
+                    if change['json'] == True:
+                        isJson = True
+                if change.has_key('append'):
+                    if change['append'] == True:
+                        doAppend = True
+                if doAppend:
+                    PH.AppendValueByPath(change['xpath'], change['appendKey'], change['value'], isJson)
+                else:
+                    PH.UpdateValueByPath(change['xpath'], change['value'], isJson)
+            PH.WriteParams(False)
             print u'... config file {} updated'.format(configFile['file'])
 
 def _FindAllFiles(Dir):

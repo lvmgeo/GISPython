@@ -56,9 +56,24 @@ class XMLParams(object):
             self.Params.write(xmlfile, pretty_print=True, method="xml", xml_declaration=True, encoding="utf-8")
 
 
-    def UpdateValueByPath(self, path, Value, index = 0):
+    def UpdateValueByPath(self, path, Value, index = 0, isString = False):
         elem = self.Params
-        elem.xpath(path)[index].text = Value
+        if isString:
+            elem.xpath(path)[index].append(etree.fromstring(Value))
+        else:
+            elem.xpath(path)[index].text = Value
+
+    def AppendValueByPath(self, path, key, Value, attrib, index = 0, isString = False):
+        elem = self.Params
+        elem = elem.xpath(path)[index]
+        if key==None:
+            node = elem
+        else:
+            node = etree.SubElement(elem, key, attrib)
+        if isString:
+            node.append(etree.fromstring(Value))
+        else:
+            node.text = Value
 
     def UpdateAtributeByPath(self, path, atribute, Value, index = 0):
         elem = self.Params

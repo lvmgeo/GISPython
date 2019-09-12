@@ -46,13 +46,13 @@ class JsonParams(object):
         self.Params = J
         return self.Params
 
-    def WriteParams(self):
+    def WriteParams(self, sort_keys=True):
         """Save parameters in the parameter file
 
         Args:
             self: The reserved object 'self'
         """
-        JsonString = json.dumps(self.Params, sort_keys=True, indent=4 * ' ')
+        JsonString = json.dumps(self.Params, sort_keys, indent=4 * ' ')
         f = codecs.open(self.ConfigPath, 'w', 'utf-8')
         f.write(JsonString)
         f.close()
@@ -64,17 +64,40 @@ class JsonParams(object):
             Value = json.loads(Value, object_pairs_hook=OrderedDict)
 
         pathList = path.strip("\\").split("\\")
-        for x in pathList[:-1]:
-                elem = elem[x]
+        for key in pathList[:-1]:
+                elem = self.__get_sub_element__(elem, key)
         LastKey = pathList[-1:][0]
 
         elem[LastKey] = Value
 
+    def AppendValueByPath(self, path, key, Value, valueIsStringJson = False):
+        elem = self.Params
+
+        if valueIsStringJson:
+            Value = json.loads(Value, object_pairs_hook=OrderedDict)
+            
+        if not path == '':
+            pathList = path.strip("\\").split("\\")
+            for pathkey in pathList:
+                    elem = self.__get_sub_element__(elem, pathkey)
+
+        if isinstance(elem, list): 
+            elem.insert(key, Value)
+        else:
+            elem[key] = Value
 
     def GetValueByPath(self, path):
         elem = self.Params
         pathList = path.strip("\\").split("\\")
-        for x in pathList:
-                elem = elem[x]
+        for key in pathList:
+                elem = self.__get_sub_element__(elem, key)
 
         return elem
+
+    def __get_sub_element__(self, element, key):
+        position = 0
+        if key.find('[')>-1 and key.find(']')>-1:
+            position = int(key.replace(']','').replace('[',''))
+            return element[position]
+        else:
+            return element[key]

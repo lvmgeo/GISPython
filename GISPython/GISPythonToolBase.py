@@ -321,7 +321,11 @@ class GISPythonToolBase(object):
             Detached: Whether to execute seperately from the main process (Default: False)
             hidenStrings: List of strings tha has to be hiden in the output (used for hiding passwords)
         """
-        args = shlex.split(exe)
+        if not isinstance(exe, list):
+            args = shlex.split(exe)
+        else:
+            args = exe
+            exe = " ".join(exe)
         _StartTime = datetime.datetime.now()
         if not Silent:
             command = exe
