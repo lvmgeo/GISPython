@@ -1,6 +1,12 @@
 =========
 Changelog
 =========
+v1.45.1 (2019.15.12)
+--------------------
+
+* refactoring and aditional functionality for AGServerHelperNTLM. New functionality for working with permisions, roles and users
+* refactoring and aditional functionality for PublisherHealper
+
 v1.44.1 (2019.09.11)
 --------------------
 
