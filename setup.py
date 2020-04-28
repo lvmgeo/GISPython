@@ -18,7 +18,7 @@ def get_version():
 setup(
     name = 'GISPython',
     version = get_version(), # version number according to PEP440 https://www.python.org/dev/peps/pep-0440/
-    description = 'Additional tools for administering and automating different ArcPy and ArcGIS Server geoprocessing operations. Package is intended for use with ArcGIS 10.2.1 and later (has been tested on ArcGIS 10.4)', # short package description
+    description = 'Additional tools for administering and automating different ArcPy and ArcGIS Server geoprocessing operations. Package is intended for use with ArcGIS 10.2.1 and later (has been tested on ArcGIS 10.3.1, ArcGIS 10.4, ArcGIS 10.5, ArcGIS 10.6.1)', # short package description
     long_description = 'For readme see GitHub https://github.com/lvmgeo/GISPython', # if needed (entire documentation)
     url = 'https://github.com/lvmgeo/GISPython', # GitHub url
     author = 'LVM GEO', # author

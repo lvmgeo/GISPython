@@ -3,6 +3,7 @@
      Deployment publishing operations module
 """
 
+import codecs
 import os
 import shutil
 import hashlib
@@ -47,6 +48,12 @@ class PublisherHealperConfig:
     #         ]
     #     }
     # ]
+    replacementMap = {}
+    # replacementMap = { # SAMPLE
+    #     'test.json': {
+    #         '[find sting to replace]': 'replacement value'
+    #     }
+    # }
 class PublisherHealper(object):
     """Class for easing the Rar file operations"""
 
@@ -331,6 +338,32 @@ class PublisherHealper(object):
                     params_helper.UpdateValueByPath(change['xpath'], change['value'], is_json)
             params_helper.WriteParams(False)
             print u'... config file {} updated'.format(config_file['file'])
+
+    def __do_process_json(self, config):
+        """Replace required values by sring replacement
+
+        Args:
+            self: The reserved object 'self'
+            config ([PublisherHealperConfig]): Configuration of deplyment
+        """
+        for file_name in config.replacementMap:
+            replacement_map = config.replacementMap[file_name]
+            path = os.path.join(config.destinationDir, file_name)
+            _replace_in_file(path, replacement_map)
+            print u'... file {} replaced strings'.format(path)
+
+def _replace_in_file(path, replace_map):
+    """replaces values in files using replace_map
+    """
+    with codecs.open(path, 'r') as f:
+        newlines = []
+        for line in f.readlines():
+            for key, value in replace_map.items():
+                line = line.replace(key, value)
+            newlines.append(line)
+    with open(path, 'w') as f:
+        for line in newlines:
+            f.write(line)
 
 def _find_all_files(directory):
     """Finds files in the directory

@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.45.2 (2020.04.28)
+--------------------
+* aditional functionality for PublisherHealper
+
 v1.45.1 (2019.15.12)
 --------------------
 
@@ -74,7 +78,7 @@ v1.38.1 (2018.07.20)
 
 * Bug fixes for GDPSyncroniserHelper2.py
 * Added parameter EnvironmentName. Used for Error Email generation, to indicate Environment in with error ocured.
-* Added SetupDefaultEnvironment.py module for fast environment setup. 
+* Added SetupDefaultEnvironment.py module for fast environment setup.
 
 v1.37.2 (2018.03.29)
 --------------------
