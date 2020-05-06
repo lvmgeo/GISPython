@@ -274,7 +274,7 @@ class AGServerHelperNTLM(object):
             if server_service.split('.')[0].upper() == config_service.upper():
                 return server_service
 
-        return server_service
+        return ''
 
     def getServicePermisions(self, folder, service):
         """Check service permisions
