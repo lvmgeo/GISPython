@@ -1,6 +1,14 @@
 =========
 Changelog
 =========
+v1.46.1 (2020.05.12)
+--------------------
+* SFTPHelper added ability to autorise SFTP connection with RSA private key file
+
+v1.45.3 (2020.05.05)
+--------------------
+* bug fixes for AGServerHelperNTLM
+
 v1.45.2 (2020.04.28)
 --------------------
 * aditional functionality for PublisherHealper

@@ -8,24 +8,31 @@ import paramiko
 class SFTPHelper:
     """Class for easing the SFTP operations"""
 
-    def __init__(self, userName, password, host, port):
+    def __init__(self, userName, password, host, port, pkey_file = None):
         """Class initialization procedure
 
         Args:
             self: The reserved object 'self'
             username: Username
-            password: Password
+            password: Password (provide None if using pkey_file parameter)
             host: IP adress
             port: Port number
+            pkey_file: path to rsa private key file
         """
         self.host = host
         self.port = port
         self.username = userName
         self.password = password
 
+        if not pkey_file is None:
+            pkey = paramiko.RSAKey.from_private_key_file(pkey_file)
+
         # Transporta objekta izveide
         self.transport = paramiko.Transport((self.host, self.port))
-        self.transport.connect(username=self.username, password=self.password)
+        if pkey_file is None:
+            self.transport.connect(username=self.username, password=self.password)
+        else:
+            self.transport.connect(username=self.username, pkey = pkey)
 
         # SFTP objekta izveide
         self.sftp = paramiko.SFTPClient.from_transport(self.transport)
