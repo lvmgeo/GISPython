@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.46.2 (2020.08.09)
+--------------------
+* Fixed problems when PublisherHealper not processing json config files
+
 v1.46.1 (2020.05.12)
 --------------------
 * SFTPHelper added ability to autorise SFTP connection with RSA private key file

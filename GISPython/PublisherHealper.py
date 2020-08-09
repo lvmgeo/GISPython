@@ -86,6 +86,7 @@ class PublisherHealper(object):
 
         self.__do_process_xml(config)
         self.__do_process_json(config)
+        self.__do_string_repalce(config)
 
     def __create_backup(self, config):
         """Does the backup creation
@@ -339,7 +340,7 @@ class PublisherHealper(object):
             params_helper.WriteParams(False)
             print u'... config file {} updated'.format(config_file['file'])
 
-    def __do_process_json(self, config):
+    def __do_string_repalce(self, config):
         """Replace required values by sring replacement
 
         Args:
