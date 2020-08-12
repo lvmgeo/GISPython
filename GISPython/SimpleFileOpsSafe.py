@@ -46,7 +46,7 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
 
     def delFileIfExists(self, fileName): # Overriding
         """"Deletes file if file exists
-            
+
             Args:
                 self: The reserved object 'self'
                 DirName: The directory to be cleaned
@@ -68,8 +68,8 @@ class SimpleFileOpsSafe(SimpleFileOps.SimpleFileOps):
         self.Tool.AddMessage('Executing file, newer than ' +  str(D) + ' days, archiving from [' +  InDirName + '] to [' +  OutDirName + ']')
         d = date.today() - timedelta(days=D)
         d = datetime(year=d.year, month=d.month, day=d.day)
-        for file in self.FindFileByDate(InDirName, Ext, d, 'Old'):
-            self.BackupOneFile(file, os.path.join(OutDirName, os.path.basename(file)))
+        for file_path in self.FindFileByDate(InDirName, Ext, d, 'Old'):
+            self.BackupOneFile(file_path, OutDirName)
 
     def BackupOneFile(self, InFileName, OutDirName): # Overriding
         """Specific file archiving automation procedure
