@@ -1,6 +1,14 @@
 =========
 Changelog
 =========
+v1.47.0 (2020.08.18)
+--------------------
+* Added ability for Zip files to append data to existing file
+
+v1.46.3 (2020.08.12)
+--------------------
+* Fixed problems with backup function in SimpleFileOpsSafe
+
 v1.46.2 (2020.08.09)
 --------------------
 * Fixed problems when PublisherHealper not processing json config files

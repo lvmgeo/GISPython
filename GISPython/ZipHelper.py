@@ -40,24 +40,29 @@ class ZipHelper:
             zfile.write(filePath, arcname=os.path.basename(filePath))
         zfile.close()
 
-    def CompressDir(self, dirPath, zipFileName, excludeExt=[]):
+    def CompressDir(self, dirPath, zipFileName, excludeExt=[], append=False, start_path_in_zip=''):
         """Zip all files in the directory
 
         Args:
             self: The reserved object 'self'
-            zipFileName: New Zip file path + name
-            dirPath: Directory which contains archivable files
-            excludeExt: File extensions not to include in the archive
+            zipFileName (string): New Zip file path + name
+            dirPath (string): Directory which contains archivable files
+            excludeExt (list): File extensions not to include in the archive
+            append (Bool): (Optional) True if Zip exists and data is appended to it
+            start_path_in_zip (string): (Optional) used to specify subfolder in zipfile in with data vill be written
         """
-        zfile = zipfile.ZipFile(zipFileName, 'w', zipfile.ZIP_DEFLATED)
+        if append:
+            zfile = zipfile.ZipFile(zipFileName, 'a', zipfile.ZIP_DEFLATED, allowZip64=True)
+        else:
+            zfile = zipfile.ZipFile(zipFileName, 'w', zipfile.ZIP_DEFLATED, allowZip64=True)
         for root, dirs, files in os.walk(dirPath):
-            for filePath in files:
-                doCompress = True
+            for file_path in files:
+                do_compress = True
                 for ext in excludeExt:
-                    if filePath.endswith(ext):
-                        doCompress = False
-                if doCompress:
-                    zfile.write(os.path.join(root, filePath), arcname=os.path.join(root, filePath).replace(dirPath, ''))
+                    if file_path.endswith(ext):
+                        do_compress = False
+                if do_compress:
+                    zfile.write(os.path.join(root, file_path), arcname=os.path.join(root, file_path).replace(dirPath, start_path_in_zip))
         zfile.close()
 
     def ExtractZipFile(self, zipFileName, destPath):
