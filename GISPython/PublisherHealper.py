@@ -97,7 +97,7 @@ class PublisherHealper(object):
         """
         backup_dir = config.backupFolder
         if not os.path.exists(backup_dir):
-            os.mkdir(backup_dir)
+            os.makedirs(backup_dir)
             print u'... created backup folder {}'.format(backup_dir)
 
         backup_file_name = os.path.join(backup_dir, "{}_{}.zip".format(config.moduleName, _now_for_file()))
@@ -143,7 +143,7 @@ class PublisherHealper(object):
                 for ext in clear_extensions:
                     destination_folder = infolder.replace(source_dir, destination_dir)
                     if not os.path.exists(destination_folder):
-                        os.mkdir(destination_folder)
+                        os.makedirs(destination_folder)
                         print u'... output folder created {}'.format(destination_folder)
                     found_files = _find_file(os.path.join(destination_dir, infolder), ext)
                     if found_files:
@@ -200,7 +200,7 @@ class PublisherHealper(object):
                     if not infolder == source_dir:
                         destination_folder = infolder.replace(source_dir, destination_dir)
                         if not os.path.exists(destination_folder):
-                            os.mkdir(destination_folder)
+                            os.makedirs(destination_folder)
                             print u'... output folder created {}'.format(destination_folder)
             for file_name in include_files:
                 found_files = _find_file_by_name(infolder, file_name)
@@ -209,7 +209,7 @@ class PublisherHealper(object):
                     if not infolder == source_dir:
                         destination_folder = infolder.replace(source_dir, destination_dir)
                         if not os.path.exists(destination_folder):
-                            os.mkdir(destination_folder)
+                            os.makedirs(destination_folder)
                             print u'... output folder created {}'.format(destination_folder)
         return files_to_copy
 
@@ -222,7 +222,7 @@ class PublisherHealper(object):
                 if not folder == source_dir:
                     destination_folder = os.path.join(destination_dir, os.path.basename(infolder))
                     if not os.path.exists(destination_folder):
-                        os.mkdir(destination_folder)
+                        os.makedirs(destination_folder)
                         print u'... output folder created {}'.format(destination_folder)
         return files_to_copy
 

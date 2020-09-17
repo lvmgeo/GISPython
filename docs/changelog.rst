@@ -1,6 +1,11 @@
 =========
 Changelog
 =========
+v1.48.0 (2020.09.17)
+--------------------
+* changes to e-mail notification subcet to be more esaly parsable.
+* fix: error with PublisherHealper when publishing to wast directory tree
+
 v1.47.0 (2020.08.18)
 --------------------
 * Added ability for Zip files to append data to existing file
