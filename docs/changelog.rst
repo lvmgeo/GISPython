@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.49.0 (2020.10.08)
+--------------------
+* changes to PublisherHealper - added ability to backup only changed files
+
 v1.48.0 (2020.09.17)
 --------------------
 * changes to e-mail notification subcet to be more esaly parsable.

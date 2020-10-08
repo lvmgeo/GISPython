@@ -18,6 +18,7 @@ class PublisherHealperConfig:
     destinationDir = "" # folder to deploy to
     sourceDir = "" # folder from with to deploy
     doBackup = False # does publisher need to make a backup
+    bacupType = 'Folder' # "Folder" to backup whole destinationDir, "Files" to backup only owerwritten files
     backupFolder = "" # folder in witch the backup will be stored
     includeFolders = [] # folders to publish
     # includeFolders = [ # SAMPLE
@@ -57,12 +58,13 @@ class PublisherHealperConfig:
 class PublisherHealper(object):
     """Class for easing the Rar file operations"""
 
-    def _init_(self):
+    def __init__(self):
         """Class initialization procedure
 
         Args:
             self: The reserved object 'self'
         """
+        self.backup_zip_file = ''
 
     def Deply(self, config):
         """Does the dployment
@@ -72,14 +74,13 @@ class PublisherHealper(object):
             config ([PublisherHealperConfig]): Configuration of deplyment
         """
         print u'... start publish for {}'.format(config.moduleName)
+        self.backup_zip_file = "{}_{}.zip".format(config.moduleName, _now_for_file())
 
         destination_dir = config.destinationDir
         if not os.path.exists(destination_dir):
             raise AttributeError(u'destination folder {} not found'.format(destination_dir))
 
-        if hasattr(config, "doBackup"):
-            if config.doBackup:
-                self.__create_backup(config)
+        self.__create_backup(config)
 
         for folder in config.includeFolders:
             self.__do_deploy(folder, config)
@@ -95,14 +96,39 @@ class PublisherHealper(object):
             self: The reserved object 'self'
             config ([PublisherHealperConfig]): Configuration of deplyment
         """
-        backup_dir = config.backupFolder
-        if not os.path.exists(backup_dir):
-            os.makedirs(backup_dir)
-            print u'... created backup folder {}'.format(backup_dir)
+        if hasattr(config, "doBackup"):
+            if config.bacupType.upper() == 'FOLDER':
+                backup_dir = config.backupFolder
+                if not os.path.exists(backup_dir):
+                    os.makedirs(backup_dir)
+                    print u'... created backup folder {}'.format(backup_dir)
 
-        backup_file_name = os.path.join(backup_dir, "{}_{}.zip".format(config.moduleName, _now_for_file()))
-        ZipHelper.ZipHelper().CompressDir(config.destinationDir, backup_file_name)
-        print u'... backup created!'
+                backup_file_name = os.path.join(backup_dir, self.backup_zip_file)
+                ZipHelper.ZipHelper().CompressDir(config.destinationDir, backup_file_name)
+                print u'... backup created!'
+
+
+    def __create_backup_one_file(self, file_path, config):
+        """Does the backup creation for one file
+
+        Args:
+            self: The reserved object 'self'
+            config ([PublisherHealperConfig]): Configuration of deplyment
+        """
+        if hasattr(config, "doBackup"):
+            if config.bacupType.upper() == 'FILES':
+                backup_dir = config.backupFolder
+                if not os.path.exists(backup_dir):
+                    os.makedirs(backup_dir)
+                    print u'... created backup folder {}'.format(backup_dir)
+
+                backup_file_name = os.path.join(backup_dir, self.backup_zip_file)
+                ZipHelper.ZipHelper().CompressFileList(
+                    filePathList=[file_path],
+                    zipFileName=backup_file_name,
+                    base_dir=config.destinationDir,
+                    append=os.path.exists(backup_file_name))
+                print u'... file {} backup created!'.format(file_path)
 
     def __do_deploy(self, folder, config):
         """Does the backup creation
@@ -237,7 +263,7 @@ class PublisherHealper(object):
             files_to_copy = list(fn for fn in files_to_copy if not os.path.basename(fn).lower() == exclude_file.lower())
         return files_to_copy
 
-    def __do_copy_files_to_dest(self, folder, files_to_copy, config):
+    def __do_copy_files_to_dest(self, folder, files_to_copy, config,):
         """Finds files to be copyed
 
         Args:
@@ -260,6 +286,7 @@ class PublisherHealper(object):
                 copy_hash = _md5(copy_file)
                 dest_hash = _md5(dest_file)
                 if copy_hash <> dest_hash:
+                    self.__create_backup_one_file(dest_file, config)
                     os.remove(dest_file)
                     replaced = True
                 else:

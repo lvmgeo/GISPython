@@ -27,17 +27,26 @@ class ZipHelper:
         zfile.write(filePath, arcname=zfile.write(filePath, arcname=os.path.basename(filePath)))
         zfile.close()
 
-    def CompressFileList(self, filePathList, zipFileName):
+    def CompressFileList(self, filePathList, zipFileName, base_dir=None, append=False):
         """Zip all files in the list
 
         Args:
             self: The reserved object 'self'
             filePathList: List of archivable file paths + names
             zipFileName: New Zip file path + name
+            base_dir: dase dir to strip from paths in file lists
+            append (Bool): (Optional) True if Zip exists and data is appended to it
         """
-        zfile = zipfile.ZipFile(zipFileName, "w", zipfile.ZIP_DEFLATED)
+        if append:
+            zfile = zipfile.ZipFile(zipFileName, 'a', zipfile.ZIP_DEFLATED, allowZip64=True)
+        else:
+            zfile = zipfile.ZipFile(zipFileName, 'w', zipfile.ZIP_DEFLATED, allowZip64=True)
         for filePath in filePathList:
-            zfile.write(filePath, arcname=os.path.basename(filePath))
+            if base_dir is None:
+                arc_name = os.path.basename(filePath)
+            else:
+                arc_name = _ireplace(base_dir, '', filePath)
+            zfile.write(filePath, arcname=arc_name)
         zfile.close()
 
     def CompressDir(self, dirPath, zipFileName, excludeExt=[], append=False, start_path_in_zip=''):
@@ -76,3 +85,13 @@ class ZipHelper:
         zfile = zipfile.ZipFile(zipFileName)
         zfile.extractall(destPath)
         zfile.close()
+
+def _ireplace(old, new, text):
+    idx = 0
+    while idx < len(text):
+        index_l = text.lower().find(old.lower(), idx)
+        if index_l == -1:
+            return text
+        text = text[:index_l] + new + text[index_l + len(old):]
+        idx = index_l + len(new)
+    return text
