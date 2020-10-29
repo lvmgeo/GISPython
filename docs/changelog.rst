@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.50.0 (2020.10.08)
+--------------------
+* changes to GDBHelper - added ability to get all field names for table
+
 v1.49.0 (2020.10.08)
 --------------------
 * changes to PublisherHealper - added ability to backup only changed files

@@ -133,6 +133,18 @@ class GDBHelper:
                 return True
         return False
 
+    def GetFieldNames(self, db_object):
+        """Function gets all of the field names in table
+
+        Args:
+            self: The reserved object 'self'
+            db_object: Path to DB object to describe
+        """
+        table_description = self.gp.Describe(db_object)
+        fields = table_description.fields
+        field_names = [f.name for f in fields]
+        return field_names
+
     def DelleteField(self, ConnDBSchema, TABLENAME, FIELDNAME):
         """Function eases work with the ESRI field deletion function DeleteField_management
 
@@ -347,7 +359,7 @@ class RowHelper2:
             outStringformat: Error output text on the found error.
                                 You can use the 'unicode.format' function notation {#} to transfer the row values.
                                 For example - a field with the index 0 in the list of fields with 'outStringformat' parameter value: u"faulty feature OID: {0}" will return the string: u"faulty feature OID: 123", where 123 is the 'objectid' field value for found record.
-            idStringformat: Row id output text on the found error. 
+            idStringformat: Row id output text on the found error.
                             You can use the 'unicode.format' function notation {#} to transfer the row values.
         Returns:
             List containig list of two values - row id string and row error description string
@@ -357,7 +369,7 @@ class RowHelper2:
             for row in cursor:
                 rezultList.append([unicode(idStringformat).format(*row), unicode(outStringformat).format(*row)])
         return rezultList
-    
+
     def ValidateRowsForFieldValueList(self, festureClass, getField, fields, valuelist, where_clause, outStringformat, idStringformat='{0}'):
         """Check rows if the field matches the unique value list
 
@@ -371,7 +383,7 @@ class RowHelper2:
             outStringformat: Error output text on the found error.
                                 You can use the 'unicode.format' function notation {#} to transfer the row values.
                                 For example - a field with the index 0 in the list of fields with 'outStringformat' parameter value: u"faulty feature OID: {0}" will return the string: u"faulty feature OID: 123", where 123 is the 'objectid' field value for found record.
-            idStringformat: Row id output text on the found error. 
+            idStringformat: Row id output text on the found error.
                             You can use the 'unicode.format' function notation {#} to transfer the row values.
         Returns:
             List containig list of two values - row id string and row error description string
