@@ -96,7 +96,7 @@ class PublisherHealper(object):
             self: The reserved object 'self'
             config ([PublisherHealperConfig]): Configuration of deplyment
         """
-        if hasattr(config, "doBackup"):
+        if hasattr(config, "doBackup") and config.doBackup:
             if config.bacupType.upper() == 'FOLDER':
                 backup_dir = config.backupFolder
                 if not os.path.exists(backup_dir):
@@ -115,7 +115,7 @@ class PublisherHealper(object):
             self: The reserved object 'self'
             config ([PublisherHealperConfig]): Configuration of deplyment
         """
-        if hasattr(config, "doBackup"):
+        if hasattr(config, "doBackup") and config.doBackup:
             if config.bacupType.upper() == 'FILES':
                 backup_dir = config.backupFolder
                 if not os.path.exists(backup_dir):

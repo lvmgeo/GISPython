@@ -1,7 +1,11 @@
 =========
 Changelog
 =========
-v1.50.0 (2020.10.08)
+v1.50.2 (2020.11.25)
+--------------------
+* fix errors in PublisherHealper
+
+v1.50.1 (2020.10.08)
 --------------------
 * changes to GDBHelper - added ability to get all field names for table
 
