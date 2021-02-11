@@ -246,7 +246,8 @@ class PublisherHealper(object):
             if found_files:
                 files_to_copy = files_to_copy + found_files
                 if not folder == source_dir:
-                    destination_folder = os.path.join(destination_dir, os.path.basename(infolder))
+                    dir_name = infolder.replace(source_dir + '\\', '')
+                    destination_folder = os.path.join(destination_dir, dir_name)
                     if not os.path.exists(destination_folder):
                         os.makedirs(destination_folder)
                         print u'... output folder created {}'.format(destination_folder)
@@ -400,7 +401,7 @@ def _find_all_files(directory):
         dir: The directory in which to look for the file
     """
     found_files = [directory + "\\" + fn
-                   for fn in os.listdir(directory)]
+                   for fn in os.listdir(directory) if os.path.isfile(directory + "\\" + fn)]
     found_files.sort()
     return found_files
 
@@ -435,7 +436,11 @@ def _find_all_folders(directory):
         Dir: The directory in which to look for the file
         Ext: The extension to search for
     """
-    return [x[0] for x in os.walk(directory)]
+    result = []
+    for root, dirs, files in os.walk(directory):
+        for name in dirs:
+            result.append(os.path.join(root, name))
+    return result
 
 def _md5(filename):
     """calculates file md5 cheksumm

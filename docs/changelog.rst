@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.50.2 (2021.02.11)
+--------------------
+* fix errors in PublisherHealper for publishing whole folders with recursive option
+
 v1.50.2 (2020.11.25)
 --------------------
 * fix errors in PublisherHealper
