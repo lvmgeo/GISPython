@@ -1,7 +1,11 @@
 =========
 Changelog
 =========
-v1.50.2 (2021.02.11)
+v1.50.2 (2021.02.12)
+--------------------
+* added xmlParamsHelper ability to provide namespaces if searching by XPath
+
+v1.50.1 (2021.02.11)
 --------------------
 * fix errors in PublisherHealper for publishing whole folders with recursive option
 

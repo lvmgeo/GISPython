@@ -79,12 +79,18 @@ class XMLParams(object):
         elem = self.Params
         elem.xpath(path)[index].attrib[atribute] = Value
 
-    def GetValueByPath(self, path):
+    def GetValueByPath(self, path, namespaces='#'):
         elem = self.Params
-        elem = elem.xpath(path)[0].text
+        if namespaces == '#':
+            elem = elem.xpath(path)[0].text
+        else:
+            elem = elem.xpath(path, namespaces=namespaces)[0].text
         return elem
 
-    def GetAtributeByPath(self, path, atribute):
+    def GetAtributeByPath(self, path, atribute, namespaces='#'):
         elem = self.Params
-        elem = elem.xpath(path)[0].attrib[atribute]
+        if namespaces == '#':
+            elem = elem.xpath(path)[0].attrib[atribute]
+        else:
+            elem = elem.xpath(path, namespaces=namespaces)[0].attrib[atribute]
         return elem
