@@ -154,7 +154,7 @@ class AGServerHelperNTLM(object):
                 self.Tool.AddMessage("Service {}{} {}  done successfully ...".format(
                     folder, service, action))
 
-    def getServiceList(self, folder):
+    def getServiceList(self, folder, return_running_state=True):
         """Retrieve ArcGIS server services
 
         Args:
@@ -197,11 +197,15 @@ class AGServerHelperNTLM(object):
             if self.Tool != None:
                 self.Tool.AddMessage("Services on " + self.serverurl +":")
             for service in services:
-                status_url = "services/{}/status?f=json".format(service)
-                data = self.__request_from_server(status_url, params)
-                status = json.loads(data)
-                if self.Tool != None:
-                    self.Tool.AddMessage("  " + status["realTimeState"] + " > " + service)
+                if return_running_state:
+                    status_url = "services/{}/status?f=json".format(service)
+                    data = self.__request_from_server(status_url, params)
+                    status = json.loads(data)
+                    if self.Tool != None:
+                        self.Tool.AddMessage("  " + status["realTimeState"] + " > " + service)
+                else:
+                    if self.Tool != None:
+                        self.Tool.AddMessage(" > " + service)
 
         return services
 
@@ -269,7 +273,7 @@ class AGServerHelperNTLM(object):
         if serviceDir is None:
             config_service = service
         else:
-            config_service = serviceDir + "//" + service
+            config_service = serviceDir + "/" + service
         for server_service in services:
             if server_service.split('.')[0].upper() == config_service.upper():
                 return server_service

@@ -2,4 +2,4 @@
 """
     Module for storing the scripting parameters
 """
-Version = 'GISPython Core 10.x - 1.52.0002' # GISPython full version name
+Version = 'GISPython Core 10.x - 1.53.0001' # GISPython full version name
