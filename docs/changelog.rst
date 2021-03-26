@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.53.2 (2021.03.26)
+--------------------
+* fix deploy error in PublisherHealper
+
 v1.53.1 (2021.03.11)
 --------------------
 * Optimization of AGServerHelperNTLM

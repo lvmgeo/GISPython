@@ -293,6 +293,8 @@ class PublisherHealper(object):
                 else:
                     thesame = True
             if not thesame:
+                if not os.path.isdir(os.path.dirname(dest_file)):
+                    os.makedirs(os.path.dirname(dest_file))
                 shutil.copy2(copy_file, dest_file)
                 if not replaced:
                     print u'... file copy    {}'.format(dest_file)
