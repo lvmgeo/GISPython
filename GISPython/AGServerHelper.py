@@ -20,6 +20,10 @@ class AGSServerHelper(object):
             serverPort: Server port (optional)
             Tool: GISPython tool (optional)
         """
+        if not Tool is None:
+            Tool.AddMessage('Tool AGSServerHelper is beeing discontinued please use AGSServerHelper or AGServerHelperToken instead')
+        else:
+            print ('Tool AGSServerHelper is beeing discontinued please use AGSServerHelper or AGServerHelperToken instead')
         self.username = username
         self.password = password
         self.serverName = serverName

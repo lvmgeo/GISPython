@@ -386,15 +386,15 @@ class PublisherHealper(object):
 def _replace_in_file(path, replace_map):
     """replaces values in files using replace_map
     """
-    with codecs.open(path, 'r') as f:
+    with codecs.open(path, 'r', encoding='utf-8') as read_file:
         newlines = []
-        for line in f.readlines():
+        for line in read_file.readlines():
             for key, value in replace_map.items():
                 line = line.replace(key, value)
             newlines.append(line)
-    with open(path, 'w') as f:
+    with codecs.open(path, 'w', encoding='utf-8') as write_file:
         for line in newlines:
-            f.write(line)
+            write_file.write(line)
 
 def _find_all_files(directory):
     """Finds files in the directory

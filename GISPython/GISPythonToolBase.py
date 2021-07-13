@@ -25,7 +25,7 @@ class GISPythonToolBase(object):
         self.OutputStr = u''
         self.OutputErrStr = u''
         self.State = "Started"
-        
+
         if hasattr(Params, 'encodingPrimary'):
             UnicodeWriter = codecs.getwriter(Params.encodingPrimary)
             sys.stdout = UnicodeWriter(sys.stdout)
@@ -93,7 +93,7 @@ class GISPythonToolBase(object):
         self.OutputErrStr += strMessage
         if newline == True:
             self.OutputErrStr += '\n'
-        
+
     def AddWarning(self, strMessage, newline=True):
         """Procedure for the GP object warning message output (screen, logfile and if necessary e-mail)
 
@@ -115,7 +115,7 @@ class GISPythonToolBase(object):
         if newline == True:
             self.OutputErrStr += '\n'
 
-    def _tryCovertStringEncoding(self, txt):
+def _tryCovertStringEncoding(self, txt):
         """Function for working with strings in diferent encodings. Converts string from input to string in correct encoding.
 
         Args:
