@@ -188,7 +188,7 @@ class AGServerHelperNTLM(object):
                 subfolder_list = json.loads(data)
 
                 for single in subfolder_list["services"]:
-                    services.append(subfolder + "//" + single['serviceName'] + '.' + single['type'])
+                    services.append(subfolder + "/" + single['serviceName'] + '.' + single['type'])
 
         if not services:
             if self.Tool != None:

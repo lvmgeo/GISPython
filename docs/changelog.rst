@@ -1,7 +1,11 @@
 =========
 Changelog
 =========
-v1.54.0 (2021.07.13)
+v1.54.2 (2021.08.10)
+--------------------
+* fix errors in AGServerHelperToken and AGServerHelperNTLM
+
+v1.54.1 (2021.07.13)
 --------------------
 * Added new Module AGServerHelperToken - with replaces AGSServerHelper and supports all the methods avalable in AGServerHelperNTLM. Module is used for AGS management with tocken autentification
 
