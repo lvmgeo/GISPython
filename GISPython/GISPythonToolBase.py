@@ -115,7 +115,7 @@ class GISPythonToolBase(object):
         if newline == True:
             self.OutputErrStr += '\n'
 
-def _tryCovertStringEncoding(self, txt):
+    def _tryCovertStringEncoding(self, txt):
         """Function for working with strings in diferent encodings. Converts string from input to string in correct encoding.
 
         Args:

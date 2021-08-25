@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.54.3 (2021.08.25)
+--------------------
+* fix errors in GISPythonToolBase.py
+
 v1.54.2 (2021.08.10)
 --------------------
 * fix errors in AGServerHelperToken and AGServerHelperNTLM
