@@ -1,6 +1,11 @@
 =========
 Changelog
 =========
+v1.55.1 (2022.01.22)
+--------------------
+* combined functionality of AGServerHelperNTLM and AGServerHelperToken - now AGServerHelperNTLM supports token authentication
+* AGServerHelperNTLM - added function for publishing MXD files
+
 v1.54.3 (2021.08.25)
 --------------------
 * fix errors in GISPythonToolBase.py
