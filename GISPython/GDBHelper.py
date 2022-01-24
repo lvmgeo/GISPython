@@ -64,7 +64,7 @@ class GDBHelper:
                 ResultList = list(set(ResultList + DSfcs2))
         return ResultList
 
-    def GetRelations(self, ConnDBSchema, dfc, existingObjects):
+    def GetRelations(self, ConnDBSchema, dfc, existingObjects, only_childs=False):
         """Auxiliary function for 'GetDSConnectedElements' function
 
         Args:
@@ -72,28 +72,30 @@ class GDBHelper:
             ConnDBSchema: Connection to the DB schema
             dfc: Describe 'FeatureClass' object
             existingObjects: List of existing objects
+            only_childs: add only child's and not parent classes
 
         Returns:
             List of the found objects
         """
         existingObjects.append(dfc.name)
         rcs = dfc.relationshipClassNames
-        ResultList = list()
+        result_list = list()
         for rc in rcs:
             drc = self.gp.Describe(ConnDBSchema + '\\' + rc)
             if drc.dataType == "RelationshipClass":
-                origins = drc.originClassNames
-                destinations = drc.destinationClassNames
-                ResultList = list(set(ResultList + origins))
-                ResultList = list(set(ResultList + destinations))
+                origin = drc.originClassNames
+                destination = drc.destinationClassNames
+                if not only_childs or (only_childs and len(origin)==1 and dfc.name.lower() == origin[0].lower()):
+                    result_list = list(set(result_list + origin))
+                    result_list = list(set(result_list + destination))
             else:
                 self.gp.AddWarning(u'        ...Descriptive object for relational class [' + ConnDBSchema + '\\' + rc + u'] not found')
         for x in existingObjects:
-            if x in ResultList:
-                ResultList.remove(x)
-        for x in ResultList:
+            if x in result_list:
+                result_list.remove(x)
+        for x in result_list:
             dfc2 = self.gp.Describe(ConnDBSchema + '\\' + x)
-            existingObjects = list(set(existingObjects + self.GetRelations(ConnDBSchema, dfc2, existingObjects)))
+            existingObjects = list(set(existingObjects + self.GetRelations(ConnDBSchema, dfc2, existingObjects, only_childs)))
         return existingObjects
 
     def CalculateXY(self, Layer, Field, type, Query):

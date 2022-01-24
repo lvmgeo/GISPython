@@ -1,6 +1,12 @@
 =========
 Changelog
 =========
+v1.55.2 (2022.01.23)
+--------------------
+* GDBHelper - GetRelations added ability to add only child tables
+* minor documentation fixes
+* minor bug fixes
+
 v1.55.1 (2022.01.22)
 --------------------
 * combined functionality of AGServerHelperNTLM and AGServerHelperToken - now AGServerHelperNTLM supports token authentication

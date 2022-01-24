@@ -120,18 +120,18 @@ class MXDHelper:
         
         self.GDBTools = GDBHelper.GDBHelper(self.gp)
         T = TimerHelper.TimerHelper()
-        if not silent == True:
+        if not silent:
             self.AddMessage(u'    Processing document [{0}]'.format(MXD))
         if not self.gp.Exists(MXD):
-            if not silent == True:
+            if not silent:
                 self.AddWarning(u'MXD with path {0} has not been found'.format(MXD))
         else:
-            if not silent == True:
+            if not silent:
                  self.AddMessage(u'        Document found')
             T.TimerReset()
             try:
                 Doc = self.gp.mapping.MapDocument(MXD)
-                if not silent == True: 
+                if not silent:
                     self.AddMessage(u'        Document opened - {0}'.format(T.GetTimeReset()))
                 try:
                     Relations = list()
@@ -139,7 +139,7 @@ class MXDHelper:
                         self.__ProcessLyr(lyr,'            ', Relations, silent = silent)
                     Relations = set(Relations)
 
-                    if not silent == True: 
+                    if not silent:
                         self.AddMessage('\n           ' + u'Found tables:')
                         for tabl in Relations:
                             self.AddMessage('              > ' + tabl)
@@ -188,7 +188,7 @@ class MXDHelper:
             if not silent == True: 
                 self.AddMessage(step + lyr.name)
             Relations = list()
-            Relations = self.GDBTools.GetRelations(lyr.workspacePath, self.gp.Describe(lyr.dataSource), Relations)
+            Relations = self.GDBTools.GetRelations(lyr.workspacePath, self.gp.Describe(lyr.dataSource), Relations, only_childs=True)
             for rel in Relations:
                 DRel = self.gp.Describe(os.path.join(lyr.workspacePath, rel))
                 if DRel.dataElementType == u'DETable':

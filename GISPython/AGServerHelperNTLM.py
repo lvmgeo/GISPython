@@ -694,9 +694,9 @@ class AGServerHelperNTLM(object):
         self._add_message(u'...Start SDDraft validation {}\n'.format(timer.GetTimeReset()), gp)
         analysis = gp.mapping.AnalyzeForSD(sdd_draft)
 
-        error_code = self._print_sdd_analysis_results(analysis, sdd_draft, gp)
+        errors = self._print_sdd_analysis_results(analysis, sdd_draft, gp)
 
-        if analysis['errors'] == {} and error_code != 24011 and error_code != 24012:
+        if not errors:
             self._add_message(
                 u'...SDDraft validation no critical problems where found - {}\n'.format(timer.GetTimeReset()), gp)
             self._add_message(u'...Start creating stage service \n', gp)
@@ -758,7 +758,7 @@ class AGServerHelperNTLM(object):
         xml.write(sdd_draft, pretty_print=True, method="xml", xml_declaration=True, encoding="utf-8")
 
     def _print_sdd_analysis_results(self, analysis, sdd_draft, gp):
-        error_code = 0
+        errors = False
         iterable_keys = [key for key in ('messages', 'warnings', 'errors') if analysis[key] != {}]
         for key in iterable_keys:
             self._add_message("---" + key.upper() + "---", gp)
@@ -767,19 +767,20 @@ class AGServerHelperNTLM(object):
                 laystr = ', '.join([layer.name for layer in layerlist])
                 text = u"    [{0}] - {1}".format(code, message)
                 if unicode(laystr) != '':
-                    text = text + u"Applies to: ({0})".format(laystr)
+                    text = text + u" Applies to: ({0})".format(laystr)
                 if key == 'messages':
                     self._add_message(text, gp)
                 if key == 'warnings':
-                    self._add_message(text, gp)
+                    self._add_warning(text, gp)
                     if code == 24011 or code == 24012:
-                        error_code = code
+                        errors = True
                         self._add_warning(
                             u'...\n===================================================\nData source not reggistered on server. To prevent data copy on server - publish will stop: {}\n==================================================='.format(
                                 sdd_draft), gp)
                 if key == 'errors':
-                    self._add_error(text)
-        return error_code
+                    self._add_error(text, gp)
+                    errors = True
+        return errors
 
     def _renew_service_configuration(self, json_data, server_service, timer, gp):
         self._add_message(u'...read new config from server - {}\n'.format(timer.GetTimeReset()))

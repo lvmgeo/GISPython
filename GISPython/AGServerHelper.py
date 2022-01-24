@@ -21,9 +21,9 @@ class AGSServerHelper(object):
             Tool: GISPython tool (optional)
         """
         if not Tool is None:
-            Tool.AddMessage('Tool AGSServerHelper is beeing discontinued please use AGSServerHelper or AGServerHelperToken instead')
+            Tool.AddMessage('Warning: Tool AGSServerHelper is beeing discontinued please use AGServerHelperNTLM instead!')
         else:
-            print ('Tool AGSServerHelper is beeing discontinued please use AGSServerHelper or AGServerHelperToken instead')
+            print ('Warning: Tool AGSServerHelper is beeing discontinued please use AGServerHelperNTLM instead!')
         self.username = username
         self.password = password
         self.serverName = serverName

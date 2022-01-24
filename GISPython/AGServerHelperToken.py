@@ -29,6 +29,10 @@ class AGServerHelperToken(object):
             ags_admin_url: ArcGIS server rest admin url
             Tool: GISPython tool (optional)
         """
+        if not tool is None:
+            tool.AddMessage('Warning: Tool AGSServerHelper is beeing discontinued please use AGServerHelperNTLM instead!')
+        else:
+            print ('Warning: Tool AGSServerHelper is beeing discontinued please use AGServerHelperNTLM instead!')
         self.username = username
         self.password = password
         self.ags_admin_url = ags_admin_url
