@@ -110,7 +110,18 @@ class GDBHelper:
         """
         xExpression = "getcord('X', !SHAPE.CENTROID!)"
         yExpression = "getcord('Y', !SHAPE.CENTROID!)"
-        codeBlock = "def getcord(typ, Cent=''):\\n    Cent = Cent.replace('\\\"', '')\\n    if typ == 'X':\\n        if not Cent == '':\\n            return float(Cent.split()[0])\\n        else:\\n            return 0\\n    else:\\n        if not Cent == '':\\n            return float(Cent.split()[1])\\n        else:\\n            return 0\\n"
+        codeBlock = '''def getcord(typ, Cent=''):
+    Cent = Cent.replace('"', '')
+    if typ == 'X':
+        if not Cent == '':
+            return float(Cent.split()[0])
+        else:
+            return 0
+    else:
+        if not Cent == '':
+            return float(Cent.split()[1])
+        else:
+            return 0'''
 
         CalcLayer = (self.gp.MakeTableView_management(Layer, "#" + Field, Query, "#")).getOutput(0)
         if type == 'X':
