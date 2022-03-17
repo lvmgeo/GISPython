@@ -1,6 +1,14 @@
 =========
 Changelog
 =========
+v1.55.5 (2022.03.17)
+--------------------
+* GDPSyncroniserHelper2 - fix of bug, when Shape fields wuld not sync if changes are minor
+
+v1.55.4 (2022.03.16)
+--------------------
+* AGServerHelperNTLM - minor bug fixes
+
 v1.55.3 (2022.02.21)
 --------------------
 * GDBHelper - CalculateXY bug fixes

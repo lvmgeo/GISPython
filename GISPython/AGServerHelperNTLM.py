@@ -135,7 +135,7 @@ class AGServerHelperNTLM(object):
 
         data = urllib.urlencode(params)
         url_address = urlparse.urljoin(self.ags_admin_url + "/", adress)
-        print(url_address)
+        # print(url_address)
         req = urllib2.Request(url=url_address, data=data)
         req.add_header('Content-Type', content_type)
         req.get_method = lambda: method
