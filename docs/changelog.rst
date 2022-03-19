@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.55.6 (2022.03.19)
+--------------------
+* MXDHelper - fix of bug, in error repporting
+
 v1.55.5 (2022.03.17)
 --------------------
 * GDPSyncroniserHelper2 - fix of bug, when Shape fields wuld not sync if changes are minor

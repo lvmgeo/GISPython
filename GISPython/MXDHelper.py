@@ -66,7 +66,7 @@ class MXDHelper:
         if not silent == True:
             self.AddMessage(u'    Processing document [{0}]'.format(mxd))
         if not self.gp.Exists(mxd):
-            self.AddWarning(u'MXD with path {0} has not been found'.format(MXD))
+            self.AddWarning(u'MXD with path {0} has not been found'.format(mxd))
         else:
             if not silent == True:
                  self.AddMessage(u'        Document found')
