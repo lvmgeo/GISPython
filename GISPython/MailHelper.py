@@ -73,7 +73,7 @@ class MailHelper:
 class GISPythonMailHelper(MailHelper):
     """MailHelper wrapper class, which acquires parameters from the GISPython parameter file"""
 
-    def __init__(self, Pr, recipients, Subject, Text):
+    def __init__(self, Pr, recipients, Subject, Text, Files=None):
         """Class initialization procedure
 
         Args:
@@ -107,6 +107,10 @@ class GISPythonMailHelper(MailHelper):
         else:
             user = None
             pwd = None
+
+        if Files is not None and Files:
+            for File in Files:
+                mailer.AttachFile(File)
 
         # Send a message
         mailer.SendMessage(Pr.Mailserver, port, user, pwd, useTLS, useSSL)

@@ -57,14 +57,14 @@ class GISPythonModule(object):
         self.DoMailErrOutput = False
         if self.DoMail:
             self.statusMailRecipients = statusMailRecipients
-            if  hasattr(self.Pr, 'MailOutputRecipientsAlways'):
+            if hasattr(self.Pr, 'MailOutputRecipientsAlways'):
                 self.statusMailRecipients = self.statusMailRecipients + self.Pr.MailOutputRecipientsAlways
             self.errorMailRecipients = errorMailRecipients
-            if  hasattr(self.Pr, 'MailErrorRecipientsAlways'):
+            if hasattr(self.Pr, 'MailErrorRecipientsAlways'):
                 self.errorMailRecipients = self.errorMailRecipients + self.Pr.MailErrorRecipientsAlways
-            if self.statusMailRecipients != []:
+            if self.statusMailRecipients:
                 self.DoMailOutput = True
-            if self.errorMailRecipients != []:
+            if self.errorMailRecipients:
                 self.DoMailErrOutput = True
 
     def runInsideJob(self, Tool):
@@ -123,10 +123,21 @@ class GISPythonModule(object):
             self.mainModule()
             self.MyEnd()
             if self.DoMailOutput:
-                MailHelper.GISPythonMailHelper(self.Pr, self.statusMailRecipients, unicode.format(u'{}[{}] - {}', self.EnvironmentName, self.ToolName, self.Tool.MyNow()), self.Tool.OutputStr)
+                MailHelper.GISPythonMailHelper(
+                    self.Pr,
+                    recipients=self.statusMailRecipients,
+                    Subject=unicode.format(u'{}[{}] - {}', self.EnvironmentName, self.ToolName, self.Tool.MyNow()),
+                    Text=self.Tool.OutputStr,
+                    Files=[self.Tool.out_log_path]
+                )
             if self.DoMailErrOutput:
                 if not self.Tool.OutputErrStr == u'':
-                    MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'{}Error [{}] - {}', self.EnvironmentName, self.ToolName, self.Tool.MyNow()), self.Tool.OutputErrStr)
+                    MailHelper.GISPythonMailHelper(
+                        self.Pr,
+                        recipients=self.errorMailRecipients,
+                        Subject=unicode.format(u'{}Error [{}] - {}', self.EnvironmentName, self.ToolName, self.Tool.MyNow()),
+                        Text=self.Tool.OutputErrStr,
+                        Files=[self.Tool.out_log_path, self.Tool.error_log_path])
             self.MyDispose()
         except Exception, e:
             # If an error occurred, print line number and error message
@@ -149,7 +160,12 @@ class GISPythonModule(object):
                         self.Tool.OutputErrors()
                         if self.DoMailErrOutput:
                             if self.Tool.OutputErrStr != u'':
-                                MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'{}Error [{}] - {}', self.EnvironmentName, self.ToolName, self.Tool.MyNow()), self.Tool.OutputErrStr)
+                                MailHelper.GISPythonMailHelper(
+                                    self.Pr,
+                                    recipients=self.errorMailRecipients,
+                                    Subject=unicode.format(u'{}Error [{}] - {}', self.EnvironmentName, self.ToolName, self.Tool.MyNow()),
+                                    Text=self.Tool.OutputErrStr,
+                                    Files=[self.Tool.out_log_path, self.Tool.error_log_path])
                     else:
                         print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
                         print(u'Raw tool error {0}'.format(self.ToolName))
@@ -157,7 +173,12 @@ class GISPythonModule(object):
                         print(orgTraceback)
                         print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
                         if self.DoMailErrOutput:
-                            MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'{}Critical error  [{}]', self.EnvironmentName, self.ToolName), orgLine + '\n' + orgTraceback)
+                            MailHelper.GISPythonMailHelper(
+                                self.Pr,
+                                recipients=self.errorMailRecipients,
+                                Subject=unicode.format(u'{}Critical error  [{}]', self.EnvironmentName, self.ToolName),
+                                Text=orgLine + '\n' + orgTraceback,
+                                Files=[self.Tool.out_log_path, self.Tool.error_log_path])
                         raise
                 except Exception:
                     print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
@@ -166,7 +187,12 @@ class GISPythonModule(object):
                     print(orgTraceback)
                     print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
                     if self.DoMailErrOutput:
-                        MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'{}Critical error [{}]', self.EnvironmentName, self.ToolName), orgLine + '\n' + orgTraceback)
+                        MailHelper.GISPythonMailHelper(
+                            self.Pr,
+                            recipients=self.errorMailRecipients,
+                            Subject=unicode.format(u'{}Critical error [{}]', self.EnvironmentName, self.ToolName),
+                            Text=orgLine + '\n' + orgTraceback,
+                            Files=[self.Tool.out_log_path, self.Tool.error_log_path])
                     raise tb[1], None, tb[2]
             else:
                 print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
@@ -175,7 +201,12 @@ class GISPythonModule(object):
                 print(orgTraceback)
                 print(r'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
                 if self.DoMailErrOutput:
-                    MailHelper.GISPythonMailHelper(self.Pr, self.errorMailRecipients, unicode.format(u'{}Critical error [{}]', self.EnvironmentName, self.ToolName), orgLine + '\n' + orgTraceback)
+                    MailHelper.GISPythonMailHelper(
+                        self.Pr,
+                        recipients=self.errorMailRecipients,
+                        Subject=unicode.format(u'{}Critical error [{}]', self.EnvironmentName, self.ToolName),
+                        Text=orgLine + '\n' + orgTraceback,
+                        Files=[self.Tool.out_log_path, self.Tool.error_log_path])
                 raise
 
 class GISPythonModuleArgsHelper(object):

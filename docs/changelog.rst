@@ -3,7 +3,7 @@ Changelog
 =========
 v1.55.6 (2022.03.19)
 --------------------
-* MXDHelper - fix of bug, in error repporting
+* MXDHelper - fix of bug, in error reporting
 
 v1.55.5 (2022.03.17)
 --------------------

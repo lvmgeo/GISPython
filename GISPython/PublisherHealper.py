@@ -107,7 +107,6 @@ class PublisherHealper(object):
                 ZipHelper.ZipHelper().CompressDir(config.destinationDir, backup_file_name)
                 print u'... backup created!'
 
-
     def __create_backup_one_file(self, file_path, config):
         """Does the backup creation for one file
 

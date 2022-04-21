@@ -78,8 +78,10 @@ class GISTools10(GISPythonToolBase.GISPythonToolBase):
                     print('{}'.format(err))
             else:
                 print(err.message)
-        self.fLog = codecs.open(LogDir + '\\' + self.ToolName + self.MyNowFile() + '.errlog', encoding='utf-8', mode='w')
-        self.fOut = codecs.open(OutDir + '\\' + self.ToolName + self.MyNowFile() + '.outlog', encoding='utf-8', mode='w')
+        self.error_log_path = LogDir + '\\' + self.ToolName + self.MyNowFile() + '.errlog'
+        self.fLog = codecs.open(self.error_log_path, encoding='utf-8', mode='w')
+        self.out_log_path = OutDir + '\\' + self.ToolName + self.MyNowFile() + '.outlog'
+        self.fOut = codecs.open(self.out_log_path, encoding='utf-8', mode='w')
         self.fSQL = OutDir + '\\' + self.ToolName + self.MyNowFile() + 'SQL.outlog'
 
         self.AddMessage(u'\n==================================================')
@@ -116,13 +118,13 @@ class GISTools10(GISPythonToolBase.GISPythonToolBase):
             gpOutput = None
         return gpOutput
 
-    def MyDispose(self):
-        """Disposal of the class
+    def MyEnd(self):
+        """End of the process
 
         Args:
             self: The reserved object 'self'
         """
-        super(GISTools10, self).MyDispose()
+        super(GISTools10, self).MyEnd()
         self.fOut.close()
         self.fLog.close()
 
