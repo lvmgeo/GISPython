@@ -5,10 +5,11 @@
 
 import paramiko
 
+
 class SFTPHelper:
     """Class for easing the SFTP operations"""
 
-    def __init__(self, userName, password, host, port, pkey_file = None):
+    def __init__(self, userName, password, host, port, pkey_file=None):
         """Class initialization procedure
 
         Args:
@@ -32,10 +33,28 @@ class SFTPHelper:
         if pkey_file is None:
             self.transport.connect(username=self.username, password=self.password)
         else:
-            self.transport.connect(username=self.username, pkey = pkey)
+            self.transport.connect(username=self.username, pkey=pkey)
 
         # SFTP objekta izveide
         self.sftp = paramiko.SFTPClient.from_transport(self.transport)
+
+    def list_files(self, remote_path):
+        """List the files in the remote directory
+
+        Args:
+            self: The reserved object 'self'
+            remote_path: Remote directory path
+        """
+        return self.sftp.listdir(remote_path)
+
+    def delete_file(self, remote):
+        """Deletes the file, using SFTP
+
+        Args:
+            self: The reserved object 'self'
+            remote: Remote file path
+        """
+        self.sftp.remove(remote)
 
     def upload(self, local, remote):
         """Upload the file, using SFTP

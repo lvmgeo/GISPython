@@ -1,6 +1,16 @@
 =========
 Changelog
 =========
+v1.57.1 (2022.07.15)
+--------------------
+* SFTPHelper - added list_files ability
+* SFTPHelper - added delete_file ability
+
+v1.56.1 (2022.04.21)
+--------------------
+* MailHelper - added ability to attach files to GISPythonMailHelper
+* GISPythonModule - added ability to get log files in error and status e-mails of platform
+
 v1.55.6 (2022.03.19)
 --------------------
 * MXDHelper - fix of bug, in error reporting
