@@ -361,7 +361,29 @@ class AGServerHelperNTLM(object):
 
         if not self.__assert_json_success(permisions_data):
             raise MyError.MyError(
-                "Error while setting permisions information for {} to {}.".format(
+                "Error while setting permissions information for {} to {}.".format(
+                    service, principal))
+
+    def cleanServicePermisions(self, folder, service, principal):
+        """Cleans all permissions that have been assigned to a role (principal). This is typically used when a role is deleted.
+
+        This operation is only available through the Permissions resource on the Root Folder.
+
+        Args:
+            self: The reserved object 'self'
+            folder: Service directory
+            service: Name of a service
+            principal: The name of the role (principal) whose permissions need to be deleted.
+        """
+        urlparams = urllib.urlencode({'principal': principal, 'f': 'json'})
+        folder = self.__process_folder_string(folder)
+        status_url = "services/" + folder + service + "/permissions/clean?{}".format(urlparams)
+        params = {}
+        permisions_data = self.__request_from_server(status_url, params, method='POST')
+
+        if not self.__assert_json_success(permisions_data):
+            raise MyError.MyError(
+                "Error while removing permissions information for {} to {}.".format(
                     service, principal))
 
     def isServiceRunning(self, folder, service):

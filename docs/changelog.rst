@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.58.1 and (fix) v1.58.2 (2022.08.29)
+--------------------
+* AGServerHelperNTLM - added function cleanServicePermisions to remove rights from services
+
 v1.57.1 (2022.07.15)
 --------------------
 * SFTPHelper - added list_files ability
