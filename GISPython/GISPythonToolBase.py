@@ -408,7 +408,7 @@ class GISPythonToolBase(object):
         """
         return self.ExecutePatch + '\\SQL\\' + Name + '.sql'
 
-    def RunSQL(self, Name, user="#", pwd="#", SpoolFile='#', ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], params=[], DBType='Oracle', hidenStrings = [], DBName='#'):
+    def RunSQL(self, Name, user="#", pwd="#", SpoolFile='#', ErrorStrings=['ERROR', 'FAILED', u'KĻŪDA', 'EXCEPTION', 'ORA-'], params=[], DBType='Oracle', hidenStrings = [], DBName='#', Detached=False):
         """Procedure for SQL file execution (only Oracle sqlplus supported)
         Typically used for execution, passing only SQL filename parameter
 
@@ -423,6 +423,7 @@ class GISPythonToolBase(object):
             DBType: only Oracle is supported
             hidenStrings: List of strings tha has to be hiden in the output (used for hiding passwords)
             DBName: Oracle TNS name
+            Detached: Whether to execute seperately from the main process (Default: False)
         """
         if DBType.upper() == 'ORACLE':
             if pwd == "#":
@@ -435,7 +436,9 @@ class GISPythonToolBase(object):
                 SpoolFile = self.Pr.OutDir + '\\' + Name + self.MyNowFile() + 'SQL.outlog'
             hidenStrings.append(pwd)
             self.AchiveFiles(self.Pr.OutDir, self.Pr.OutDirArh, Name, False)
-            self.runShell('sqlplus -L ' + user + '/' + pwd + '@' + DBName + ' @"' + self.GetSQL(Name) + '" "' + SpoolFile + '" ' + ' '.join(params), False, ErrorStrings, hidenStrings = hidenStrings)
+            self.runShell(
+                'sqlplus -L ' + user + '/' + pwd + '@' + DBName + ' @"' + self.GetSQL(Name) + '" "' + SpoolFile + '" ' + ' '.join(params),
+                False, ErrorStrings, hidenStrings=hidenStrings, Detached=Detached)
         else:
             raise AttributeError('Provided DB Type is not supported!')
 

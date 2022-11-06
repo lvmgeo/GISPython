@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.58.3 (2022.11.06)
+--------------------
+* GISPythonToolBase - added ability to run Detached oracle sqlplus scripts (RunSQL)
+
 v1.58.1 and (fix) v1.58.2 (2022.08.29)
 --------------------
 * AGServerHelperNTLM - added function cleanServicePermisions to remove rights from services
