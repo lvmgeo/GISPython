@@ -7,7 +7,7 @@ import os
 class MailHelper:
     """Class for easing the SMTP operations"""
 
-    def __init__(self, From, recipients, Subject, Text):
+    def __init__(self, From, recipients, Subject, Text, msg_format='plain'):
         """Class initialization procedure
 
         Args:
@@ -16,13 +16,14 @@ class MailHelper:
             recipients: Recipient array
             Subject: E-mail subject
             Text: E-mail text
+            msg_format: E-mail text format (Default = 'plain')
         """
         from email.mime.multipart import MIMEMultipart
         from email.mime.text import MIMEText
         self.msg = MIMEMultipart()
         self.msg['Subject'] = Subject
         self.msg['To'] = ", ".join(recipients)
-        self.msg.attach(MIMEText(Text, 'plain', 'utf-8'))
+        self.msg.attach(MIMEText(Text, msg_format, 'utf-8'))
         self.From = From
         self.recipients = recipients
 
@@ -73,7 +74,7 @@ class MailHelper:
 class GISPythonMailHelper(MailHelper):
     """MailHelper wrapper class, which acquires parameters from the GISPython parameter file"""
 
-    def __init__(self, Pr, recipients, Subject, Text, Files=None):
+    def __init__(self, Pr, recipients, Subject, Text, Files=None, msg_format='plain'):
         """Class initialization procedure
 
         Args:
@@ -82,8 +83,10 @@ class GISPythonMailHelper(MailHelper):
             recipients: Recipient array
             Subject: E-mail subject
             Text: E-mail text
+            Files: Array of files to attach
+            msg_format: E-mail text format (Default = 'plain')
         """
-        mailer = MailHelper(Pr.MailFromAdress, recipients, Subject, Text)
+        mailer = MailHelper(Pr.MailFromAdress, recipients, Subject, Text, msg_format)
 
         # Check if attributes exists
         if hasattr(Pr, 'MailserverPort'):

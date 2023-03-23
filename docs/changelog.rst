@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.59.1 (2023.03.23)
+--------------------
+* MailHelper - added ability to send e-mails in HTML format
+
 v1.58.3 (2022.11.06)
 --------------------
 * GISPythonToolBase - added ability to run Detached oracle sqlplus scripts (RunSQL)
