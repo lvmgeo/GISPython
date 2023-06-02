@@ -212,8 +212,9 @@ class AGServerHelperNTLM(object):
         except urllib2.URLError, exception:
             raise MyError.MyError(exception)
 
-        for single in service_list["services"]:
-            services.append(folder + single['serviceName'] + '.' + single['type'])
+        if "services" in service_list:
+            for single in service_list["services"]:
+                services.append(folder + single['serviceName'] + '.' + single['type'])
 
         folder_list = service_list["folders"] if u'folders' in service_list else []
         if u'Utilities' in service_list:
