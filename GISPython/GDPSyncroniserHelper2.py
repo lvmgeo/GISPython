@@ -5,6 +5,7 @@
      Second version is ment for advanced scenarious, but opereates data inMemory so it,s not intended for large data sets.
 """
 import TimerHelper
+import datetime
 
 
 class GDPSyncroniserHelper2(object):
@@ -66,7 +67,7 @@ class GDPSyncroniserHelper2(object):
 
         Returns:
             * output - list of dictionary items containig:
-                - id: record id, 
+                - id: record id,
                 - syncResult: notInitialized,  synchronized, inserted, error
                 - error: error mesage or '',
                 - updated: true if inserted or updated
@@ -484,13 +485,89 @@ class SyncItem2(object):
         outRow = self.outSyncRow
         for x in range(0, len(inRow)):
             if isinstance(inRow[x], gp.Geometry):
-                outRow[x] = inRow[x]
-                self.updated = True
+                if not self.do_shape_match(inRow[x], outRow[x]):
+                    outRow[x] = inRow[x]
+                    self.updated = True
             else:
-                if inRow[x] != outRow[x]:
+                if not self.do_values_match(inRow[x], outRow[x]):
                     outRow[x] = inRow[x]
                     self.updated = True
         self.outSyncRow = outRow
+
+    @staticmethod
+    def do_values_match(source_value, destination_value):
+        """Procedure performs the value comparsion
+
+        Args:
+            source_value: Source valueg
+            destination_value: Destination value
+
+        Returns:
+            * output - True if values match, False if values do not match
+        """
+        if isinstance(source_value, float) and  isinstance(destination_value, float):
+            if abs(source_value - destination_value) > 0.00000001:
+                return False
+            else:
+                return True
+        elif isinstance(source_value, datetime.datetime) and isinstance(destination_value, datetime.datetime):
+            if source_value.replace(microsecond=0) != destination_value.replace(microsecond=0):
+                return False
+            else:
+                return True
+        elif unicode(source_value) == unicode(destination_value):
+            return True
+        elif source_value != destination_value:
+            return False
+        else:
+            return True
+
+    @staticmethod
+    def do_shape_match(shape1, shape2):
+        """Procedure performs the shape comparsion
+
+        Args:
+            shape1: Source shape
+            shape2: Destination shape
+
+        Returns:
+            * output - True if shapes match, False if shapes do not match
+        """
+        if (shape1 is None and shape2 is not None) or (shape1 is not None and shape2 is None):
+            return False
+
+        if shape1 is None and shape2 is None:
+            return True
+
+        if shape1.type != shape2.type:
+            return False
+
+        if shape1.pointCount != shape2.pointCount:
+            return False
+
+        if shape1.partCount != shape2.partCount:
+            return False
+
+        if shape1.type == "point":
+            if abs(shape1[0].X - shape2[0].X) > 0.000001 or abs(shape1[0].Y - shape2[0].Y) > 0.000001:
+                return False
+
+        elif shape1.type == "polyline" or shape1.type == "polygon":
+            for i in range(shape1.partCount):
+                shape1_part = shape1[i]
+                shape2_part = shape2[i]
+                if shape1_part.count != shape2_part.count:
+                    return False
+                for j in range(shape1_part.count):
+                    if (shape1_part[j] is None and shape2_part[j] is not None) or (
+                            shape1_part[j] is not None and shape2_part[j] is None):
+                        return False
+                    if not shape1_part[j] is None:
+                        if abs(shape1_part[j].X - shape2_part[j].X) > 0.000001 or abs(
+                                shape1_part[j].Y - shape2_part[j].Y) > 0.000001:
+                            return False
+
+        return True
 
 
 class SyncDefinition2(object):

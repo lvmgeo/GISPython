@@ -1,6 +1,14 @@
 =========
 Changelog
 =========
+v1.60.1 (2024.02.11)
+--------------------
+* Upgraded GDPSyncroniserHelper2 for better data change detection and geometry compare
+
+v1.59.2 (2023.06.02)
+--------------------
+* Bug fixes for MailHelper and AGSHelper
+
 v1.59.1 (2023.03.23)
 --------------------
 * MailHelper - added ability to send e-mails in HTML format
