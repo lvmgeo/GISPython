@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+v1.60.2 (2024.08.13)
+--------------------
+* publish changes
+
 v1.60.1 (2024.02.11)
 --------------------
 * Upgraded GDPSyncroniserHelper2 for better data change detection and geometry compare

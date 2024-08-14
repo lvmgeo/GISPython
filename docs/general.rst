@@ -7,7 +7,7 @@ Installation
 Dependencies
 ************
 
-- ArcGIS 10.x /recommended with newest patches and service packs/ (*GISPython* is currently running on production systems based on ArcGIS 10.2.1, ArcGIS 10.3.1 and has been tested on ArcGIS 10.6.1)
+- ArcGIS 10.x /recommended with newest patches and service packs/ (*GISPython* is currently running on production systems based on ArcGIS 10.2.1 un until 10.9.1)
 - Python 2.7 (included in ArcGIS installation) (arcpy and numpy modules included)
 - Additional python modules:
 
@@ -19,18 +19,18 @@ Dependencies
 
 Package installation
 ********************
-  
+
 *GISPython* package is available on the `Python Package Index <https://pypi.python.org/pypi/GISPython>`_, so you can get it via pip::
 
 	pip install GISPython
-	
+
 .. Note:: If pip isn’t installed, you can get it `here <https://packaging.python.org/installing/#install-pip-setuptools-and-wheel>`_!
 
 Configuration & basic usage
 ---------------------------
-	
+
 Before using *GISPython* modules in custom geoprocessing scripts, you need to set up your scripting environment with `*SetupDefaultEnvironment* <https://github.com/lvmgeo/GISPython/blob/master/GISPython/SetupDefaultEnvironment.py>`_ module which also includes template for user scripts.
-		
+
 *SetupDefaultEnvironment* module also includes basic parameters (variable *paramsFileSource*) for parameter file (e.g. SysGISParams.py) which is important, because *GISPython* relies of several
 parameters to be present to function successfully:
 
@@ -54,7 +54,7 @@ Set up the variables at the beggining of the main function, to shorten the main 
 	gp = Tool.gp
 	callGP = Tool.callGP
 	pj = os.path.join
-	
+
 Basic operations
 ****************
 
@@ -66,13 +66,13 @@ ArcPy function call::
 	callGP('AddField_management', slay, 'CAR', 'TEXT', '#', '#', 128)
 	callGP('AddField_management', slay, 'WorkID', 'DOUBLE', 12, 0)
 	callGP('AddField_management', slay, 'REC_DATE_FROM', 'DATE')
-	
+
 Tool message output::
 
 	Tool = self.Tool
 	self.Tool.AddMessage(u'This is a message')
 	self.Tool.AddWarning(u'This is a warning')
 	self.Tool.AddError(u'This is an error')
-	
+
 .. toctree::
    :maxdepth: 4
